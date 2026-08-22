@@ -154,30 +154,44 @@ export default function Navigation({
             </button>
           </div>
 
-          {/* Mobile & Tablet Controls (Visible sur Écrans < 1024px — Ultra optimisé pour 320px+) */}
+          {/* Mobile & Tablet Controls (Visible sur Écrans < 1024px) */}
           <div className="flex lg:hidden items-center gap-1.5 sm:gap-2.5">
             
-            {/* Audio Toggle Compact sur Mobile/Tablette */}
-            <button
-              onClick={onToggleAudio}
-              aria-label={isAudioPlaying ? "Couper la musique" : "Activer la musique"}
-              className={`p-1.5 sm:p-2 h-8 w-8 sm:h-9 sm:w-9 rounded-full border flex items-center justify-center transition-all shrink-0 ${
-                isAudioPlaying 
-                  ? 'bg-or text-nero border-or shadow-md' 
-                  : 'bg-surface border-white/15 text-muted hover:text-ivoire'
-              }`}
-              title={isAudioPlaying ? `Musique active : ${activeTrack.title}` : "Activer la musique"}
-            >
-              {isAudioPlaying ? (
-                <div className="flex items-center gap-0.5 h-2.5">
-                  <span className="w-[2px] bg-nero rounded-full animate-eq-1" />
-                  <span className="w-[2px] bg-nero rounded-full animate-eq-2" />
-                  <span className="w-[2px] bg-nero rounded-full animate-eq-3" />
-                </div>
-              ) : (
-                <VolumeX className="w-3.5 h-3.5" />
+            {/* Audio Toggle & Track Changer sur Mobile/Tablette */}
+            <div className="flex items-center bg-surface border border-or-subtle rounded-full p-0.5 gap-0.5 shadow-sm">
+              <button
+                onClick={onToggleAudio}
+                aria-label={isAudioPlaying ? "Couper la musique" : "Activer la musique"}
+                className={`p-1.5 h-8 w-8 rounded-full flex items-center justify-center transition-all shrink-0 ${
+                  isAudioPlaying 
+                    ? 'bg-or text-nero font-bold shadow-md' 
+                    : 'text-muted hover:text-ivoire'
+                }`}
+                title={isAudioPlaying ? `Musique active : ${activeTrack.title}` : "Activer la musique"}
+              >
+                {isAudioPlaying ? (
+                  <div className="flex items-center gap-0.5 h-2.5">
+                    <span className="w-[2px] bg-nero rounded-full animate-eq-1" />
+                    <span className="w-[2px] bg-nero rounded-full animate-eq-2" />
+                    <span className="w-[2px] bg-nero rounded-full animate-eq-3" />
+                  </div>
+                ) : (
+                  <VolumeX className="w-3.5 h-3.5" />
+                )}
+              </button>
+
+              {/* Bouton Suivant pour changer de morceau directement sur Mobile */}
+              {isAudioPlaying && onNextTrack && (
+                <button
+                  onClick={onNextTrack}
+                  aria-label="Morceau suivant"
+                  title={`Changer de morceau (${currentTrackIndex + 1}/${audioTracks.length}) : ${activeTrack.title}`}
+                  className="w-7 h-7 rounded-full flex items-center justify-center text-or hover:text-ivoire hover:bg-white/10 transition-colors"
+                >
+                  <SkipForward size={11} />
+                </button>
               )}
-            </button>
+            </div>
 
             {/* Bouton RÉSERVER sur Mobile/Tablette */}
             <button
@@ -242,11 +256,16 @@ export default function Navigation({
             </div>
           </div>
 
-          {/* Right Column: Menu Navigation Links */}
-          <div className="flex-1 lg:col-span-7 flex flex-col justify-between p-6 sm:p-14 lg:p-20 pt-24 sm:pt-32 overflow-y-auto">
+          {/* Right Column: Menu Navigation Links & Controls */}
+          <div className="flex-1 lg:col-span-7 flex flex-col justify-between p-6 sm:p-14 lg:p-20 pt-20 sm:pt-32 pb-12 overflow-y-auto">
             
             <div className="space-y-6 sm:space-y-8">
-              <p className="typo-eyebrow text-or">Navigation</p>
+              <div className="flex items-center justify-between">
+                <p className="typo-eyebrow text-or">Navigation</p>
+                <span className="text-[10px] font-mono text-muted uppercase tracking-wider">
+                  Milano · {milanTime || '20:00'}
+                </span>
+              </div>
               
               {/* Primary Links with Staggered Hover Effect */}
               <nav aria-label="Menu plein écran" className="flex flex-col space-y-3 sm:space-y-5">
@@ -273,23 +292,95 @@ export default function Navigation({
                 ))}
               </nav>
 
-              {/* Secondary Links Grid */}
-              <div className="pt-4 sm:pt-6 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 border-t border-white/10">
-                <Link to="/contact" onClick={() => setMobileMenuOpen(false)} className="typo-navigation text-muted hover:text-or transition-colors">
+              {/* Dedicated Mobile & Desktop Audio Player Widget in Unfolded Menu */}
+              <div className="p-3.5 sm:p-4 bg-surface border border-or/30 flex items-center justify-between gap-3 shadow-xl">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
+                    isAudioPlaying ? 'bg-or text-nero border-or' : 'bg-nero border-white/10 text-muted'
+                  }`}>
+                    {isAudioPlaying ? (
+                      <div className="flex items-center gap-0.5 h-2.5">
+                        <span className="w-[2px] bg-nero rounded-full animate-eq-1" />
+                        <span className="w-[2px] bg-nero rounded-full animate-eq-2" />
+                        <span className="w-[2px] bg-nero rounded-full animate-eq-3" />
+                      </div>
+                    ) : (
+                      <VolumeX className="w-3.5 h-3.5" />
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] uppercase font-mono text-or tracking-wider truncate">
+                      Ambiance ({currentTrackIndex + 1}/{audioTracks.length})
+                    </p>
+                    <p className="font-serif text-sm text-ivoire truncate">
+                      {activeTrack.title} <span className="text-muted text-xs italic font-sans">({activeTrack.genre})</span>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    onClick={onToggleAudio}
+                    className={`px-3 py-1.5 text-[10px] sm:text-[11px] uppercase font-bold font-mono tracking-wider transition-all ${
+                      isAudioPlaying 
+                        ? 'bg-or text-nero shadow' 
+                        : 'bg-surface-elevated text-ivoire border border-white/10 hover:border-or/40'
+                    }`}
+                  >
+                    {isAudioPlaying ? 'PAUSE' : 'ÉCOUTER'}
+                  </button>
+                  {onNextTrack && (
+                    <button
+                      onClick={onNextTrack}
+                      aria-label="Morceau suivant"
+                      className="p-1.5 sm:p-2 bg-surface-elevated hover:bg-white/10 text-or hover:text-ivoire border border-white/10 transition-colors flex items-center justify-center"
+                      title="Changer de morceau"
+                    >
+                      <SkipForward size={13} />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Centered Secondary Links with Perfect Visual Symmetry */}
+              <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-6 sm:gap-x-8 gap-y-3 text-center">
+                <Link 
+                  to="/contact" 
+                  onClick={() => setMobileMenuOpen(false)} 
+                  className="typo-navigation text-xs text-muted hover:text-or transition-colors tracking-widest py-1 px-1.5"
+                >
                   CONTACT
                 </Link>
-                <Link to="/careers" onClick={() => setMobileMenuOpen(false)} className="typo-navigation text-muted hover:text-or transition-colors">
+                <span className="text-white/20 hidden sm:inline">✦</span>
+                <Link 
+                  to="/careers" 
+                  onClick={() => setMobileMenuOpen(false)} 
+                  className="typo-navigation text-xs text-muted hover:text-or transition-colors tracking-widest py-1 px-1.5"
+                >
                   CARRIÈRES
                 </Link>
-                <Link to="/legal" onClick={() => setMobileMenuOpen(false)} className="typo-navigation text-muted hover:text-or transition-colors">
+                <span className="text-white/20 hidden sm:inline">✦</span>
+                <Link 
+                  to="/legal#rgpd" 
+                  onClick={() => setMobileMenuOpen(false)} 
+                  className="typo-navigation text-xs text-muted hover:text-or transition-colors tracking-widest py-1 px-1.5"
+                >
                   CONFIDENTIALITÉ
+                </Link>
+                <span className="text-white/20 hidden sm:inline">✦</span>
+                <Link 
+                  to="/legal" 
+                  onClick={() => setMobileMenuOpen(false)} 
+                  className="typo-navigation text-xs text-muted hover:text-or transition-colors tracking-widest py-1 px-1.5"
+                >
+                  MENTIONS LÉGALES
                 </Link>
               </div>
             </div>
 
             {/* Bottom Actions */}
             <div className="pt-8 sm:pt-10 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
-              <div className="space-y-1">
+              <div className="space-y-1 text-center sm:text-left">
                 <p className="typo-metadata text-muted">Réservations & Conciergerie</p>
                 <p className="font-serif-luxury text-lg text-ivoire font-mono">{restaurantInfo?.phone || '+39 02 8905 4321'}</p>
               </div>
@@ -298,7 +389,7 @@ export default function Navigation({
                   setMobileMenuOpen(false);
                   onOpenBooking();
                 }}
-                className="px-6 sm:px-8 py-3 sm:py-3.5 bg-or text-nero font-semibold typo-cta hover:bg-ivoire transition-colors shadow-xl"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 bg-or text-nero font-bold typo-cta hover:bg-ivoire transition-colors shadow-xl text-center"
               >
                 RÉSERVER UNE TABLE
               </button>
