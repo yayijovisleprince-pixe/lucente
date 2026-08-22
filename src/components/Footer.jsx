@@ -154,7 +154,7 @@ export default function Footer({ onOpenBooking }) {
               <button
                 onClick={() => onOpenBooking()}
                 aria-label={t('footer.reserveBtn')}
-                className="w-full py-3.5 border border-or hover:bg-or hover:text-nero text-or typo-cta text-xs transition-all text-center shadow-lg"
+                className="w-full py-3.5 border border-or bg-transparent hover:bg-or text-or hover:text-nero typo-cta text-xs transition-all duration-300 text-center shadow-lg footer-reserve-btn"
               >
                 {t('footer.reserveBtn')}
               </button>

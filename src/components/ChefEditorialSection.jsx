@@ -74,7 +74,7 @@ export default function ChefEditorialSection() {
             <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-t border-white/10">
               <Link
                 to="/story"
-                className="px-8 py-4 bg-or hover:bg-ivoire text-nero typo-cta transition-all text-center shadow-lg"
+                className="px-8 py-4 bg-or hover:bg-or-light text-nero hover:text-nero typo-cta transition-all text-center shadow-lg"
               >
                 {lang === 'it' ? 'Scopri lo Chef' : lang === 'en' ? 'Discover the Chef' : 'Découvrir le Chef'}
               </Link>

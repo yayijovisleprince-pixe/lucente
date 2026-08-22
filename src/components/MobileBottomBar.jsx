@@ -54,7 +54,7 @@ export default function MobileBottomBar({ onOpenBooking }) {
         <button
           onClick={() => onOpenBooking()}
           aria-label={t('nav.reserveTable')}
-          className="flex-1 flex items-center justify-center gap-2 px-4 min-h-[48px] rounded-none bg-or hover:bg-ivoire text-nero font-semibold text-xs uppercase tracking-widest transition-all shadow-xl touch-manipulation"
+          className="flex-1 flex items-center justify-center gap-2 px-4 min-h-[48px] rounded-none bg-or hover:bg-or-light text-nero hover:text-nero font-semibold text-xs uppercase tracking-widest transition-all shadow-xl touch-manipulation"
         >
           <Calendar size={15} />
           <span>{t('nav.reserveTable')}</span>

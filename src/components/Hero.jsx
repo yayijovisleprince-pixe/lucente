@@ -87,7 +87,7 @@ export default function Hero({ onOpenBooking }) {
         >
           <button
             onClick={() => onOpenBooking()}
-            className="w-full sm:w-auto px-10 py-4 bg-or hover:bg-ivoire text-nero typo-cta transition-all duration-300 shadow-2xl shadow-or/10 hover:scale-[1.02]"
+            className="w-full sm:w-auto px-10 py-4 bg-or hover:bg-or-light text-nero hover:text-nero typo-cta transition-all duration-300 shadow-2xl shadow-or/10 hover:scale-[1.02]"
           >
             {t('nav.reserveTable')}
           </button>

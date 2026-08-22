@@ -282,7 +282,7 @@ export default function HomePage({ onOpenBooking }) {
           }`}>
             <button
               onClick={() => onOpenBooking()}
-              className="w-full sm:w-auto px-10 py-4 bg-or hover:bg-ivoire text-nero typo-cta text-xs shadow-2xl transition-all duration-300 hover:scale-105"
+              className="w-full sm:w-auto px-10 py-4 bg-or hover:bg-or-light text-nero hover:text-nero typo-cta text-xs shadow-2xl transition-all duration-300 hover:scale-105"
             >
               {lang === 'it' ? 'PRENOTA UN TAVOLO' : lang === 'en' ? 'RESERVE A TABLE' : 'RÉSERVER UNE TABLE'}
             </button>
@@ -625,7 +625,7 @@ export default function HomePage({ onOpenBooking }) {
               <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-t border-white/10">
                 <Link
                   to="/story"
-                  className="px-8 py-3.5 bg-or hover:bg-ivoire text-nero typo-cta text-xs transition-all shadow-lg"
+                  className="px-8 py-3.5 bg-or hover:bg-or-light text-nero hover:text-nero typo-cta text-xs transition-all shadow-lg"
                 >
                   {lang === 'it' ? 'LA SUA STORIA' : lang === 'en' ? 'HIS STORY' : 'SON HISTOIRE'}
                 </Link>
@@ -789,7 +789,7 @@ export default function HomePage({ onOpenBooking }) {
           <div className="pt-4">
             <button
               onClick={() => onOpenBooking()}
-              className="px-12 py-5 bg-or hover:bg-ivoire text-nero typo-cta text-sm shadow-2xl transition-all duration-300 hover:scale-105"
+              className="px-12 py-5 bg-or hover:bg-or-light text-nero hover:text-nero typo-cta text-sm shadow-2xl transition-all duration-300 hover:scale-105"
             >
               {lang === 'it' ? 'PRENOTA UN TAVOLO' : lang === 'en' ? 'RESERVE A TABLE' : 'RÉSERVER UNE TABLE'}
             </button>

@@ -49,8 +49,22 @@
   color: #B89B5E;
 }
 
+/* Guarantees text turns dark on gold hover backgrounds */
+.footer-reserve-btn:hover,
+.hover\:text-nero:hover {
+  color: #10100E !important;
+}
+
 .bg-or {
   background-color: #B89B5E;
+}
+
+.bg-or-light {
+  background-color: #D4BD88;
+}
+
+.hover\:bg-or-light:hover {
+  background-color: #D4BD88;
 }
 
 :root {
@@ -207,6 +221,7 @@ body {
 .text-gradient-gold {
   background: linear-gradient(135deg, #F2EBDD 0%, #B89B5E 50%, #D4BD88 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

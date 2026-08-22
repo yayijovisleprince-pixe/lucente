@@ -180,7 +180,7 @@ export default function Navigation({
               onClick={() => onOpenBooking()}
               data-cursor="RESERVE"
               aria-label={t('nav.reserve')}
-              className="px-5 py-2 bg-or hover:bg-ivoire text-nero font-semibold text-xs uppercase tracking-[0.18em] transition-all duration-300 shadow-md shadow-or/20 hover:shadow-or/40 border border-or shrink-0 flex items-center gap-2"
+              className="px-5 py-2 bg-or hover:bg-or-light text-nero hover:text-nero font-semibold text-xs uppercase tracking-[0.18em] transition-all duration-300 shadow-md shadow-or/20 hover:shadow-or/40 border border-or shrink-0 flex items-center gap-2"
             >
               <Calendar className="w-3.5 h-3.5" />
               <span>{t('nav.reserve')}</span>

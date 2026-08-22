@@ -47,7 +47,7 @@ export default function DiningRoomImmersive({ onOpenBooking }) {
         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
           <Link
             to="/private-dining"
-            className="px-8 py-3.5 bg-or hover:bg-ivoire text-nero typo-cta transition-all shadow-xl"
+            className="px-8 py-3.5 bg-or hover:bg-or-light text-nero hover:text-nero typo-cta transition-all shadow-xl"
           >
             {lang === 'it' ? 'Esplora i Saloni' : lang === 'en' ? 'Explore the Salons' : 'Explorer les Salons'}
           </Link>

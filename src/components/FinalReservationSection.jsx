@@ -32,7 +32,7 @@ export default function FinalReservationSection({ onOpenBooking }) {
         <div className="pt-6">
           <button
             onClick={() => onOpenBooking()}
-            className="px-12 py-5 bg-or hover:bg-ivoire text-nero typo-cta text-sm transition-all duration-300 shadow-2xl shadow-or/20 hover:scale-105"
+            className="px-12 py-5 bg-or hover:bg-or-light text-nero hover:text-nero typo-cta text-sm transition-all duration-300 shadow-2xl shadow-or/20 hover:scale-105"
           >
             {t('nav.reserveTable')}
           </button>
