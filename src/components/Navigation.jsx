@@ -62,11 +62,11 @@ export default function Navigation({
             : 'bg-gradient-to-b from-nero/90 via-nero/40 to-transparent py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between gap-3 sm:gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-12 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Logo LUCENTE — Épuré, sobre et compact */}
           <Link to="/" data-cursor="LUCENTE" className="flex items-center group text-left shrink-0 py-1">
-            <span className="font-serif-luxury text-xl sm:text-2xl tracking-[0.24em] text-ivoire uppercase font-light transition-colors group-hover:text-or">
+            <span className="font-serif-luxury text-lg sm:text-2xl tracking-[0.16em] sm:tracking-[0.24em] text-ivoire uppercase font-light transition-colors group-hover:text-or">
               LUCENTE
             </span>
           </Link>
@@ -154,14 +154,14 @@ export default function Navigation({
             </button>
           </div>
 
-          {/* Mobile & Tablet Controls (Visible uniquement sur Écrans < 1024px) */}
-          <div className="flex lg:hidden items-center space-x-2 sm:space-x-3">
+          {/* Mobile & Tablet Controls (Visible sur Écrans < 1024px — Ultra optimisé pour 320px+) */}
+          <div className="flex lg:hidden items-center gap-1.5 sm:gap-2.5">
             
             {/* Audio Toggle Compact sur Mobile/Tablette */}
             <button
               onClick={onToggleAudio}
               aria-label={isAudioPlaying ? "Couper la musique" : "Activer la musique"}
-              className={`p-2 h-9 w-9 rounded-full border flex items-center justify-center transition-all ${
+              className={`p-1.5 sm:p-2 h-8 w-8 sm:h-9 sm:w-9 rounded-full border flex items-center justify-center transition-all shrink-0 ${
                 isAudioPlaying 
                   ? 'bg-or text-nero border-or shadow-md' 
                   : 'bg-surface border-white/15 text-muted hover:text-ivoire'
@@ -169,38 +169,38 @@ export default function Navigation({
               title={isAudioPlaying ? `Musique active : ${activeTrack.title}` : "Activer la musique"}
             >
               {isAudioPlaying ? (
-                <div className="flex items-center gap-0.5 h-3">
+                <div className="flex items-center gap-0.5 h-2.5">
                   <span className="w-[2px] bg-nero rounded-full animate-eq-1" />
                   <span className="w-[2px] bg-nero rounded-full animate-eq-2" />
                   <span className="w-[2px] bg-nero rounded-full animate-eq-3" />
                 </div>
               ) : (
-                <VolumeX className="w-4 h-4" />
+                <VolumeX className="w-3.5 h-3.5" />
               )}
             </button>
 
-            {/* UNIQUE Bouton RÉSERVER sur Mobile/Tablette */}
+            {/* Bouton RÉSERVER sur Mobile/Tablette */}
             <button
               onClick={() => onOpenBooking()}
               aria-label="Réserver une table à LUCENTE"
-              className="px-3.5 sm:px-4 py-2 bg-or text-nero font-bold text-[11px] sm:text-xs uppercase tracking-wider border border-or shadow-md shrink-0 flex items-center gap-1.5"
+              className="px-2.5 sm:px-4 py-1.5 sm:py-2 bg-or text-nero font-bold text-[10px] sm:text-xs uppercase tracking-wider border border-or shadow-md shrink-0 flex items-center gap-1 sm:gap-1.5"
             >
-              <Calendar size={13} />
+              <Calendar size={12} className="shrink-0" />
               <span>RÉSERVER</span>
             </button>
 
-            {/* Menu Hamburger Visible, Net & Accessible sur Mobile & Tablette */}
+            {/* Menu Hamburger Accessible sur Mobile & Tablette */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 w-10 h-10 flex items-center justify-center rounded bg-surface border border-white/15 text-ivoire hover:text-or hover:border-or/50 transition-all focus:outline-none shrink-0"
+              className="p-1.5 sm:p-2 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded bg-surface border border-white/15 text-ivoire hover:text-or hover:border-or/50 transition-all focus:outline-none shrink-0"
               aria-label={mobileMenuOpen ? "Fermer le menu de navigation" : "Ouvrir le menu de navigation"}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu-overlay"
             >
               {mobileMenuOpen ? (
-                <X className="w-5 h-5 text-or" />
+                <X className="w-4 h-4 text-or" />
               ) : (
-                <Menu className="w-5 h-5 text-ivoire" />
+                <Menu className="w-4 h-4 text-ivoire" />
               )}
             </button>
           </div>
@@ -212,18 +212,18 @@ export default function Navigation({
       {mobileMenuOpen && (
         <div id="mobile-menu-overlay" className="fixed inset-0 z-50 bg-nero flex flex-col lg:grid lg:grid-cols-12 overflow-hidden animate-pageEnter">
           
-          {/* Top Close Bar */}
-          <div className="absolute top-6 left-6 right-6 z-50 flex items-center justify-between">
-            <Link to="/" onClick={() => setMobileMenuOpen(false)} className="font-serif-luxury text-2xl tracking-[0.25em] text-ivoire uppercase">
+          {/* Top Close Bar with Safe Area */}
+          <div className="absolute top-4 sm:top-6 left-4 sm:left-6 right-4 sm:right-6 z-50 flex items-center justify-between">
+            <Link to="/" onClick={() => setMobileMenuOpen(false)} className="font-serif-luxury text-xl sm:text-2xl tracking-[0.2em] text-ivoire uppercase">
               LUCENTE
             </Link>
             <button
               onClick={() => setMobileMenuOpen(false)}
               aria-label="Fermer le menu"
-              className="flex items-center space-x-2 px-4 py-2 bg-surface border border-white/10 rounded-full text-ivoire hover:text-or hover:border-or text-xs uppercase tracking-widest transition-colors"
+              className="flex items-center space-x-1.5 px-3 py-1.5 bg-surface border border-white/10 rounded-full text-ivoire hover:text-or hover:border-or text-[11px] sm:text-xs uppercase tracking-widest transition-colors"
             >
               <span>Fermer</span>
-              <X size={14} className="text-or" />
+              <X size={13} className="text-or" />
             </button>
           </div>
 
