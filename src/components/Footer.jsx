@@ -165,9 +165,22 @@ export default function Footer({ onOpenBooking }) {
 
         {/* Bottom Legal, Privacy & Credits - Optimized for mobile tap & clearance */}
         <div className="pt-6 sm:pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-muted gap-4 sm:gap-6">
-          <p className="text-center md:text-left text-[11px] tracking-wide text-muted/90">
-            © 2026 LUCENTE S.r.l. Milano. {t('footer.copyright')}
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 text-center md:text-left text-[11px] tracking-wide text-muted/90">
+            <span>© 2026 LUCENTE S.r.l. Milano. {t('footer.copyright')}</span>
+            <span className="hidden sm:inline text-white/20">·</span>
+            <span>
+              {lang === 'it' ? 'Fatto da ' : lang === 'en' ? 'Crafted by ' : 'Fait par '}
+              <a
+                href="https://jovisleprinceyayi.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="JODEV"
+                className="text-or hover:text-ivoire transition-colors underline-offset-4 hover:underline font-semibold"
+              >
+                JoDev
+              </a>
+            </span>
+          </div>
           <nav aria-label="Legal links" className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 sm:gap-y-3 text-[11px] uppercase tracking-wider">
             <Link 
               to="/legal#rgpd" 

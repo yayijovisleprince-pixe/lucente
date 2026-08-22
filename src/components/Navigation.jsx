@@ -64,7 +64,7 @@ export default function Navigation({
             : 'bg-gradient-to-b from-nero/90 via-nero/40 to-transparent py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 md:px-12 flex items-center justify-between gap-2 sm:gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Logo LUCENTE — Épuré, sobre et compact */}
           <Link to="/" data-cursor="LUCENTE" className="flex items-center group text-left shrink-0 py-1">
@@ -74,14 +74,14 @@ export default function Navigation({
           </Link>
 
           {/* Desktop Navigation Links (Visible uniquement sur Desktop >= 1024px) */}
-          <nav aria-label="Navigation principale" className="hidden lg:flex items-center space-x-5 xl:space-x-7 mr-2 xl:mr-6">
+          <nav aria-label="Navigation principale" className="hidden lg:flex items-center space-x-3.5 xl:space-x-6">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (
                 <Link
                   key={link.labelKey}
                   to={link.path}
-                  className={`typo-navigation text-[11px] xl:text-xs tracking-[0.16em] xl:tracking-[0.18em] transition-all duration-300 relative py-1 ${
+                  className={`typo-navigation text-[11px] xl:text-xs tracking-[0.14em] xl:tracking-[0.18em] transition-all duration-300 relative py-1 ${
                     isActive ? 'text-or' : 'text-ivoire/80 hover:text-or'
                   }`}
                 >
@@ -95,17 +95,17 @@ export default function Navigation({
           </nav>
 
           {/* Desktop Right Action Bar (Visible uniquement sur Desktop >= 1024px) */}
-          <div className="hidden lg:flex items-center space-x-3 xl:space-x-4 shrink-0">
+          <div className="hidden lg:flex items-center space-x-2.5 xl:space-x-3.5 shrink-0">
             
             {/* Live Milan Clock */}
-            <div className="flex items-center space-x-2 typo-metadata text-[10px] text-muted border-r border-white/10 pr-3.5">
+            <div className="hidden xl:flex items-center space-x-2 typo-metadata text-[10px] text-muted border-r border-white/10 pr-3">
               <span className="w-1.5 h-1.5 rounded-full bg-or animate-ping" />
               <span>Milano</span>
               <span className="text-ivoire font-medium font-mono">{milanTime || '20:00'}</span>
             </div>
 
             {/* Language Switcher Desktop (FR / IT / EN) */}
-            <div className="flex items-center gap-0.5 bg-surface border border-white/10 rounded-full p-0.5">
+            <div className="flex items-center gap-0.5 bg-surface border border-white/10 rounded-full p-0.5 shrink-0">
               <button
                 onClick={() => setLang('fr')}
                 aria-label="Français"
@@ -136,7 +136,7 @@ export default function Navigation({
             </div>
 
             {/* Audio Toggle & 6-Track Selector */}
-            <div className="flex items-center bg-surface border border-or-subtle rounded-full p-1 gap-1 min-w-0 max-w-[160px] xl:max-w-[190px] overflow-hidden">
+            <div className="flex items-center bg-surface border border-or-subtle rounded-full p-1 gap-1 shrink-0">
               <button
                 onClick={onToggleAudio}
                 data-cursor="SOUND"
@@ -155,7 +155,7 @@ export default function Navigation({
                       <span className="w-[2px] bg-nero rounded-full animate-eq-2" />
                       <span className="w-[2px] bg-nero rounded-full animate-eq-3" />
                     </div>
-                    <span className="max-w-[72px] xl:max-w-[96px] truncate block">{activeTrack.genre} ({currentTrackIndex + 1}/6)</span>
+                    <span className="max-w-[75px] truncate block text-[10px]">{activeTrack.genre}</span>
                   </>
                 ) : (
                   <VolumeX className="w-3.5 h-3.5 text-muted" />
@@ -168,9 +168,9 @@ export default function Navigation({
                   onClick={onNextTrack}
                   aria-label={lang === 'it' ? 'Brano successivo' : lang === 'en' ? 'Next track' : 'Morceau suivant'}
                   title={`${lang === 'it' ? 'Cambia brano' : lang === 'en' ? 'Change track' : 'Changer de morceau'} (${currentTrackIndex + 1}/6) : ${activeTrack.title}`}
-                  className="w-6 h-6 rounded-full flex items-center justify-center text-or hover:text-ivoire hover:bg-white/10 transition-colors"
+                  className="w-5 h-5 rounded-full flex items-center justify-center text-or hover:text-ivoire hover:bg-white/10 transition-colors shrink-0"
                 >
-                  <SkipForward size={11} />
+                  <SkipForward size={10} />
                 </button>
               )}
             </div>
@@ -180,7 +180,7 @@ export default function Navigation({
               onClick={() => onOpenBooking()}
               data-cursor="RESERVE"
               aria-label={t('nav.reserve')}
-              className="flex-none px-5 py-2 bg-or hover:bg-or-light text-nero hover:text-nero font-semibold text-xs uppercase tracking-[0.18em] transition-all duration-300 shadow-md shadow-or/20 hover:shadow-or/40 border border-or flex items-center gap-2 whitespace-nowrap"
+              className="shrink-0 px-4 xl:px-5 py-2 bg-or hover:bg-or-light text-nero hover:text-nero font-semibold text-[11px] xl:text-xs uppercase tracking-[0.16em] xl:tracking-[0.18em] transition-all duration-300 shadow-md shadow-or/20 hover:shadow-or/40 border border-or flex items-center gap-1.5 xl:gap-2 whitespace-nowrap"
             >
               <Calendar className="w-3.5 h-3.5 shrink-0" />
               <span>{t('nav.reserve')}</span>
