@@ -97,11 +97,11 @@ export default function PrivateDiningPage({ onOpenBooking }) {
         </section>
 
         {/* Spaces Showcase */}
-        <section className="space-y-16">
+        <section className="space-y-12 sm:space-y-16">
           {spacesList.map((space, index) => (
             <div 
               key={space.id}
-              className={`grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-surface border border-white/10 p-8 sm:p-12 shadow-2xl ${
+              className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center bg-surface border border-white/10 p-5 sm:p-10 lg:p-12 shadow-2xl ${
                 index % 2 === 1 ? 'lg:flex-row-reverse' : ''
               }`}
             >
@@ -110,7 +110,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
                   src={space.image}
                   alt={space.name}
                   loading="lazy"
-                  className="w-full h-[360px] sm:h-[440px] object-cover filter brightness-90 hover:scale-[1.02] transition-transform duration-700"
+                  className="w-full h-[280px] sm:h-[380px] md:h-[440px] object-cover filter brightness-90 hover:scale-[1.02] transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-nero/80 via-transparent to-transparent pointer-events-none" />
                 <span className="absolute top-4 left-4 px-3 py-1 bg-nero/90 border border-or/40 text-or text-[10px] uppercase font-mono tracking-widest">
@@ -121,7 +121,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
               <div className={`lg:col-span-6 space-y-6 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
                 <div className="space-y-2">
                   <span className="text-xs uppercase font-mono text-or tracking-widest">{space.subtitle}</span>
-                  <h2 className="font-serif-luxury text-3xl sm:text-4xl text-ivoire">{space.name}</h2>
+                  <h2 className="font-serif-luxury text-2xl sm:text-3xl md:text-4xl text-ivoire">{space.name}</h2>
                 </div>
 
                 <p className="text-sm text-muted leading-relaxed font-sans">
@@ -140,16 +140,16 @@ export default function PrivateDiningPage({ onOpenBooking }) {
                   </ul>
                 </div>
 
-                <div className="pt-4 flex items-center gap-4">
+                <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                   <button
                     onClick={() => onOpenBooking(space.name)}
-                    className="px-6 py-3 bg-or text-nero font-semibold text-xs uppercase tracking-widest hover:bg-ivoire transition-all"
+                    className="w-full sm:w-auto px-6 py-3.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all text-center shadow-lg"
                   >
                     Réserver cet Espace
                   </button>
                   <a
                     href="#contact-privatisation"
-                    className="text-xs text-or hover:text-ivoire transition-colors uppercase tracking-wider font-mono inline-flex items-center gap-1"
+                    className="text-xs text-or hover:text-ivoire transition-colors uppercase tracking-wider font-mono inline-flex items-center justify-center gap-1.5 py-2"
                   >
                     Demande de devis <ArrowRight size={13} />
                   </a>

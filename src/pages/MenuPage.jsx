@@ -62,11 +62,11 @@ export default function MenuPage({ onSelectMenuForBooking }) {
         </div>
 
         {/* Mode Switcher */}
-        <div className="flex justify-center">
-          <div className="flex bg-surface p-1 border border-white/10 rounded-none">
+        <div className="flex justify-center w-full">
+          <div className="w-full sm:w-auto grid grid-cols-2 sm:flex bg-surface p-1 border border-white/10 rounded-none">
             <button
               onClick={() => setViewMode('tasting')}
-              className={`px-6 py-2.5 text-xs uppercase tracking-widest font-semibold transition-all ${
+              className={`px-3 sm:px-6 py-2.5 text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest font-semibold transition-all text-center ${
                 viewMode === 'tasting' ? 'bg-or text-nero shadow-lg' : 'text-muted hover:text-ivoire'
               }`}
             >
@@ -74,7 +74,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
             </button>
             <button
               onClick={() => setViewMode('carte')}
-              className={`px-6 py-2.5 text-xs uppercase tracking-widest font-semibold transition-all ${
+              className={`px-3 sm:px-6 py-2.5 text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest font-semibold transition-all text-center ${
                 viewMode === 'carte' ? 'bg-or text-nero shadow-lg' : 'text-muted hover:text-ivoire'
               }`}
             >
@@ -94,8 +94,8 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                   <div
                     key={menu.id}
                     onClick={() => setActiveTastingId(menu.id)}
-                    className={`p-6 border cursor-pointer transition-all duration-300 bg-surface flex flex-col justify-between ${
-                      isSelected ? 'border-or ring-1 ring-or shadow-2xl scale-102' : 'border-white/10 hover:border-or/40 opacity-70'
+                    className={`p-5 sm:p-6 border cursor-pointer transition-all duration-300 bg-surface flex flex-col justify-between ${
+                      isSelected ? 'border-or ring-1 ring-or shadow-2xl scale-[1.01]' : 'border-white/10 hover:border-or/40 opacity-75'
                     }`}
                   >
                     <div className="space-y-2">
@@ -105,7 +105,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                     </div>
                     <div className="pt-4 border-t border-white/5 flex items-baseline justify-between">
                       <span className="font-serif text-2xl text-or">{menu.price}</span>
-                      <span className="text-[11px] text-muted">{menu.winePairingPrice}</span>
+                      <span className="text-[11px] text-muted font-mono">{menu.winePairingPrice}</span>
                     </div>
                   </div>
                 );
@@ -113,7 +113,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
             </div>
 
             {/* Active Menu Details */}
-            <div className="bg-surface-elevated border border-or/30 p-8 sm:p-12 space-y-10 shadow-2xl">
+            <div className="bg-surface-elevated border border-or/30 p-5 sm:p-10 lg:p-12 space-y-8 sm:space-y-10 shadow-2xl">
               <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-6 gap-4">
                 <div>
                   <span className="text-xs uppercase font-mono text-or tracking-widest">{activeTasting.italianName}</span>
@@ -122,7 +122,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                 </div>
                 <button
                   onClick={() => onSelectMenuForBooking(activeTasting.name)}
-                  className="px-8 py-3 bg-or text-nero font-semibold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shrink-0"
+                  className="w-full sm:w-auto px-8 py-3.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shrink-0 text-center shadow-lg"
                 >
                   Réserver ce Menu
                 </button>

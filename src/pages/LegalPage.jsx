@@ -60,34 +60,34 @@ export default function LegalPage() {
         </div>
 
         {/* Quick Nav Anchors */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
           <a
             href="#mentions"
-            className="p-3 bg-surface border border-white/10 hover:border-or/50 transition-all text-xs text-muted hover:text-ivoire flex items-center justify-between group"
+            className="p-2.5 sm:p-3 bg-surface border border-white/10 hover:border-or/50 transition-all text-[11px] sm:text-xs text-muted hover:text-ivoire flex items-center justify-between group"
           >
-            <span>1. Mentions Légales</span>
-            <ArrowUpRight size={12} className="text-or opacity-60 group-hover:opacity-100" />
+            <span className="truncate">1. Mentions</span>
+            <ArrowUpRight size={12} className="text-or opacity-60 group-hover:opacity-100 shrink-0 ml-1" />
           </a>
           <a
             href="#rgpd"
-            className="p-3 bg-surface border border-white/10 hover:border-or/50 transition-all text-xs text-muted hover:text-ivoire flex items-center justify-between group"
+            className="p-2.5 sm:p-3 bg-surface border border-white/10 hover:border-or/50 transition-all text-[11px] sm:text-xs text-muted hover:text-ivoire flex items-center justify-between group"
           >
-            <span>2. RGPD & Données</span>
-            <ArrowUpRight size={12} className="text-or opacity-60 group-hover:opacity-100" />
+            <span className="truncate">2. RGPD</span>
+            <ArrowUpRight size={12} className="text-or opacity-60 group-hover:opacity-100 shrink-0 ml-1" />
           </a>
           <a
             href="#cookies"
-            className="p-3 bg-surface border border-white/10 hover:border-or/50 transition-all text-xs text-muted hover:text-ivoire flex items-center justify-between group"
+            className="p-2.5 sm:p-3 bg-surface border border-white/10 hover:border-or/50 transition-all text-[11px] sm:text-xs text-muted hover:text-ivoire flex items-center justify-between group"
           >
-            <span>3. Cookies</span>
-            <ArrowUpRight size={12} className="text-or opacity-60 group-hover:opacity-100" />
+            <span className="truncate">3. Cookies</span>
+            <ArrowUpRight size={12} className="text-or opacity-60 group-hover:opacity-100 shrink-0 ml-1" />
           </a>
           <a
             href="#conditions"
-            className="p-3 bg-surface border border-white/10 hover:border-or/50 transition-all text-xs text-muted hover:text-ivoire flex items-center justify-between group"
+            className="p-2.5 sm:p-3 bg-surface border border-white/10 hover:border-or/50 transition-all text-[11px] sm:text-xs text-muted hover:text-ivoire flex items-center justify-between group"
           >
-            <span>4. Réservations</span>
-            <ArrowUpRight size={12} className="text-or opacity-60 group-hover:opacity-100" />
+            <span className="truncate">4. Accueil</span>
+            <ArrowUpRight size={12} className="text-or opacity-60 group-hover:opacity-100 shrink-0 ml-1" />
           </a>
         </div>
 
