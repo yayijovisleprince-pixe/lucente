@@ -15,11 +15,11 @@ export const articles = [
     title: "Le Manifeste du Chiaroscuro Culinaire",
     excerpt: "L'ombre n'est pas l'absence de lumière. C'est ce qui lui donne sa direction. Vincenzo Moretti explique pourquoi chaque assiette de LUCENTE commence dans le noir.",
     readingTime: "5 min",
-    image: "/images/.webp",
+    image: "/images/hero-dish.webp",
     author: {
       name: "Vincenzo Moretti",
       role: "Chef Exécutif",
-      avatar: "/images/.webp"
+      avatar: "/images/chef-portrait.webp"
     },
     featured: true,
     tags: ["Chiaroscuro", "Philosophie", "Esthétique", "Gastronomie"],
@@ -55,11 +55,11 @@ export const articles = [
     title: "Le Secret des Vins en Amphore de l'Etna",
     excerpt: "Dans notre cave, une section entière est consacrée aux vins élevés en jarre de terre cuite sur les pentes nord de l'Etna. Gianluca Ferri explique pourquoi l'argile dit la vérité là où le bois ment.",
     readingTime: "7 min",
-    image: "/images/.webp",
+    image: "/images/cellar-architecture.webp",
     author: {
       name: "Gianluca Ferri",
       role: "Directeur de la Sommellerie",
-      avatar: "/images/.webp"
+      avatar: "/images/sommelier-ritual.webp"
     },
     featured: false,
     tags: ["Œnologie", "Sicile", "Amphores", "Etna"],
@@ -95,11 +95,11 @@ export const articles = [
     title: "L'Alchimie du Gambero Rosso de Mazara del Vallo",
     excerpt: "Il vit à 700 mètres de profondeur. On ne le cuit jamais. On le sert à 12°C. Vincenzo Moretti explique pourquoi cette crevette est la seule à mériter une assiette seule.",
     readingTime: "4 min",
-    image: "/images/.webp",
+    image: "/images/prawn-dish.webp",
     author: {
       name: "Vincenzo Moretti",
       role: "Chef Exécutif",
-      avatar: "/images/.webp"
+      avatar: "/images/chef-portrait.webp"
     },
     featured: false,
     tags: ["Haute Gastronomie", "Crustacés", "Technique", "Méditerranée"],
@@ -122,11 +122,11 @@ export const articles = [
     title: "Les Visages du Pass : Dans l'Intimité de la Brigade",
     excerpt: "À 18h45, quatorze cuisiniers entrent en silence. Ce qui se passe ensuite pendant six heures n'a rien à voir avec ce que vous imaginez d'une cuisine étoilée.",
     readingTime: "6 min",
-    image: "/images/.webp",
+    image: "/images/kitchen-fire.webp",
     author: {
       name: "Rédaction LUCENTE",
       role: "Chroniqueurs Gastronomiques",
-      avatar: "/images/.webp"
+      avatar: "/images/chef-portrait.webp"
     },
     featured: false,
     tags: ["Brigade", "Cuisine", "Transmission", "Excellence"],
@@ -154,11 +154,11 @@ export const articles = [
     title: "L'Or Rouge de San Gimignano : Trois Siècles de Safran",
     excerpt: "Au XIIIe siècle, San Gimignano finançait ses tours médiévales avec du safran. Chez LUCENTE, 150 fleurs récoltées à la main donnent un seul gramme. Il en faut trois pour un risotto.",
     readingTime: "5 min",
-    image: "/images/.webp",
+    image: "/images/tomato-saffron.webp",
     author: {
       name: "Vincenzo Moretti",
       role: "Chef Exécutif",
-      avatar: "/images/.webp"
+      avatar: "/images/chef-portrait.webp"
     },
     featured: false,
     tags: ["Toscane", "Épices", "Safran", "Histoire"],
@@ -181,11 +181,11 @@ export const articles = [
     title: "L'Art du Service en Salle : La Chorégraphie Invisible",
     excerpt: "Matteo Castiglione, Maître d'Hôtel de LUCENTE, sur la différence entre servir et accueillir — et pourquoi la sprezzatura italienne est la forme la plus difficile de la perfection.",
     readingTime: "5 min",
-    image: "/images/.webp",
+    image: "/images/table-ambiance.webp",
     author: {
       name: "Rédaction LUCENTE",
       role: "Chroniqueurs",
-      avatar: "/images/.webp"
+      avatar: "/images/chef-portrait.webp"
     },
     featured: false,
     tags: ["Service", "Hospitalité", "Milan", "Art de Vivre"],

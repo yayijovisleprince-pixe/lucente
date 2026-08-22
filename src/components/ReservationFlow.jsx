@@ -95,21 +95,21 @@ export default function ReservationFlow({
       title: 'La Sala Chiaroscuro',
       subtitle: 'Salle Principale · Architecture & Pénombre',
       description: 'Atmosphère feutrée sous éclairage focalisé. Acoustique étudiée et tables drapées de lin sombre (28 couverts).',
-      image: '/images/.webp'
+      image: '/images/dining-room.webp'
     },
     {
       id: "Il Tavolo dello Chef",
       title: "Il Tavolo dello Chef",
       subtitle: 'Table Haute · Vue Directe sur le Passe',
       description: 'Immersion au plus près de la brigade de Vincenzo Moretti. Dressage d\'orfèvre et échanges privilégiés.',
-      image: '/images/.webp'
+      image: '/images/chef-craft.webp'
     },
     {
       id: "La Cantina Segreta",
       title: "La Cantina Segreta",
       subtitle: 'Crypte Historique aux 1 400 Flacons',
       description: 'Table exclusive au cœur de la cave voûtée avec le Chef Sommelier Gianluca Ferri.',
-      image: '/images/.webp'
+      image: '/images/cellar-architecture.webp'
     }
   ];
 

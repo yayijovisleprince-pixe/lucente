@@ -30,7 +30,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
       capacity: 'Jusqu\'à 28 couverts assis',
       description: 'L\'intégralité du restaurant dédié à votre événement. Pierre de lave d\'Etna, lin sombre et acoustique feutrée étudiée par nos acousticiens pour préserver l\'intimité absolue de chaque échange.',
       features: ['28 couverts exclusifs', 'Service dédié par la brigade complète', 'Menu sur mesure en 9 ou 11 actes', 'Accords de grands crus par Gianluca Ferri'],
-      image: '/images/.webp'
+      image: '/images/dining-room.webp'
     },
     {
       id: 'il-tavolo-dello-chef',
@@ -39,7 +39,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
       capacity: '4 à 6 convives',
       description: 'Un bloc monolithique de marbre de Carrare brut taillé d\'un seul tenant, situé en prise directe avec la brigade de Vincenzo Moretti. Les plats sont commentés et dressés à votre table par le Chef en personne.',
       features: ['Vue directe sur le passe', 'Dégustation interactive inédite', 'Flacons d\'exception sortis de la réserve', 'Échange privilégié avec Vincenzo Moretti'],
-      image: '/images/.webp'
+      image: '/images/chef-craft.webp'
     },
     {
       id: 'la-cantina-segreta',
@@ -48,7 +48,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
       capacity: 'Jusqu\'à 10 convives',
       description: 'Sous les voûtes séculaires de la Via Monte Napoleone, entouré de millésimes rares et de pièces de collection introuvables. L\'atmosphère idéale pour les dîners confidentiels et célébrations privées.',
       features: ['Table centrale en noyer massif', 'Dégustation commentée par le Chef Sommelier', 'Entrée privée discrète', 'Salon de dégustation réservé'],
-      image: '/images/.webp'
+      image: '/images/cellar-architecture.webp'
     }
   ];
 
@@ -77,7 +77,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
       <SEOHead
         title="Privatisations & Salons Confidentiels | LUCENTE — Milano"
         description="La Cantina Segreta, la Table du Chef et privatisation intégrale de LUCENTE à Milan. Événements privés, dîners confidentiels et sommellerie rare."
-        image="/images/.webp"
+        image="/images/dining-room.webp"
         path="/private-dining"
         schema={privateDiningSchema}
       />

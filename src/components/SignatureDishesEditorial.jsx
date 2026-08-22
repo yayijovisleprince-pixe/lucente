@@ -9,7 +9,7 @@ export default function SignatureDishesEditorial({ onSelectDishForBooking }) {
       name: 'Filetto di Chianina, Tartufo Bianco & Jus al Barolo',
       italianTitle: 'La Terra in Chiaroscuro',
       price: '75 €',
-      image: '/images/.webp',
+      image: '/images/hero-dish.webp',
       description: 'Wood-fired Chianina beef tenderloin, smoked over vine shoots, Alba white truffle shavings, caramelized baby shallots, and a 48-hour glossy Barolo reduction.',
       winePairing: 'Barolo Monprivato DOCG 2017 — Giuseppe Mascarello'
     },
@@ -19,7 +19,7 @@ export default function SignatureDishesEditorial({ onSelectDishForBooking }) {
       name: 'Raviolo Imperiale, Scampi Reali & Caviale Oscietra',
       italianTitle: 'L\'Oro del Mare',
       price: '68 €',
-      image: '/images/.webp',
+      image: '/images/pasta-caviar.webp',
       description: 'Single golden handcrafted raviolo filled with Mediterranean langoustines, 20g Royal Oscietra caviar, and pure saffron broth from San Gimignano.',
       winePairing: 'Trebbiano d\'Abruzzo DOC 2019 — Valentini'
     },
@@ -29,7 +29,7 @@ export default function SignatureDishesEditorial({ onSelectDishForBooking }) {
       name: 'Risotto Carnaroli Riserva 7 Anni, Zafferano & Foglia d\'Oro',
       italianTitle: 'L\'Omaggio a Milano',
       price: '55 €',
-      image: '/images/.webp',
+      image: '/images/hero-dish.webp',
       description: '7-year aged Carnaroli rice, mountain butter noisette, 36-month Vacche Rosse Parmigiano-Reggiano, topped with 24k edible pure gold leaf.',
       winePairing: 'Tignanello Toscana IGT 2017 — Marchesi Antinori'
     },
@@ -39,7 +39,7 @@ export default function SignatureDishesEditorial({ onSelectDishForBooking }) {
       name: 'Crudo di Spigola di Linea, Agrumi di Sorrento & Salicornia',
       italianTitle: 'La Brezza Marina',
       price: '48 €',
-      image: '/images/.webp',
+      image: '/images/pasta-caviar.webp',
       description: 'Line-caught sea bass sashimi, Sorrento citrus pearls, crispy rock samphire, and first-press cold Coratina extra virgin olive oil.',
       winePairing: 'Franciacorta Riserva Annamaria Clementi — Ca\' del Bosco'
     }

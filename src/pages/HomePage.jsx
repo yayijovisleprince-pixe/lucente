@@ -21,7 +21,7 @@ export default function HomePage({ onOpenBooking }) {
       description: 'Maturé 45 jours, fumé au sarment de vigne, posé sur une mousseline de céleri brûlé. Le balsamique de Modène, 25 ans d\'âge, arrive en dernier — une goutte, pas une sauce.',
       price: '85 €',
       pairing: 'Barolo Monprivato 2017 — Mascarello',
-      image: '/images/.webp',
+      image: '/images/hero-dish.webp',
       tag: 'Acte IV · Terra'
     },
     {
@@ -31,7 +31,7 @@ export default function HomePage({ onOpenBooking }) {
       description: 'Un raviolo. Pas deux. La pâte est étirée chaque matin à la main jusqu\'à ce qu\'elle soit translucide. À l\'intérieur : langoustine crue, jamais chauffée. Le caviar arrive après.',
       price: '75 €',
       pairing: 'Trebbiano d\'Abruzzo 2019 — Valentini',
-      image: '/images/.webp',
+      image: '/images/pasta-caviar.webp',
       tag: 'Acte III · Mare'
     },
     {
@@ -41,7 +41,7 @@ export default function HomePage({ onOpenBooking }) {
       description: 'Pêchée à 700 mètres de profondeur entre la Sicile et la Tunisie. Servie à 12°C exactement — ni plus froide, ni plus chaude. Jamais cuite. Trois éléments. Pas quatre.',
       price: '60 €',
       pairing: 'Etna Bianco Superiore 2021 — Pietradolce',
-      image: '/images/.webp',
+      image: '/images/prawn-dish.webp',
       tag: 'Acte II · Sicile'
     },
     {
@@ -51,7 +51,7 @@ export default function HomePage({ onOpenBooking }) {
       description: 'Le riz a attendu sept ans dans des silos froids. L\'amidon s\'est cristallisé. La truffe, elle, est râpée en salle, sur le riz chaud — pour que le parfum s\'exhale devant vous.',
       price: '65 €',
       pairing: 'Barbaresco Asili 2016 — Bruno Giacosa',
-      image: '/images/.webp',
+      image: '/images/truffle-harvest.webp',
       tag: 'Acte V · Signature'
     }
   ];
@@ -65,7 +65,7 @@ export default function HomePage({ onOpenBooking }) {
       title: 'Le Manifeste du Chiaroscuro Culinaire',
       date: '18 Août 2026',
       readTime: '5 min',
-      image: '/images/.webp',
+      image: '/images/hero-dish.webp',
       excerpt: 'L\'ombre n\'est pas l\'absence de lumière. C\'est ce qui lui donne sa direction. Vincenzo Moretti explique pourquoi chaque assiette commence dans le noir.'
     },
     {
@@ -74,7 +74,7 @@ export default function HomePage({ onOpenBooking }) {
       title: 'Le Secret des Vins en Amphore de l\'Etna',
       date: '11 Août 2026',
       readTime: '7 min',
-      image: '/images/.webp',
+      image: '/images/cellar-architecture.webp',
       excerpt: 'Dans notre cave, une section entière consacrée aux vins en jarre de terre cuite. Gianluca Ferri explique pourquoi l\'argile dit la vérité là où le bois ment.'
     },
     {
@@ -83,7 +83,7 @@ export default function HomePage({ onOpenBooking }) {
       title: 'L\'Alchimie du Gambero Rosso de Mazara del Vallo',
       date: '04 Août 2026',
       readTime: '4 min',
-      image: '/images/.webp',
+      image: '/images/prawn-dish.webp',
       excerpt: 'Il vit à 700 mètres de profondeur. On ne le cuit jamais. On le sert à 12°C. Et il n\'a besoin de rien d\'autre.'
     }
   ];
@@ -96,7 +96,7 @@ export default function HomePage({ onOpenBooking }) {
         '@id': 'https://lucente-milano.com/#restaurant',
         'name': 'LUCENTE',
         'url': 'https://lucente-milano.com',
-        'image': 'https://lucente-milano.com/images/.webp',
+        'image': 'https://lucente-milano.com/images/hero-dish.webp',
         'description': 'Restaurant de haute cuisine italienne contemporaine à Milan doublement étoilé au Guide Michelin par le Chef Vincenzo Moretti.',
         'servesCuisine': ['Haute Cuisine Italienne', 'Contemporary Italian', 'Alta Cucina'],
         'priceRange': '€€€€€',
@@ -179,7 +179,7 @@ export default function HomePage({ onOpenBooking }) {
       <SEOHead
         title="LUCENTE | Alta Cucina Contemporanea — Milano"
         description="Restaurant doublement étoilé Michelin à Milan. Via Monte Napoleone, 14. Chef Vincenzo Moretti. 28 couverts. Réservations ouvertes 30 jours à l'avance."
-        image="/images/.webp"
+        image="/images/hero-dish.webp"
         path="/"
         schema={homeSchema}
       />
@@ -190,7 +190,7 @@ export default function HomePage({ onOpenBooking }) {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-20 bg-nero">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/images/.webp"
+            src="/images/hero-dish.webp"
             alt="LUCENTE — Alta Cucina Contemporanea Milano"
             className={`w-full h-full object-cover object-center filter brightness-[0.45] contrast-110 transition-all duration-[2200ms] ease-out ${
               heroLoaded ? 'scale-100 opacity-100' : 'scale-110 opacity-0'
@@ -269,7 +269,7 @@ export default function HomePage({ onOpenBooking }) {
             <div className="lg:col-span-5 relative group">
               <div className="relative rounded overflow-hidden border border-or-subtle shadow-2xl">
                 <img
-                  src="/images/.webp"
+                  src="/images/truffle-harvest.webp"
                   alt="Récolte de truffe blanche — Langhe, Piémont"
                   className="w-full h-[420px] sm:h-[500px] object-cover filter brightness-95 group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
@@ -338,7 +338,7 @@ export default function HomePage({ onOpenBooking }) {
             <div className="group bg-nero border border-white/5 hover:border-or/40 rounded-lg overflow-hidden flex flex-col justify-between transition-all duration-500 shadow-xl">
               <div className="relative h-64 overflow-hidden">
                 <img
-                  src="/images/.webp"
+                  src="/images/truffle-harvest.webp"
                   alt="Producteurs artisans — Piémont"
                   className="w-full h-full object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -361,7 +361,7 @@ export default function HomePage({ onOpenBooking }) {
             <div className="group bg-nero border border-white/5 hover:border-or/40 rounded-lg overflow-hidden flex flex-col justify-between transition-all duration-500 shadow-xl">
               <div className="relative h-64 overflow-hidden">
                 <img
-                  src="/images/.webp"
+                  src="/images/chef-craft.webp"
                   alt="Technique culinaire — Brigade LUCENTE"
                   className="w-full h-full object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -384,7 +384,7 @@ export default function HomePage({ onOpenBooking }) {
             <div className="group bg-nero border border-white/5 hover:border-or/40 rounded-lg overflow-hidden flex flex-col justify-between transition-all duration-500 shadow-xl">
               <div className="relative h-64 overflow-hidden">
                 <img
-                  src="/images/.webp"
+                  src="/images/tomato-saffron.webp"
                   alt="Saisonnalité — Tomate & Safran"
                   className="w-full h-full object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -504,7 +504,7 @@ export default function HomePage({ onOpenBooking }) {
             <div className="lg:col-span-5 relative">
               <div className="relative rounded-lg overflow-hidden border border-or-subtle shadow-2xl">
                 <img
-                  src="/images/.webp"
+                  src="/images/chef-portrait.webp"
                   alt="Chef Vincenzo Moretti — LUCENTE Milano"
                   className="w-full h-[480px] object-cover filter brightness-95"
                 />
@@ -566,7 +566,7 @@ export default function HomePage({ onOpenBooking }) {
 
           <div className="relative rounded-lg overflow-hidden border border-or-subtle shadow-2xl group">
             <img
-              src="/images/.webp"
+              src="/images/dining-room.webp"
               alt="La Sala Chiaroscuro — LUCENTE Milano"
               className="w-full h-80 sm:h-[480px] lg:h-[550px] object-cover object-center filter brightness-90 group-hover:scale-102 transition-transform duration-1000 ease-out"
             />

@@ -9,7 +9,7 @@ export default function DiningRoomImmersive({ onOpenBooking }) {
       {/* Background Wide Horizontal Image with Parallax Impression */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/.webp"
+          src="/images/dining-room.webp"
           alt="La Sala Chiaroscuro de LUCENTE à Milan"
           className="w-full h-full object-cover filter brightness-[0.5] contrast-[1.1] scale-105"
         />

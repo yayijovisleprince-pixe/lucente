@@ -76,7 +76,7 @@ export default function ContactPage({ onShowToast }) {
       <SEOHead
         title="Contact & Accès | LUCENTE — Via Monte Napoleone, Milano"
         description="LUCENTE Milano · Via Monte Napoleone, 14 · +39 02 8945 7700 · Mardi–Samedi · Voiturier disponible. Contactez la conciergerie pour toute demande."
-        image="/images/.webp"
+        image="/images/dining-room.webp"
         path="/contact"
         schema={contactSchema}
       />

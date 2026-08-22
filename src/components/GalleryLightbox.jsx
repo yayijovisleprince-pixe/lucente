@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { 
   X, ChevronLeft, ChevronRight, Maximize2, Minimize2, 
   Play, Pause, Info, Camera, Compass, Tag, Layers
@@ -361,8 +361,8 @@ export default function GalleryLightbox({
         <div className="px-4 sm:px-8 py-2 bg-nero/95">
           <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
             
-            <span className="text-[10px] uppercase tracking-widest text-muted/60 hidden sm:inline-block shrink-0">
-              Filmstrip
+            <span className="text-[10px] uppercase tracking-widest text-muted/60 hidden sm:inline-block shrink-0 font-mono">
+              Planche Contact
             </span>
 
             {/* Scrollable Thumbnails */}

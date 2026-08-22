@@ -16,7 +16,7 @@ export default function ChefEditorialSection() {
           <div className="lg:col-span-5 relative">
             <div className="rounded overflow-hidden border border-or-subtle shadow-2xl group">
               <img
-                src="/images/.webp"
+                src="/images/chef-craft.webp"
                 alt={chef.name}
                 className="w-full h-96 sm:h-[520px] object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
               />

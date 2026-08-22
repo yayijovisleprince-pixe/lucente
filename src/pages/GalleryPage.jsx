@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   Maximize2, Eye, Camera, ArrowUpRight, Sparkles, Filter, 
   BookOpen, ChevronRight, SlidersHorizontal, Image as ImageIcon
@@ -89,8 +89,8 @@ export default function GalleryPage() {
       {/* Dynamic SEO & Schema.org Metadata */}
       <SEOHead
         title="Galerie Éditoriale & Immersion Visuelle | LUCENTE — Milano"
-        description="Explorez la galerie photographique de LUCENTE Milano : The Table, The Kitchen, The Space, The People, The Ingredients. Une anthologie visuelle au Chiaroscuro."
-        image="/images/.webp"
+        description="Explorez la galerie photographique de LUCENTE Milano : La Table, La Cuisine, L'Espace, Les Artisans, Les Ingrédients. Une anthologie visuelle au Chiaroscuro."
+        image="/images/dining-room.webp"
         path="/gallery"
         schema={gallerySchema}
       />
@@ -124,7 +124,7 @@ export default function GalleryPage() {
           <div className="hidden lg:flex flex-col items-end text-right space-y-1 text-xs text-muted font-mono">
             <span className="text-ivoire font-semibold tracking-wider">15 ŒUVRES ÉDITORIALES</span>
             <span>5 CYCLES THÉMATIQUES</span>
-            <span className="text-or/80">HASSELBLAD & LEICA ARCHIVES</span>
+            <span className="text-or/80">ARCHIVES HASSELBLAD & LEICA</span>
           </div>
 
         </div>
@@ -336,8 +336,8 @@ loading="lazy"                 src={spreadBreak1.src}
 
             {/* Bottom Right Full-Bleed Tag */}
             <div className="absolute bottom-6 right-6 hidden md:block">
-              <span className="text-[10px] uppercase font-mono tracking-[0.25em] text-ivoire/50 bg-nero/60 px-3 py-1 rounded border border-white/10 backdrop-blur-sm">
-                FULL-BLEED ARCHITECTURAL SPREAD
+              <span className="text-[10px] uppercase font-mono tracking-[0.25em] text-ivoire/50 bg-nero/60 px-3 py-1 rounded-none border border-white/10 backdrop-blur-sm">
+                PERSPECTIVE ARCHITECTURALE IMMERSIVE
               </span>
             </div>
           </div>
@@ -370,7 +370,7 @@ loading="lazy"                 src={spreadBreak1.src}
             >
               <div className="h-80 sm:h-[440px] overflow-hidden">
                 <img
-loading="lazy"                   src="/images/.webp"
+loading="lazy"                   src="/images/olive-oil-stone.webp"
                   alt="Huile d'olive Coratina sur basalte"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -394,7 +394,7 @@ loading="lazy"                   src="/images/.webp"
             >
               <div className="h-80 sm:h-[440px] overflow-hidden">
                 <img
-loading="lazy"                   src="/images/.webp"
+loading="lazy"                   src="/images/chef-craft.webp"
                   alt="Dressage de précision à la pince d'argent"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

@@ -39,7 +39,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
       <SEOHead
         title="Menus Dégustation & Carte | LUCENTE — Milano"
         description="Terra & Memoria (7 actes · 210€), Mare & Orizzonte (9 actes · 240€), Luce Assoluta (11 actes · 290€). Accords mets & vins par Gianluca Ferri."
-        image="/images/.webp"
+        image="/images/pasta-caviar.webp"
         path="/menu"
         schema={menuSchema}
       />

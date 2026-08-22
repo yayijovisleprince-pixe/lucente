@@ -45,7 +45,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
       italianName: 'Tuber Magnatum Pico',
       region: 'Collines des Langhe, Piémont',
       season: 'Octobre — Décembre',
-      image: '/images/.webp',
+      image: '/images/truffle-harvest.webp',
       philosophy: 'Un cavatore exclusif la récolte avant l\'aube dans le brouillard des Langhe. Elle n\'est jamais chauffée ici. On la râpe minute en salle, sur un féculent chaud, pour que le parfum s\'exhale devant vous — pas en cuisine, dans l\'obscurité.'
     },
     {
@@ -54,7 +54,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
       italianName: 'Gambero Rosso di Mazara',
       region: 'Détroit de Sicile · 700m de profondeur',
       season: 'Pêche de Printemps & Été',
-      image: '/images/.webp',
+      image: '/images/prawn-dish.webp',
       philosophy: 'Pêchée à 700 mètres, là où il n\'y a pas de lumière. Sa chair est d\'une sucrosité et d\'une minéralité incomparables. Nous la servons crue, à 12°C exactement — avec une stracciatella fumée et un gel de bergamote. Trois éléments. Pas quatre.'
     },
     {
@@ -63,7 +63,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
       italianName: 'Essenza di Pomodoro & Zafferano',
       region: 'Vésuve & San Gimignano',
       season: 'Récolte mi-été',
-      image: '/images/.webp',
+      image: '/images/tomato-saffron.webp',
       philosophy: 'Centrifugation à froid : pas de chaleur, pas d\'amertume. Ce qui reste est un bouillon translucide, doré, infusé à froid pendant 24 heures aux pistils de safran de Toscane. La clarté comme principe.'
     },
     {
@@ -72,7 +72,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
       italianName: 'Riso Carnaroli Invecchiato 7 Anni',
       region: 'Plaines de Vercelli, Piémont',
       season: '84 mois en silos froids',
-      image: '/images/.webp',
+      image: '/images/pasta-caviar.webp',
       philosophy: 'La patience transforme le grain. Sept ans de séchage lent cristallisent l\'amidon — le grain absorbe davantage, sans se briser. Ce risotto ne déborde pas. Il tient. Et il continue de tenir deux minutes après le service.'
     },
     {
@@ -81,7 +81,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
       italianName: 'Razza Chianina IGP',
       region: 'Val di Chiana, Toscane',
       season: 'Maturation 45 jours sous foin',
-      image: '/images/.webp',
+      image: '/images/hero-dish.webp',
       philosophy: 'La race bovine blanche de Toscane, la plus ancienne d\'Europe. Saisie sur sarments de vigne secs — l\'extérieur se caramélise sous la fumée de bois, le cœur reste rouge et velouté. Le balsamique de Modène, 25 ans d\'âge, arrive en dernier. Une seule goutte.'
     }
   ];
@@ -108,7 +108,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
       <SEOHead
         title="La Cuisine, Philosophie & Saisons | LUCENTE — Milano"
         description="42 producteurs italiens. 4 micro-saisons. La truffe blanche d'Alba râpée minute. La crevette rouge à 700m de profondeur. La cuisine de Vincenzo Moretti à Milan."
-        image="/images/.webp"
+        image="/images/hero-dish.webp"
         path="/cuisine"
         schema={cuisineSchema}
       />

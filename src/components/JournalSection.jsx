@@ -10,7 +10,7 @@ export default function JournalSection() {
       title: 'The Alchemy of Alba White Truffles at Dawn',
       excerpt: 'Following our historical cavatore through the foggy autumn hills of Piedmont to source the rare Alba tuber.',
       readTime: '4 min read',
-      image: '/images/.webp'
+      image: '/images/hero-dish.webp'
     },
     {
       slug: 'behind-the-kitchen-technique',
@@ -18,7 +18,7 @@ export default function JournalSection() {
       title: 'Inside the Atelier: 48 Hours of Saffron Clarification',
       excerpt: 'How our brigade transforms raw saffron stigmas from San Gimignano into crystal-clear golden infusions.',
       readTime: '6 min read',
-      image: '/images/.webp'
+      image: '/images/chef-craft.webp'
     },
     {
       slug: 'vins-amphores-terroirs-etna',
@@ -26,7 +26,7 @@ export default function JournalSection() {
       title: 'Why Amphora Aging Brings Modernity to Italian Vintages',
       excerpt: 'Exploring the mineral tension of terracotta amphorae and volcanic soil wines with Chef Sommelier Gianluca Ferri.',
       readTime: '5 min read',
-      image: '/images/.webp'
+      image: '/images/dining-room.webp'
     }
   ];
 
