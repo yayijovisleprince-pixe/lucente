@@ -26,40 +26,47 @@ export default function Footer({ onOpenBooking }) {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 space-y-20">
         
         {/* Top Newsletter & Private Circle Invitation */}
-        <div className="bg-surface border border-or-subtle rounded-lg p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-2xl">
-          <div className="lg:col-span-7 space-y-2">
-            <p className="typo-eyebrow text-or text-[10px]">Cercle Privé · Lettre de la Maison</p>
-            <h3 className="font-serif-luxury text-2xl sm:text-4xl text-ivoire">
+        <div className="bg-surface border border-or-subtle rounded-none p-6 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-2xl">
+          <div className="lg:col-span-6 space-y-2">
+            <p className="typo-eyebrow text-or text-[11px]">Cercle Privé · Lettre de la Maison</p>
+            <h3 className="font-serif-luxury text-2xl sm:text-3xl lg:text-4xl text-ivoire leading-tight">
               Avant les autres, connaître la carte.
             </h3>
-            <p className="typo-body text-xs text-muted max-w-lg">
-              Accès prioritaire aux tables libérées la veille. Nouvelles de la cave, du marché, de la brigade. Pas de lettres d'information génériques.
+            <p className="typo-body text-xs sm:text-sm text-muted max-w-lg leading-relaxed">
+              Accès prioritaire aux tables libérées la veille, primeurs de cave et créations de saison. Zéro spam.
             </p>
           </div>
 
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-6">
             {emailSubscribed ? (
-              <div className="p-4 bg-surface-elevated border border-or/40 rounded text-center text-xs text-or flex items-center justify-center space-x-2">
-                <CheckCircle2 className="w-4 h-4" />
+              <div className="p-4 bg-surface-elevated border border-or/40 rounded-none text-center text-xs sm:text-sm text-or font-medium flex items-center justify-center gap-2.5">
+                <CheckCircle2 className="w-5 h-5 text-or flex-shrink-0" />
                 <span>Bienvenue dans le Cercle Privé LUCENTE.</span>
               </div>
             ) : (
-              <form onSubmit={handleSubscribe} className="flex gap-2">
-                <input
-                  type="email"
-                  required
-                  placeholder="Votre adresse email"
-                  value={newsletterEmail}
-                  onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="flex-1 bg-nero border border-white/10 rounded px-4 py-3 text-xs text-ivoire focus:border-or outline-none"
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-or hover:bg-ivoire text-nero typo-cta text-xs transition-all flex items-center space-x-1.5 flex-shrink-0"
-                >
-                  <span>S'INSCRIRE</span>
-                  <Send className="w-3.5 h-3.5" />
-                </button>
+              <form onSubmit={handleSubscribe} className="space-y-2">
+                <div className="flex flex-col sm:flex-row gap-2.5 w-full">
+                  <input
+                    type="email"
+                    required
+                    aria-label="Adresse email pour la newsletter"
+                    placeholder="Votre adresse email"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    className="flex-1 bg-[#121210] border border-white/20 focus:border-or text-ivoire placeholder:text-muted/60 px-4 py-3.5 text-xs sm:text-sm outline-none transition-colors rounded-none"
+                  />
+                  <button
+                    type="submit"
+                    aria-label="S'inscrire à la lettre de la maison"
+                    className="px-6 py-3.5 bg-or hover:bg-ivoire text-nero font-bold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 flex-shrink-0 shadow-xl cursor-pointer touch-manipulation"
+                  >
+                    <span className="font-sans font-bold">S'INSCRIRE</span>
+                    <Send className="w-3.5 h-3.5 text-nero" />
+                  </button>
+                </div>
+                <p className="text-[10px] text-muted/70">
+                  Confidentialité garantie. Vous pouvez vous désinscrire à tout moment via le lien dédié.
+                </p>
               </form>
             )}
           </div>
