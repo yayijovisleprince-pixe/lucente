@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import { tastingMenus, aLaCarteSections } from '../data/restaurantData';
+import React, { useState, useMemo } from 'react';
+import { getTastingMenus, getALaCarteSections } from '../data/restaurantData';
 import { Wine, ArrowRight, Download, Eye, Sparkles, Check, Info, ShieldAlert, Utensils } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function MenuPage({ onSelectMenuForBooking }) {
   const [viewMode, setViewMode] = useState('tasting');
-  const [activeTastingId, setActiveTastingId] = useState(tastingMenus[0].id);
+  const { lang, t } = useLanguage();
 
-  const activeTasting = tastingMenus.find((m) => m.id === activeTastingId) || tastingMenus[0];
+  const localizedTastingMenus = useMemo(() => getTastingMenus(lang), [lang]);
+  const localizedALaCarteSections = useMemo(() => getALaCarteSections(lang), [lang]);
+
+  const [activeTastingId, setActiveTastingId] = useState(localizedTastingMenus[0].id);
+
+  const activeTasting = localizedTastingMenus.find((m) => m.id === activeTastingId) || localizedTastingMenus[0];
 
   const menuSchema = {
     '@type': 'Menu',
@@ -22,7 +28,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
         { '@type': 'ListItem', 'position': 2, 'name': 'Menus & Carte', 'item': 'https://lucente-milano.com/menu' }
       ]
     },
-    'hasMenuItem': tastingMenus.map(m => ({
+    'hasMenuItem': localizedTastingMenus.map(m => ({
       '@type': 'MenuItem',
       'name': m.name,
       'description': m.description,
@@ -37,8 +43,8 @@ export default function MenuPage({ onSelectMenuForBooking }) {
   return (
     <div className="bg-nero text-ivoire min-h-screen pt-32 pb-24">
       <SEOHead
-        title="Menus Dégustation & Carte | LUCENTE — Milano"
-        description="Terra & Memoria (7 actes · 210€), Mare & Orizzonte (9 actes · 240€), Luce Assoluta (11 actes · 290€). Accords mets & vins par Gianluca Ferri."
+        title={lang === 'it' ? 'Menu Degustazione & Carta | LUCENTE — Milano' : lang === 'en' ? 'Tasting Menus & À La Carte | LUCENTE — Milano' : 'Menus Dégustation & Carte | LUCENTE — Milano'}
+        description={lang === 'it' ? 'Terra & Memoria (7 atti · 210€), Mare & Orizzonte (9 atti · 240€), Luce Assoluta (11 atti · 290€). Abbinamenti vino a cura di Gianluca Ferri.' : lang === 'en' ? 'Terra & Memoria (7 acts · 210€), Mare & Orizzonte (9 acts · 240€), Luce Assoluta (11 acts · 290€). Wine pairings by Gianluca Ferri.' : 'Terra & Memoria (7 actes · 210€), Mare & Orizzonte (9 actes · 240€), Luce Assoluta (11 actes · 290€). Accords mets & vins par Gianluca Ferri.'}
         image="/images/pasta-caviar.webp"
         path="/menu"
         schema={menuSchema}
@@ -49,15 +55,15 @@ export default function MenuPage({ onSelectMenuForBooking }) {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="typo-eyebrow text-or block animate-float">
-            I Percorsi Gastronomici
+            {t('menu.eyebrow')}
           </span>
           <h1 className="font-serif-luxury text-4xl sm:text-6xl md:text-7xl text-ivoire font-light leading-tight">
-            Trois menus.<br />
-            <span className="italic text-or">Trois façons d'entrer.</span>
+            {t('menu.heroTitle1')}<br />
+            <span className="italic text-or">{t('menu.heroTitle2')}</span>
           </h1>
           <div className="w-16 h-[1px] bg-or mx-auto mt-4" />
           <p className="typo-body text-base text-muted max-w-xl mx-auto pt-2">
-            Choisissez votre durée. La cuisine fait le reste. La carte change avec les saisons, les accords avec l'humeur du soir.
+            {t('menu.heroSubtitle')}
           </p>
         </div>
 
@@ -70,7 +76,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                 viewMode === 'tasting' ? 'bg-or text-nero shadow-lg' : 'text-muted hover:text-ivoire'
               }`}
             >
-              Menus Dégustation
+              {t('menu.tastingMenus')}
             </button>
             <button
               onClick={() => setViewMode('carte')}
@@ -78,7 +84,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                 viewMode === 'carte' ? 'bg-or text-nero shadow-lg' : 'text-muted hover:text-ivoire'
               }`}
             >
-              À La Carte
+              {t('menu.aLaCarte')}
             </button>
           </div>
         </div>
@@ -88,7 +94,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
           <div className="space-y-12">
             {/* Menu Selector */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {tastingMenus.map((menu) => {
+              {localizedTastingMenus.map((menu) => {
                 const isSelected = menu.id === activeTastingId;
                 return (
                   <div
@@ -124,7 +130,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                   onClick={() => onSelectMenuForBooking(activeTasting.name)}
                   className="w-full sm:w-auto px-8 py-3.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shrink-0 text-center shadow-lg"
                 >
-                  Réserver ce Menu
+                  {t('menu.bookThisMenu')}
                 </button>
               </div>
 
@@ -133,7 +139,9 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                   <div key={i} className="pt-6 first:pt-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="space-y-1 max-w-2xl">
                       <div className="flex items-center gap-3">
-                        <span className="text-xs font-mono text-or">Acte {c.act}</span>
+                        <span className="text-xs font-mono text-or">
+                          {lang === 'it' ? `Atto ${c.act}` : lang === 'en' ? `Act ${c.act}` : `Acte ${c.act}`}
+                        </span>
                         <h4 className="font-serif text-xl text-ivoire">{c.name}</h4>
                       </div>
                       <p className="text-xs text-muted leading-relaxed font-sans">{c.ingredients}</p>
@@ -155,9 +163,14 @@ export default function MenuPage({ onSelectMenuForBooking }) {
         {viewMode === 'carte' && (
           <div className="space-y-12">
             <p className="text-center text-sm text-muted max-w-xl mx-auto">
-              Pour ceux qui souhaitent composer leur propre séquence. Deux entrées, un plat, un dessert — ou autre chose. La salle s'adapte à votre rythme.
+              {lang === 'it'
+                ? "Per chi desidera comporre la propria sequenza. Due antipasti, un piatto, un dessert — o altro. La sala si adatta al vostro ritmo."
+                : lang === 'en'
+                ? "For those who wish to compose their own sequence. Two starters, a main, a dessert — or something else. The dining room adapts to your pace."
+                : "Pour ceux qui souhaitent composer leur propre partition. Deux entrées, un plat, un dessert — ou autre chose. La salle s'adapte à votre rythme."
+              }
             </p>
-            {aLaCarteSections.map((sec) => (
+            {localizedALaCarteSections.map((sec) => (
               <div key={sec.id} className="bg-surface border border-white/10 p-8 sm:p-10 space-y-6">
                 <div className="border-b border-white/10 pb-4">
                   <h3 className="font-serif text-2xl text-ivoire">{sec.category}</h3>
@@ -172,7 +185,10 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                       </div>
                       <p className="text-xs text-muted leading-relaxed">{item.description}</p>
                       {item.allergens && (
-                        <p className="text-[10px] text-muted/60 font-mono">Allergènes : {item.allergens}</p>
+                        <p className="text-[10px] text-muted/60 font-mono">
+                          {lang === 'it' ? 'Allergeni: ' : lang === 'en' ? 'Allergens: ' : 'Allergènes : '}
+                          {item.allergens}
+                        </p>
                       )}
                     </div>
                   ))}

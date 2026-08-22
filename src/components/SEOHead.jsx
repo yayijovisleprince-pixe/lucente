@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const BASE_URL = 'https://lucente-milano.com';
 const DEFAULT_IMAGE = `${BASE_URL}/images/hero-dish.webp`;
@@ -17,12 +18,16 @@ export default function SEOHead({
   article = null,
   schema = null
 }) {
+  const { lang } = useLanguage();
   const location = useLocation();
   const currentPath = path || location.pathname;
   const canonicalUrl = `${BASE_URL}${currentPath === '/' ? '' : currentPath}`;
   const fullImageUrl = image.startsWith('http') ? image : `${BASE_URL}${image}`;
 
   useEffect(() => {
+    // 0. Update HTML Lang attribute
+    document.documentElement.lang = lang;
+
     // 1. Update Document Title
     document.title = title;
 
@@ -66,9 +71,10 @@ export default function SEOHead({
     setMetaTag('property', 'og:image', fullImageUrl);
     setMetaTag('property', 'og:type', type);
     setMetaTag('property', 'og:site_name', 'LUCENTE Milano');
-    setMetaTag('property', 'og:locale', 'fr_FR');
+    setMetaTag('property', 'og:locale', lang === 'it' ? 'it_IT' : lang === 'en' ? 'en_US' : 'fr_FR');
     setMetaTag('property', 'og:locale:alternate', 'it_IT');
     setMetaTag('property', 'og:locale:alternate', 'en_US');
+    setMetaTag('property', 'og:locale:alternate', 'fr_FR');
 
     // 5. Twitter Card Tags
     setMetaTag('name', 'twitter:card', 'summary_large_image');

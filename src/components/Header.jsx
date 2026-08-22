@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX, Calendar, Menu as MenuIcon, X } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Header({ onOpenBooking, isAudioPlaying, onToggleAudio }) {
+  const { lang, t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [milanTime, setMilanTime] = useState('');
@@ -27,11 +29,11 @@ export default function Header({ onOpenBooking, isAudioPlaying, onToggleAudio })
   }, []);
 
   const navLinks = [
-    { label: 'La Filosofia', href: '#filosofia' },
-    { label: 'I Percorsi', href: '#percorsi' },
-    { label: 'La Cantina', href: '#cantina' },
-    { label: 'L\'Atelier', href: '#spazi' },
-    { label: 'Riconoscimenti', href: '#riconoscimenti' },
+    { label: lang === 'it' ? 'La Filosofia' : lang === 'en' ? 'The Philosophy' : 'La Philosophie', href: '#filosofia' },
+    { label: lang === 'it' ? 'I Percorsi' : lang === 'en' ? 'Tasting Menus' : 'Les Menus', href: '#percorsi' },
+    { label: lang === 'it' ? 'La Cantina' : lang === 'en' ? 'Wine Cellar' : 'La Cave', href: '#cantina' },
+    { label: lang === 'it' ? "L'Atelier" : lang === 'en' ? 'The Atelier' : "L'Atelier", href: '#spazi' },
+    { label: lang === 'it' ? 'Riconoscimenti' : lang === 'en' ? 'Accolades' : 'Distinctions', href: '#riconoscimenti' },
   ];
 
   const handleNavClick = (e, href) => {
@@ -97,7 +99,9 @@ export default function Header({ onOpenBooking, isAudioPlaying, onToggleAudio })
             <button
               onClick={onToggleAudio}
               className="p-2.5 rounded-full bg-surface border border-or-subtle text-or hover:bg-surface-elevated transition-all group"
-              title={isAudioPlaying ? "Désactiver l'ambiance sonore feutrée" : "Activer l'expérience sonore gastronomique"}
+              title={isAudioPlaying
+                ? (lang === 'it' ? "Disattiva la musica d'ambiente" : lang === 'en' ? 'Mute ambient sound' : "Désactiver l'ambiance sonore")
+                : (lang === 'it' ? "Attiva l'esperienza sonora gastronomica" : lang === 'en' ? 'Play gastronomic ambient sound' : "Activer l'expérience sonore")}
             >
               {isAudioPlaying ? (
                 <Volume2 className="w-4 h-4 text-or" />
@@ -113,7 +117,7 @@ export default function Header({ onOpenBooking, isAudioPlaying, onToggleAudio })
             >
               <span className="flex items-center space-x-2">
                 <Calendar className="w-3.5 h-3.5" />
-                <span>Prenota un Tavolo</span>
+                <span>{t('nav.reserveTable')}</span>
               </span>
             </button>
           </div>
@@ -124,7 +128,7 @@ export default function Header({ onOpenBooking, isAudioPlaying, onToggleAudio })
               onClick={() => onOpenBooking()}
               className="px-3.5 py-1.5 border border-or/40 text-or text-[10px] uppercase tracking-widest"
             >
-              Prenota
+              {t('nav.reserve')}
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -140,7 +144,7 @@ export default function Header({ onOpenBooking, isAudioPlaying, onToggleAudio })
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-30 bg-nero/98 backdrop-blur-xl flex flex-col justify-between p-8 pt-28 sm:hidden">
           <div className="space-y-6">
-            <p className="typo-eyebrow">Navigazione</p>
+            <p className="typo-eyebrow">{t('nav.navigation')}</p>
             <div className="flex flex-col space-y-4">
               {navLinks.map((link) => (
                 <a
@@ -157,7 +161,7 @@ export default function Header({ onOpenBooking, isAudioPlaying, onToggleAudio })
 
           <div className="space-y-4 pt-6 border-t border-white/10">
             <div className="flex items-center justify-between typo-metadata">
-              <span>Heure locale Milano</span>
+              <span>{lang === 'it' ? 'Ora locale Milano' : lang === 'en' ? 'Milan local time' : 'Heure locale Milano'}</span>
               <span className="text-ivoire">{milanTime}</span>
             </div>
             <button
@@ -167,7 +171,7 @@ export default function Header({ onOpenBooking, isAudioPlaying, onToggleAudio })
               }}
               className="w-full py-3.5 bg-or text-nero typo-cta"
             >
-              Prenota un Tavolo
+              {t('nav.reserveTable')}
             </button>
           </div>
         </div>

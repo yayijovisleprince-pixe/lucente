@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, Sparkles } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Hero({ onOpenBooking }) {
+  const { lang, t } = useLanguage();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -67,8 +69,13 @@ export default function Hero({ onOpenBooking }) {
           }`}
         >
           <p className="font-serif-luxury text-xl sm:text-2xl md:text-3xl text-ivoire/90 font-light tracking-wide uppercase">
-            ITALIAN CUISINE, <br className="hidden sm:block" />
-            <span className="italic text-or">REIMAGINED.</span>
+            {lang === 'it' ? (
+              <>CUCINA ITALIANA, <br className="hidden sm:block" /><span className="italic text-or">REINVENTATA.</span></>
+            ) : lang === 'en' ? (
+              <>ITALIAN CUISINE, <br className="hidden sm:block" /><span className="italic text-or">REIMAGINED.</span></>
+            ) : (
+              <>CUISINE ITALIENNE, <br className="hidden sm:block" /><span className="italic text-or">RÉINVENTÉE.</span></>
+            )}
           </p>
         </div>
 
@@ -82,14 +89,14 @@ export default function Hero({ onOpenBooking }) {
             onClick={() => onOpenBooking()}
             className="w-full sm:w-auto px-10 py-4 bg-or hover:bg-ivoire text-nero typo-cta transition-all duration-300 shadow-2xl shadow-or/10 hover:scale-[1.02]"
           >
-            RESERVE A TABLE
+            {t('nav.reserveTable')}
           </button>
           
           <Link
             to="/cuisine"
             className="w-full sm:w-auto px-10 py-4 border border-or-subtle hover:border-or bg-surface/80 hover:bg-surface-elevated text-ivoire typo-cta transition-all duration-300 text-center"
           >
-            DISCOVER OUR CUISINE
+            {lang === 'it' ? 'SCOPRI LA NOSTRA CUCINA' : lang === 'en' ? 'DISCOVER OUR CUISINE' : 'DÉCOUVRIR NOTRE CUISINE'}
           </Link>
         </div>
 
@@ -100,7 +107,9 @@ export default function Hero({ onOpenBooking }) {
             isLoaded ? 'opacity-70 hover:opacity-100' : 'opacity-0'
           }`}
         >
-          <span className="typo-caption text-[9px] uppercase tracking-[0.25em]">Scroll to Discover</span>
+          <span className="typo-caption text-[9px] uppercase tracking-[0.25em]">
+            {lang === 'it' ? 'Scorri per scoprire' : lang === 'en' ? 'Scroll to discover' : 'Défiler pour explorer'}
+          </span>
           <ChevronDown className="w-4 h-4 animate-bounce text-or" />
         </div>
 

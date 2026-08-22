@@ -11,7 +11,7 @@ export default function PageTransition({ children }) {
   return (
     <div 
       key={pathname} 
-      className="w-full flex-grow animate-pageEnter"
+      className="w-full flex-grow opacity-100"
     >
       {children}
     </div>

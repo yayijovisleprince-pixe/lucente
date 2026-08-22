@@ -3,37 +3,39 @@ import { Link } from 'react-router-dom';
 import { Sparkles, Utensils, Flame, Droplet, Wine, ArrowRight, Sun, Leaf, Snowflake, Compass, Feather } from 'lucide-react';
 import { restaurantInfo } from '../data/restaurantData';
 import SEOHead from '../components/SEOHead';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
   const [activeSeason, setActiveSeason] = useState('autumn');
   const [activeIngredientIndex, setActiveIngredientIndex] = useState(0);
   const [activePairingType, setActivePairingType] = useState('harmony');
+  const { lang, t } = useLanguage();
 
   const seasonsData = {
     spring: {
-      name: 'Primavera · Printemps',
-      subtitle: 'L\'éveil des herbes sauvages. La mer Adriatique avant les chaleurs.',
-      description: 'Fèves jeunes du Latium, asperges sauvages des collines toscanes, petits encornets de l\'Adriatique. La carte s\'allège. Le goût, non.',
-      dishes: ['Crudo di Seppia & Piselli Selvatici', 'Raviolini di Borragine & Ricotta d\'Alpeggio', 'Agnello da Latte ai Fiori di Zagara']
+      name: t('cuisine.spring.name'),
+      subtitle: t('cuisine.spring.subtitle'),
+      description: t('cuisine.spring.description'),
+      dishes: t('cuisine.spring.dishes'),
     },
     summer: {
-      name: 'Estate · Été',
-      subtitle: 'Sel. Soleil. Minéralité brute. Rien d\'autre.',
-      description: 'Eau clarifiée de tomates San Marzano des flancs du Vésuve. Crevettes rouges de Mazara del Vallo crues, servies à 12°C. Cédrats d\'Amalfi. Oursins de roche volcanique.',
-      dishes: ['Acqua di Pomodoro & Gambero Rosso', 'Spaghettone ai Ricci di Mare & Bottarga', 'Rombo Selvaggio nel Coccio d\'Amphora']
+      name: t('cuisine.summer.name'),
+      subtitle: t('cuisine.summer.subtitle'),
+      description: t('cuisine.summer.description'),
+      dishes: t('cuisine.summer.dishes'),
     },
     autumn: {
-      name: 'Autunno · Automne',
-      subtitle: 'Le brouillard du Piémont. La truffe blanche. La braise qui ne s\'éteint pas.',
-      description: 'Les truffes blanches d\'Alba arrivent en octobre — râpées minute en salle, jamais chauffées. Le riz Carnaroli a attendu sept ans. Le bœuf Chianina, 45 jours sous foin.',
-      dishes: ['Risotto al Tartufo Bianco & Oro', 'Filetto di Chianina al Fumo di Vite', 'Animelle Caramellate & Topinambur']
+      name: t('cuisine.autumn.name'),
+      subtitle: t('cuisine.autumn.subtitle'),
+      description: t('cuisine.autumn.description'),
+      dishes: t('cuisine.autumn.dishes'),
     },
     winter: {
-      name: 'Inverno · Hiver',
-      subtitle: 'Le feu. Le concentré. L\'amertume juste du radicchio tardivo.',
-      description: 'Radicchio tardivo de Trévise — une amertume noble et précise. Bouillons de 48 heures. Gibier des montagnes, fumé à la braise. Oranges sanguines de l\'Etna pour finir, vives et froides.',
-      dishes: ['Tortello di Fagiano in Brodo Dorato', 'Radicchio Tardivo Glassato al Barolo', 'Sfera di Cioccolato Chuao & Fumo d\'Olivo']
-    }
+      name: t('cuisine.winter.name'),
+      subtitle: t('cuisine.winter.subtitle'),
+      description: t('cuisine.winter.description'),
+      dishes: t('cuisine.winter.dishes'),
+    },
   };
 
   const currentSeason = seasonsData[activeSeason];
@@ -41,48 +43,68 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
   const ingredients = [
     {
       id: 'truffle',
-      name: 'Truffe Blanche d\'Alba',
+      name: lang === 'it' ? "Tartufo Bianco d'Alba" : lang === 'en' ? "Alba White Truffle" : "Truffe Blanche d'Alba",
       italianName: 'Tuber Magnatum Pico',
-      region: 'Collines des Langhe, Piémont',
-      season: 'Octobre — Décembre',
+      region: lang === 'it' ? "Colline delle Langhe, Piemonte" : lang === 'en' ? "Langhe Hills, Piedmont" : "Collines des Langhe, Piémont",
+      season: lang === 'it' ? "Ottobre — Dicembre" : lang === 'en' ? "October — December" : "Octobre — Décembre",
       image: '/images/truffle-harvest.webp',
-      philosophy: 'Un cavatore exclusif la récolte avant l\'aube dans le brouillard des Langhe. Elle n\'est jamais chauffée ici. On la râpe minute en salle, sur un féculent chaud, pour que le parfum s\'exhale devant vous — pas en cuisine, dans l\'obscurité.'
+      philosophy: lang === 'it'
+        ? "Un cavatore esclusivo lo raccoglie prima dell'alba nella nebbia delle Langhe. Non viene mai riscaldato. Lo grattugiamo al minuto in sala, su un piatto caldo, affinché il profumo si sprigioni davanti a voi."
+        : lang === 'en'
+        ? "An exclusive truffle hunter forages before dawn in the Langhe fog. Never cooked or reheated. Shaved tableside over steaming pasta or risotto so the aroma blooms right before your eyes."
+        : "Un cavatore exclusif la récolte avant l'aube dans le brouillard des Langhe. Elle n'est jamais chauffée ici. On la râpe minute en salle, sur un féculent chaud, pour que le parfum s'exhale devant vous — pas en cuisine, dans l'obscurité."
     },
     {
       id: 'prawn',
-      name: 'Gambero Rosso de Mazara del Vallo',
+      name: lang === 'it' ? "Gambero Rosso di Mazara del Vallo" : lang === 'en' ? "Mazara del Vallo Red Prawn" : "Gambero Rosso de Mazara del Vallo",
       italianName: 'Gambero Rosso di Mazara',
-      region: 'Détroit de Sicile · 700m de profondeur',
-      season: 'Pêche de Printemps & Été',
+      region: lang === 'it' ? "Canale di Sicilia · 700m di profondità" : lang === 'en' ? "Strait of Sicily · 700m depth" : "Détroit de Sicile · 700m de profondeur",
+      season: lang === 'it' ? "Pesca di Primavera & Estate" : lang === 'en' ? "Spring & Summer Catch" : "Pêche de Printemps & Été",
       image: '/images/prawn-dish.webp',
-      philosophy: 'Pêchée à 700 mètres, là où il n\'y a pas de lumière. Sa chair est d\'une sucrosité et d\'une minéralité incomparables. Nous la servons crue, à 12°C exactement — avec une stracciatella fumée et un gel de bergamote. Trois éléments. Pas quatre.'
+      philosophy: lang === 'it'
+        ? "Pescato a 700 metri, dove non c'è luce. La sua polpa vanta una dolcezza e una mineralità incomparabili. Lo serviamo crudo a 12°C con stracciatella affumicata e gel di bergamotto."
+        : lang === 'en'
+        ? "Fished at 700 meters, where no light reaches. Its flesh possesses peerless natural sweetness and mineral depth. Served raw at precisely 12°C with smoked stracciatella and wild bergamot gel."
+        : "Pêchée à 700 mètres, là où il n'y a pas de lumière. Sa chair est d'une sucrosité et d'une minéralité incomparables. Nous la servons crue, à 12°C exactement — avec une stracciatella fumée et un gel de bergamote. Trois éléments. Pas quatre."
     },
     {
       id: 'tomato-saffron',
-      name: 'Tomate San Marzano & Safran de Toscane',
+      name: lang === 'it' ? "Pomodoro San Marzano & Zafferano Toscano" : lang === 'en' ? "San Marzano Tomato & Tuscan Saffron" : "Tomate San Marzano & Safran de Toscane",
       italianName: 'Essenza di Pomodoro & Zafferano',
-      region: 'Vésuve & San Gimignano',
-      season: 'Récolte mi-été',
+      region: lang === 'it' ? "Vesuvio & San Gimignano" : lang === 'en' ? "Vesuvius & San Gimignano" : "Vésuve & San Gimignano",
+      season: lang === 'it' ? "Raccolta di Mezza Estate" : lang === 'en' ? "Mid-Summer Harvest" : "Récolte mi-été",
       image: '/images/tomato-saffron.webp',
-      philosophy: 'Centrifugation à froid : pas de chaleur, pas d\'amertume. Ce qui reste est un bouillon translucide, doré, infusé à froid pendant 24 heures aux pistils de safran de Toscane. La clarté comme principe.'
+      philosophy: lang === 'it'
+        ? "Centrifugazione a freddo: niente calore, niente amarezza. Ciò che resta è un brodo limpido, dorato, infuso a freddo per 24 ore con pistilli di zafferano toscano."
+        : lang === 'en'
+        ? "Cold clarification: no heat, no bitterness. What remains is a pure, golden nectar, cold-infused for 24 hours with Tuscan saffron pistils."
+        : "Centrifugation à froid : pas de chaleur, pas d'amertume. Ce qui reste est un bouillon translucide, doré, infusé à froid pendant 24 heures aux pistils de safran de Toscane. La clarté comme principe."
     },
     {
       id: 'carnaroli',
-      name: 'Riz Carnaroli Riserva · 7 Ans',
+      name: lang === 'it' ? "Riso Carnaroli Riserva · 7 Anni" : lang === 'en' ? "Carnaroli Riserva Rice · 7 Years" : "Riz Carnaroli Riserva · 7 Ans",
       italianName: 'Riso Carnaroli Invecchiato 7 Anni',
-      region: 'Plaines de Vercelli, Piémont',
-      season: '84 mois en silos froids',
+      region: lang === 'it' ? "Pianure di Vercelli, Piemonte" : lang === 'en' ? "Vercelli Plains, Piedmont" : "Plaines de Vercelli, Piémont",
+      season: lang === 'it' ? "84 mesi in silos refrigerati" : lang === 'en' ? "84 months in chilled silos" : "84 mois en silos froids",
       image: '/images/pasta-caviar.webp',
-      philosophy: 'La patience transforme le grain. Sept ans de séchage lent cristallisent l\'amidon — le grain absorbe davantage, sans se briser. Ce risotto ne déborde pas. Il tient. Et il continue de tenir deux minutes après le service.'
+      philosophy: lang === 'it'
+        ? "La pazienza trasforma il chicco. Sette anni di lenta essiccazione cristallizzano l'amido — il chicco assorbe di più senza sfaldarsi mai."
+        : lang === 'en'
+        ? "Patience transforms the grain. Seven years of slow aging crystallize the starch — the grain absorbs richer reductions without ever breaking down."
+        : "La patience transforme le grain. Sept ans de séchage lent cristallisent l'amidon — le grain absorbe davantage, sans se briser. Ce risotto ne déborde pas. Il tient. Et il continue de tenir deux minutes après le service."
     },
     {
       id: 'chianina',
-      name: 'Bœuf Chianina IGP · Val di Chiana',
+      name: lang === 'it' ? "Manzo Chianina IGP · Val di Chiana" : lang === 'en' ? "Chianina Beef PGI · Val di Chiana" : "Bœuf Chianina IGP · Val di Chiana",
       italianName: 'Razza Chianina IGP',
-      region: 'Val di Chiana, Toscane',
-      season: 'Maturation 45 jours sous foin',
+      region: lang === 'it' ? "Val di Chiana, Toscana" : lang === 'en' ? "Val di Chiana, Tuscany" : "Val di Chiana, Toscane",
+      season: lang === 'it' ? "Frollatura 45 giorni sotto fieno" : lang === 'en' ? "45-day hay dry-aging" : "Maturation 45 jours sous foin",
       image: '/images/hero-dish.webp',
-      philosophy: 'La race bovine blanche de Toscane, la plus ancienne d\'Europe. Saisie sur sarments de vigne secs — l\'extérieur se caramélise sous la fumée de bois, le cœur reste rouge et velouté. Le balsamique de Modène, 25 ans d\'âge, arrive en dernier. Une seule goutte.'
+      philosophy: lang === 'it'
+        ? "La razza bovina bianca toscana più antica d'Europa. Scottata su tralci di vite secchi: esterno croccante e cuore rosso vellutato. L'aceto balsamico di Modena 25 anni arriva come tocco finale."
+        : lang === 'en'
+        ? "The noble white Tuscan cattle, the oldest in Europe. Seared over dry vine shoots: caramelized exterior with a velvety red heart, touched by a single drop of 25-year Modena balsamic."
+        : "La race bovine blanche de Toscane, la plus ancienne d'Europe. Saisie sur sarments de vigne secs — l'extérieur se caramélise sous la fumée de bois, le cœur reste rouge et velouté. Le balsamique de Modène, 25 ans d'âge, arrive en dernier. Une seule goutte."
     }
   ];
 
@@ -106,8 +128,8 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
   return (
     <div className="bg-nero text-ivoire min-h-screen pt-32 pb-24">
       <SEOHead
-        title="La Cuisine, Philosophie & Saisons | LUCENTE — Milano"
-        description="42 producteurs italiens. 4 micro-saisons. La truffe blanche d'Alba râpée minute. La crevette rouge à 700m de profondeur. La cuisine de Vincenzo Moretti à Milan."
+        title={lang === 'it' ? 'La Cucina, Filosofia & Stagioni | LUCENTE — Milano' : lang === 'en' ? 'The Cuisine, Philosophy & Seasons | LUCENTE — Milano' : 'La Cuisine, Philosophie & Saisons | LUCENTE — Milano'}
+        description={lang === 'it' ? "42 produttori italiani. 4 micro-stagioni. Il tartufo bianco d'Alba grattugiato al momento. Il gambero rosso a 700m di profondità. La cucina di Vincenzo Moretti a Milano." : lang === 'en' ? "42 Italian producers. 4 micro-seasons. White truffle from Alba grated tableside. Red prawn from 700m depth. The cuisine of Vincenzo Moretti in Milan." : "42 producteurs italiens. 4 micro-saisons. La truffe blanche d'Alba râpée minute. La crevette rouge à 700m de profondeur. La cuisine de Vincenzo Moretti à Milan."}
         image="/images/hero-dish.webp"
         path="/cuisine"
         schema={cuisineSchema}
@@ -117,14 +139,14 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <span className="typo-eyebrow text-or block">Philosophie & Création</span>
+          <span className="typo-eyebrow text-or block">{t('cuisine.eyebrow')}</span>
           <h1 className="font-serif-luxury text-4xl sm:text-6xl md:text-7xl text-ivoire font-light leading-tight">
-            Le Chiaroscuro<br />
-            <span className="italic text-or">dans l'assiette.</span>
+            {t('cuisine.heroTitle1')}<br />
+            <span className="italic text-or">{t('cuisine.heroTitle2')}</span>
           </h1>
           <div className="w-16 h-[1px] bg-or mx-auto mt-4" />
           <p className="typo-body text-base sm:text-lg text-muted max-w-xl mx-auto pt-2 font-light">
-            L'ombre et la lumière. Ce que la braise révèle, ce que la clarté accentue. Une tension esthétique et sensorielle construite plat après plat.
+            {t('cuisine.heroSubtitle')}
           </p>
         </div>
 
@@ -132,15 +154,18 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
         <section className="bg-surface p-8 sm:p-12 border border-white/10 space-y-8 shadow-2xl">
           <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/10 pb-6 gap-4">
             <div>
-              <span className="text-[10px] uppercase font-mono tracking-widest text-or">Le Cycle du Temps</span>
-              <h2 className="font-serif text-3xl text-ivoire">Quatre micro-saisons.<br />Une seule règle : la carte suit la terre.</h2>
+              <span className="text-[10px] uppercase font-mono tracking-widest text-or">{t('cuisine.seasonsEyebrow')}</span>
+              <h2 className="font-serif text-3xl text-ivoire">
+                {lang === 'it' ? 'Quattro micro-stagioni.' : lang === 'en' ? 'Four micro-seasons.' : 'Quatre micro-saisons.'}<br />
+                {lang === 'it' ? 'Una sola regola: la carta segue la terra.' : lang === 'en' ? 'One rule: the menu follows the earth.' : 'Une seule règle : la carte suit la terre.'}
+              </h2>
             </div>
             <div className="w-full sm:w-auto grid grid-cols-4 sm:flex bg-nero p-1 border border-white/10 rounded-none">
               {[
-                { key: 'spring', label: 'Printemps' },
-                { key: 'summer', label: 'Été' },
-                { key: 'autumn', label: 'Automne' },
-                { key: 'winter', label: 'Hiver' }
+                { key: 'spring', label: lang === 'it' ? 'Primavera' : lang === 'en' ? 'Spring' : 'Printemps' },
+                { key: 'summer', label: lang === 'it' ? 'Estate' : lang === 'en' ? 'Summer' : 'Été' },
+                { key: 'autumn', label: lang === 'it' ? 'Autunno' : lang === 'en' ? 'Autumn' : 'Automne' },
+                { key: 'winter', label: lang === 'it' ? 'Inverno' : lang === 'en' ? 'Winter' : 'Hiver' },
               ].map((season) => (
                 <button
                   key={season.key}
@@ -162,7 +187,9 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
               <p className="text-sm text-muted leading-relaxed font-sans">{currentSeason.description}</p>
             </div>
             <div className="lg:col-span-6 bg-nero p-6 border border-white/5 space-y-3">
-              <span className="text-[10px] uppercase font-mono text-muted tracking-widest">Créations de Saison</span>
+              <span className="text-[10px] uppercase font-mono text-muted tracking-widest">
+                {lang === 'it' ? 'Creazioni di Stagione' : lang === 'en' ? 'Seasonal Creations' : 'Créations de Saison'}
+              </span>
               <ul className="space-y-2">
                 {currentSeason.dishes.map((dish, i) => (
                   <li key={i} className="flex items-center gap-2 text-xs text-ivoire font-serif">
@@ -178,9 +205,15 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
         {/* Selected Ingredients */}
         <section className="space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="typo-eyebrow text-or">Matières Premières</span>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl text-ivoire">Cinq produits. Chacun irremplaçable.</h2>
-            <p className="text-sm text-muted">Ce ne sont pas des ingrédients de prestige. Ce sont des produits que rien d'autre ne peut remplacer.</p>
+            <span className="typo-eyebrow text-or">
+              {lang === 'it' ? 'Materie Prime' : lang === 'en' ? 'Raw Materials' : 'Matières Premières'}
+            </span>
+            <h2 className="font-serif-luxury text-3xl sm:text-4xl text-ivoire">
+              {lang === 'it' ? 'Cinque prodotti. Ognuno insostituibile.' : lang === 'en' ? 'Five products. Each irreplaceable.' : 'Cinq produits. Chacun irremplaçable.'}
+            </h2>
+            <p className="text-sm text-muted">
+              {lang === 'it' ? 'Non sono ingredienti di prestigio, ma prodotti che nulla può sostituire.' : lang === 'en' ? 'Not prestige ingredients, but products nothing else can replace.' : "Ce ne sont pas des ingrédients de prestige. Ce sont des produits que rien d'autre ne peut remplacer."}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
@@ -219,10 +252,20 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
 
         {/* Accords section */}
         <section className="space-y-6">
-          <div className="text-center max-w-xl mx-auto">
-            <span className="typo-eyebrow text-or">Cave & Accords</span>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl text-ivoire mt-2">L'accord ou le contraste.</h2>
-            <p className="text-sm text-muted mt-2">Gianluca Ferri propose deux philosophies d'accord. Choisissez la vôtre.</p>
+          <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/10 pb-6 gap-4">
+            <div>
+              <span className="text-[10px] uppercase font-mono tracking-widest text-or">{t('cuisine.pairingsEyebrow')}</span>
+              <h2 className="font-serif text-3xl text-ivoire">
+                {lang === 'it' ? "L'accordo o il contrasto." : lang === 'en' ? 'Harmony or contrast.' : "L'accord ou le contraste."}
+              </h2>
+              <p className="text-sm text-muted mt-2">
+                {lang === 'it'
+                  ? 'Gianluca Ferri propone due filosofie di abbinamento. Scegliete la vostra.'
+                  : lang === 'en'
+                  ? 'Gianluca Ferri offers two pairing philosophies. Choose yours.'
+                  : 'Gianluca Ferri propose deux philosophies d\'accord. Choisissez la vôtre.'}
+              </p>
+            </div>
           </div>
           <div className="flex justify-center gap-4">
             {['harmony', 'contrast'].map(type => (
@@ -233,7 +276,9 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
                   activePairingType === type ? 'border-or bg-or/10 text-or' : 'border-white/10 text-muted hover:text-ivoire'
                 }`}
               >
-                {type === 'harmony' ? 'L\'Écho · Harmonie' : 'La Tension · Contraste'}
+                {type === 'harmony'
+                  ? (lang === 'it' ? "L'Eco · Armonia" : lang === 'en' ? 'The Echo · Harmony' : "L'Écho · Harmonie")
+                  : (lang === 'it' ? 'La Tensione · Contrasto' : lang === 'en' ? 'The Tension · Contrast' : 'La Tension · Contraste')}
               </button>
             ))}
           </div>
@@ -241,17 +286,29 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
             {activePairingType === 'harmony' ? (
               <div className="space-y-4 text-center">
                 <Wine className="w-8 h-8 text-or mx-auto" />
-                <h3 className="font-serif-luxury text-2xl sm:text-3xl text-ivoire">L'Écho des Terroirs</h3>
+                <h3 className="font-serif-luxury text-2xl sm:text-3xl text-ivoire">
+                  {lang === 'it' ? "L'Eco dei Terroir" : lang === 'en' ? 'The Echo of Terroirs' : "L'Écho des Terroirs"}
+                </h3>
                 <p className="typo-body text-sm text-muted leading-relaxed max-w-2xl mx-auto">
-                  Le risotto à la truffe blanche d'Alba appelle un Barolo Monprivato 2017. Sous-bois, rose fanée, cuir noble. Le vin et le plat parlent la même langue — et leur conversation est longue.
+                  {lang === 'it'
+                    ? "Il risotto al tartufo bianco d'Alba chiama un Barolo Monprivato 2017. Sottobosco, rosa appassita, cuoio nobile. Il vino e il piatto parlano la stessa lingua."
+                    : lang === 'en'
+                    ? "White truffle risotto from Alba calls for a Barolo Monprivato 2017. Undergrowth, dried rose, noble leather. Wine and dish speak the same language."
+                    : "Le risotto à la truffe blanche d'Alba appelle un Barolo Monprivato 2017. Sous-bois, rose fanée, cuir noble. Le vin et le plat parlent la même langue — et leur conversation est longue."}
                 </p>
               </div>
             ) : (
               <div className="space-y-4 text-center">
                 <Sparkles className="w-8 h-8 text-or mx-auto" />
-                <h3 className="font-serif-luxury text-2xl sm:text-3xl text-ivoire">La Tension Minérale</h3>
+                <h3 className="font-serif-luxury text-2xl sm:text-3xl text-ivoire">
+                  {lang === 'it' ? 'La Tensione Minerale' : lang === 'en' ? 'Mineral Tension' : 'La Tension Minérale'}
+                </h3>
                 <p className="typo-body text-sm text-muted leading-relaxed max-w-2xl mx-auto">
-                  Le Gambero Rosso cru rencontre un Etna Bianco Superiore vinifié en amphore. L'acidité volcanique tranche la sucrosité de la crevette. La résonance saline dure quarante secondes. Ce n'est pas un accord — c'est un dialogue.
+                  {lang === 'it'
+                    ? "Il Gambero Rosso crudo incontra un Etna Bianco Superiore vinificato in anfora. L'acidità vulcanica taglia la dolcezza del gambero. Non è un accordo — è un dialogo."
+                    : lang === 'en'
+                    ? "Raw Gambero Rosso meets an amphora-vinified Etna Bianco Superiore. Volcanic acidity cuts through the sweetness of the prawn. It is a genuine dialogue."
+                    : "Le Gambero Rosso cru rencontre un Etna Bianco Superiore vinifié en amphore. L'acidité volcanique tranche la sucrosité de la crevette. La résonance saline dure quarante secondes. Ce n'est pas un accord — c'est un dialogue."}
                 </p>
               </div>
             )}
@@ -260,20 +317,20 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
 
         {/* CTA */}
         <section className="py-16 bg-surface border border-white/10 p-8 sm:p-12 text-center space-y-6">
-          <h2 className="font-serif-luxury text-3xl sm:text-4xl text-ivoire">La table plutôt que le texte.</h2>
-          <p className="text-xs text-muted max-w-xl mx-auto">Les menus dégustation en 7, 9 et 11 actes sont servis chaque soir. La truffe est là quand la truffe est belle.</p>
+          <h2 className="font-serif-luxury text-3xl sm:text-4xl text-ivoire">{t('cuisine.ctaTitle')}</h2>
+          <p className="text-xs text-muted max-w-xl mx-auto">{t('cuisine.ctaText')}</p>
           <div className="flex justify-center gap-4 flex-wrap">
             <button
               onClick={() => onOpenBooking()}
               className="px-8 py-3.5 bg-or text-nero font-semibold text-xs uppercase tracking-widest hover:bg-ivoire transition-all"
             >
-              Réserver une Table
+              {t('cuisine.ctaReserve')}
             </button>
             <Link
               to="/menu"
               className="px-8 py-3.5 bg-nero text-ivoire border border-white/10 font-semibold text-xs uppercase tracking-widest hover:border-or hover:text-or transition-all"
             >
-              Consulter les Menus
+              {t('cuisine.ctaMenu')}
             </Link>
           </div>
         </section>

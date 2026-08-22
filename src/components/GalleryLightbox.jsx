@@ -3,6 +3,7 @@ import {
   X, ChevronLeft, ChevronRight, Maximize2, Minimize2, 
   Play, Pause, Info, Camera, Compass, Tag, Layers
 } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function GalleryLightbox({
   isOpen,
@@ -11,6 +12,7 @@ export default function GalleryLightbox({
   currentIndex = 0,
   onIndexChange
 }) {
+  const { lang, t } = useLanguage();
   const [isPlaying, setIsPlaying] = useState(false);
   const [showInfo, setShowInfo] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -176,7 +178,7 @@ export default function GalleryLightbox({
       id="gallery-lightbox-modal"
       role="dialog"
       aria-modal="true"
-      aria-label={`Vue monumentale : ${currentItem.title}`}
+      aria-label={currentItem.title}
       className="fixed inset-0 z-[9999] flex flex-col bg-[#0A0A08]/98 backdrop-blur-2xl select-none animate-fadeIn transition-opacity duration-300"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -214,7 +216,9 @@ export default function GalleryLightbox({
           {/* Diaporama Auto Play */}
           <button
             onClick={() => setIsPlaying(!isPlaying)}
-            title={isPlaying ? 'Pause Diaporama (Espace)' : 'Lancer le Diaporama (Espace)'}
+            title={isPlaying 
+              ? (lang === 'it' ? 'Pausa (Spazio)' : lang === 'en' ? 'Pause (Space)' : 'Pause Diaporama (Espace)')
+              : (lang === 'it' ? 'Avvia Presentazione (Spazio)' : lang === 'en' ? 'Start Slideshow (Space)' : 'Lancer le Diaporama (Espace)')}
             className={`p-2 rounded-none border transition-all ${
               isPlaying 
                 ? 'bg-or text-nero border-or' 
@@ -227,7 +231,7 @@ export default function GalleryLightbox({
           {/* Toggle Info Details */}
           <button
             onClick={() => setShowInfo(!showInfo)}
-            title="Détails de l'Œuvre (H)"
+            title={lang === 'it' ? "Dettagli dell'Opera (H)" : lang === 'en' ? 'Artwork Details (H)' : "Détails de l'Œuvre (H)"}
             className={`p-2 rounded-none border transition-all ${
               showInfo 
                 ? 'bg-or/15 text-or border-or/40' 
@@ -240,7 +244,7 @@ export default function GalleryLightbox({
           {/* Fullscreen Button */}
           <button
             onClick={toggleFullscreen}
-            title="Plein écran (F)"
+            title={lang === 'it' ? 'Schermo intero (F)' : lang === 'en' ? 'Fullscreen (F)' : 'Plein écran (F)'}
             className="p-2 rounded-none border border-white/10 bg-surface text-muted hover:text-or hover:border-or/30 transition-all hidden sm:flex"
           >
             {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
@@ -250,11 +254,13 @@ export default function GalleryLightbox({
           <button
             id="lightbox-close-btn"
             onClick={onClose}
-            title="Fermer (Échap)"
+            title={lang === 'it' ? 'Chiudi (Esc)' : lang === 'en' ? 'Close (Esc)' : 'Fermer (Échap)'}
             className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-none border border-or/50 bg-surface hover:bg-or hover:text-nero text-or transition-all ml-2"
           >
             <X size={15} />
-            <span className="text-xs uppercase font-semibold tracking-widest hidden sm:inline">Fermer</span>
+            <span className="text-xs uppercase font-semibold tracking-widest hidden sm:inline">
+              {lang === 'it' ? 'Chiudi' : lang === 'en' ? 'Close' : 'Fermer'}
+            </span>
           </button>
         </div>
       </header>
@@ -267,7 +273,7 @@ export default function GalleryLightbox({
           <button
             id="lightbox-prev-btn"
             onClick={handlePrev}
-            aria-label="Photographie précédente"
+            aria-label={lang === 'it' ? 'Fotografia precedente' : lang === 'en' ? 'Previous photograph' : 'Photographie précédente'}
             className="absolute left-2 sm:left-6 z-30 p-3 sm:p-4 rounded-full bg-nero/70 hover:bg-or hover:text-nero text-ivoire/90 border border-white/10 hover:border-or backdrop-blur-md transition-all duration-300 group shadow-2xl"
           >
             <ChevronLeft size={26} className="group-hover:-translate-x-0.5 transition-transform" />
@@ -307,7 +313,7 @@ export default function GalleryLightbox({
           <button
             id="lightbox-next-btn"
             onClick={handleNext}
-            aria-label="Photographie suivante"
+            aria-label={lang === 'it' ? 'Fotografia successiva' : lang === 'en' ? 'Next photograph' : 'Photographie suivante'}
             className="absolute right-2 sm:right-6 z-30 p-3 sm:p-4 rounded-full bg-nero/70 hover:bg-or hover:text-nero text-ivoire/90 border border-white/10 hover:border-or backdrop-blur-md transition-all duration-300 group shadow-2xl"
           >
             <ChevronRight size={26} className="group-hover:translate-x-0.5 transition-transform" />
@@ -362,7 +368,7 @@ export default function GalleryLightbox({
           <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
             
             <span className="text-[10px] uppercase tracking-widest text-muted/60 hidden sm:inline-block shrink-0 font-mono">
-              Planche Contact
+              {lang === 'it' ? 'Provini a Contatto' : lang === 'en' ? 'Contact Sheet' : 'Planche Contact'}
             </span>
 
             {/* Scrollable Thumbnails */}
@@ -399,14 +405,14 @@ export default function GalleryLightbox({
             </div>
 
             {/* Keyboard Shortcuts Helper Tag */}
-            <div className="hidden lg:flex items-center gap-2 text-[10px] text-muted/50 uppercase tracking-widest shrink-0">
-              <span>← → Naviguer</span>
+            <div className="hidden lg:flex items-center gap-2 text-[10px] text-muted/50 uppercase tracking-widest shrink-0 font-mono">
+              <span>{lang === 'it' ? '← → Naviga' : lang === 'en' ? '← → Navigate' : '← → Naviguer'}</span>
               <span>·</span>
-              <span>Espace Diaporama</span>
+              <span>{lang === 'it' ? 'Spazio Presentazione' : lang === 'en' ? 'Space Slideshow' : 'Espace Diaporama'}</span>
               <span>·</span>
               <span>H Infos</span>
               <span>·</span>
-              <span>Échap Quitter</span>
+              <span>{lang === 'it' ? 'Esc Esci' : lang === 'en' ? 'Esc Exit' : 'Échap Quitter'}</span>
             </div>
 
           </div>

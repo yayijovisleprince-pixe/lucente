@@ -1,47 +1,66 @@
 import React, { useState } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function SignatureDishesEditorial({ onSelectDishForBooking }) {
+  const { lang, t } = useLanguage();
+
   const dishes = [
     {
       id: 'chianina-tartufo',
-      act: 'ACTO IV',
+      act: lang === 'it' ? 'ATTO IV' : lang === 'en' ? 'ACT IV' : 'ACTE IV',
       name: 'Filetto di Chianina, Tartufo Bianco & Jus al Barolo',
       italianTitle: 'La Terra in Chiaroscuro',
       price: '75 €',
       image: '/images/hero-dish.webp',
-      description: 'Wood-fired Chianina beef tenderloin, smoked over vine shoots, Alba white truffle shavings, caramelized baby shallots, and a 48-hour glossy Barolo reduction.',
+      description: lang === 'it'
+        ? "Filetto di Chianina cotto su tralci di vite, scaglie di tartufo bianco d'Alba, scalogni caramellati e riduzione di Barolo 48 ore."
+        : lang === 'en'
+        ? "Wood-fired Chianina beef tenderloin, smoked over vine shoots, Alba white truffle shavings, caramelized baby shallots, and a 48-hour glossy Barolo reduction."
+        : "Filet de bœuf Chianina fumé aux sarments de vigne, lamelles de truffe blanche d'Alba, échalotes confites et réduction de Barolo 48 heures.",
       winePairing: 'Barolo Monprivato DOCG 2017 — Giuseppe Mascarello'
     },
     {
       id: 'raviolo-imperiale',
-      act: 'ACTO III',
+      act: lang === 'it' ? 'ATTO III' : lang === 'en' ? 'ACT III' : 'ACTE III',
       name: 'Raviolo Imperiale, Scampi Reali & Caviale Oscietra',
-      italianTitle: 'L\'Oro del Mare',
+      italianTitle: "L'Oro del Mare",
       price: '68 €',
       image: '/images/pasta-caviar.webp',
-      description: 'Single golden handcrafted raviolo filled with Mediterranean langoustines, 20g Royal Oscietra caviar, and pure saffron broth from San Gimignano.',
-      winePairing: 'Trebbiano d\'Abruzzo DOC 2019 — Valentini'
+      description: lang === 'it'
+        ? "Raviolo artigianale farcito con scampi mediterranei, 20g di caviale Oscietra Royal e brodo puro allo zafferano di San Gimignano."
+        : lang === 'en'
+        ? "Single golden handcrafted raviolo filled with Mediterranean langoustines, 20g Royal Oscietra caviar, and pure saffron broth from San Gimignano."
+        : "Raviolo artisanal doré farci aux langoustines de Méditerranée, 20g de caviar Oscietra Royal et bouillon pur au safran de San Gimignano.",
+      winePairing: "Trebbiano d'Abruzzo DOC 2019 — Valentini"
     },
     {
       id: 'risotto-oro',
-      act: 'ACTO V',
-      name: 'Risotto Carnaroli Riserva 7 Anni, Zafferano & Foglia d\'Oro',
-      italianTitle: 'L\'Omaggio a Milano',
+      act: lang === 'it' ? 'ATTO V' : lang === 'en' ? 'ACT V' : 'ACTE V',
+      name: "Risotto Carnaroli Riserva 7 Anni, Zafferano & Foglia d'Oro",
+      italianTitle: "L'Omaggio a Milano",
       price: '55 €',
       image: '/images/hero-dish.webp',
-      description: '7-year aged Carnaroli rice, mountain butter noisette, 36-month Vacche Rosse Parmigiano-Reggiano, topped with 24k edible pure gold leaf.',
+      description: lang === 'it'
+        ? "Riso Carnaroli invecchiato 7 anni, burro di malga, Parmigiano Vacche Rosse 36 mesi e foglia d'oro 24 carati commestibile."
+        : lang === 'en'
+        ? "7-year aged Carnaroli rice, mountain butter noisette, 36-month Vacche Rosse Parmigiano-Reggiano, topped with 24k edible pure gold leaf."
+        : "Riz Carnaroli affiné 7 ans, beurre noisette d'alpage, parmesan Vacche Rosse 36 mois et feuille d'or pur 24 carats.",
       winePairing: 'Tignanello Toscana IGT 2017 — Marchesi Antinori'
     },
     {
       id: 'crudo-spigola',
-      act: 'ACTO I',
+      act: lang === 'it' ? 'ATTO I' : lang === 'en' ? 'ACT I' : 'ACTE I',
       name: 'Crudo di Spigola di Linea, Agrumi di Sorrento & Salicornia',
       italianTitle: 'La Brezza Marina',
       price: '48 €',
       image: '/images/pasta-caviar.webp',
-      description: 'Line-caught sea bass sashimi, Sorrento citrus pearls, crispy rock samphire, and first-press cold Coratina extra virgin olive oil.',
-      winePairing: 'Franciacorta Riserva Annamaria Clementi — Ca\' del Bosco'
+      description: lang === 'it'
+        ? "Crudo di spigola all'amo, perle di agrumi di Sorrento, salicornia croccante e olio extravergine Coratina prima spremitura."
+        : lang === 'en'
+        ? "Line-caught sea bass sashimi, Sorrento citrus pearls, crispy rock samphire, and first-press cold Coratina extra virgin olive oil."
+        : "Sashimi de bar de ligne, perles d'agrumes de Sorrente, salicorne croustillante et huile d'olive Coratina première pression à froid.",
+      winePairing: "Franciacorta Riserva Annamaria Clementi — Ca' del Bosco"
     }
   ];
 
@@ -54,13 +73,19 @@ export default function SignatureDishesEditorial({ onSelectDishForBooking }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-8 gap-4">
           <div className="space-y-3">
-            <span className="typo-eyebrow text-or text-[10px]">SECTION 04 — CREATIONS</span>
+            <span className="typo-eyebrow text-or text-[10px]">
+              {lang === 'it' ? 'CAPITOLO IV — CREAZIONI' : lang === 'en' ? 'CHAPTER IV — CREATIONS' : 'CHAPITRE IV — CRÉATIONS'}
+            </span>
             <h2 className="font-serif-luxury text-3xl sm:text-5xl text-ivoire font-light">
-              Signature Dishes
+              {lang === 'it' ? 'Piatti d\'Autore' : lang === 'en' ? 'Signature Dishes' : 'Plats Signatures'}
             </h2>
           </div>
           <p className="typo-caption text-muted text-xs max-w-sm">
-            Hover over any creation to reveal its sensory ingredients, rare pairings, and culinary notes.
+            {lang === 'it'
+              ? 'Esplora le creazioni per scoprire ingredienti sensoriali e abbinamenti rari.'
+              : lang === 'en'
+              ? 'Explore our creations to reveal sensory ingredients and rare pairings.'
+              : 'Survolez chaque création pour découvrir les matières premières et les accords rares.'}
           </p>
         </div>
 
@@ -99,7 +124,8 @@ export default function SignatureDishesEditorial({ onSelectDishForBooking }) {
                         {dish.description}
                       </p>
                       <p className="typo-caption text-or text-[11px]">
-                        Accompagnement conseillé : <span className="text-ivoire font-serif-luxury italic">{dish.winePairing}</span>
+                        {lang === 'it' ? 'Abbinamento consigliato: ' : lang === 'en' ? 'Recommended pairing: ' : 'Accord conseillé : '}
+                        <span className="text-ivoire font-serif-luxury italic">{dish.winePairing}</span>
                       </p>
                     </div>
                   )}

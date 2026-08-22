@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { wineCategories, restaurantInfo } from '../data/restaurantData';
 import { Wine, Award, ShieldCheck, Sparkles } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function WineCellar() {
+  const { lang, t } = useLanguage();
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const activeCategory = wineCategories[activeCategoryIndex];
 
@@ -14,10 +16,14 @@ export default function WineCellar() {
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <p className="text-[11px] uppercase tracking-[0.3em] text-[#C5A880] font-sans">Capitolo III</p>
           <h2 className="font-serif-luxury text-3xl sm:text-4xl md:text-5xl text-[#F3EFEA] font-light">
-            La Cantina d'Autore
+            {lang === 'it' ? "La Cantina d'Autore" : lang === 'en' ? "The Signature Wine Cellar" : "La Cave & Sommellerie d'Auteur"}
           </h2>
           <p className="text-[#A39F97] text-xs sm:text-sm tracking-wider">
-            1 400 références célébrant les trésors historiques et l'avant-garde des terroirs transalpins.
+            {lang === 'it'
+              ? '1.400 referenze che celebrano i tesori storici e le avanguardie dei terroir italiani.'
+              : lang === 'en'
+              ? '1,400 references celebrating historic treasures and the vanguard of Italian terroirs.'
+              : '1 400 références célébrant les trésors historiques et l\'avant-garde des terroirs transalpins.'}
           </p>
           <div className="w-12 h-[1px] bg-[#C5A880] mx-auto mt-4" />
         </div>
@@ -27,10 +33,12 @@ export default function WineCellar() {
           <div className="lg:col-span-8 space-y-4">
             <div className="flex items-center space-x-2 text-[11px] uppercase tracking-widest text-[#C5A880]">
               <Wine className="w-4 h-4" />
-              <span>Direction de Cave & Sommellerie</span>
+              <span>
+                {lang === 'it' ? 'Direzione di Cantina & Sommellerie' : lang === 'en' ? 'Wine & Cellar Direction' : 'Direction de Cave & Sommellerie'}
+              </span>
             </div>
             <h3 className="font-serif-luxury text-2xl sm:text-3xl text-[#F3EFEA]">
-              Gianluca Ferri — Chef Sommelier
+              Gianluca Ferri — {lang === 'it' ? 'Chef Sommelier' : lang === 'en' ? 'Head Sommelier' : 'Chef Sommelier'}
             </h3>
             <p className="text-xs sm:text-sm text-[#A39F97] leading-relaxed font-light">
               {restaurantInfo.sommelier.philosophy}
@@ -40,11 +48,15 @@ export default function WineCellar() {
           <div className="lg:col-span-4 grid grid-cols-2 gap-4 text-center border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-8">
             <div className="p-3 bg-[#1A1918] rounded">
               <p className="font-serif-luxury text-2xl text-[#DFCA97]">1 400</p>
-              <p className="text-[10px] uppercase tracking-wider text-[#A39F97] mt-1">Références de Vins</p>
+              <p className="text-[10px] uppercase tracking-wider text-[#A39F97] mt-1">
+                {lang === 'it' ? 'Referenze di Vini' : lang === 'en' ? 'Wine References' : 'Références de Vins'}
+              </p>
             </div>
             <div className="p-3 bg-[#1A1918] rounded">
               <p className="font-serif-luxury text-2xl text-[#DFCA97]">48</p>
-              <p className="text-[10px] uppercase tracking-wider text-[#A39F97] mt-1">Millésimes Rares</p>
+              <p className="text-[10px] uppercase tracking-wider text-[#A39F97] mt-1">
+                {lang === 'it' ? 'Annate Rare' : lang === 'en' ? 'Rare Vintages' : 'Millésimes Rares'}
+              </p>
             </div>
           </div>
         </div>
@@ -91,9 +103,13 @@ export default function WineCellar() {
                   </p>
                 </div>
 
-                <div className="pt-6 mt-4 border-t border-white/5 flex items-center justify-between text-[10px] text-[#A39F97] uppercase tracking-wider">
-                  <span>Conservation à 13°C</span>
-                  <span className="text-[#C5A880]">Flacon Numéroté</span>
+                <div className="pt-6 mt-4 border-t border-white/5 flex items-center justify-between text-[10px] text-[#A39F97] uppercase tracking-wider font-mono">
+                  <span>
+                    {lang === 'it' ? 'Conservazione a 13°C' : lang === 'en' ? 'Stored at 13°C' : 'Conservation à 13°C'}
+                  </span>
+                  <span className="text-[#C5A880]">
+                    {lang === 'it' ? 'Bottiglia Numerata' : lang === 'en' ? 'Numbered Bottle' : 'Flacon Numéroté'}
+                  </span>
                 </div>
               </div>
             ))}

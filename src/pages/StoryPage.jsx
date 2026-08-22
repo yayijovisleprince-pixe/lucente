@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { Award, Feather, ArrowRight, Sparkles, Compass, Eye, Heart, Shield, Wine, Users } from 'lucide-react';
 import { restaurantInfo } from '../data/restaurantData';
 import SEOHead from '../components/SEOHead';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function StoryPage({ onOpenBooking }) {
   const { chef, sommelier } = restaurantInfo;
+  const { lang, t } = useLanguage();
 
   const storySchema = {
     '@type': 'AboutPage',
@@ -44,8 +46,8 @@ export default function StoryPage({ onOpenBooking }) {
   return (
     <div className="bg-nero text-ivoire min-h-screen">
       <SEOHead
-        title="L'Histoire & Le Chef Vincenzo Moretti | LUCENTE — Milano"
-        description="Il a grandi au bruit de la braise, pas au son des diplômes. L'histoire de Vincenzo Moretti et de LUCENTE, restaurant doublement étoilé à Milan."
+        title={lang === 'it' ? "La Storia & il Chef Vincenzo Moretti | LUCENTE — Milano" : lang === 'en' ? "The Story & Chef Vincenzo Moretti | LUCENTE — Milano" : "L'Histoire & Le Chef Vincenzo Moretti | LUCENTE — Milano"}
+        description={lang === 'it' ? "È cresciuto al rumore della brace, non al suono dei diplomi. La storia di Vincenzo Moretti e di LUCENTE, ristorante doppie stelle Michelin a Milano." : lang === 'en' ? "He grew up to the sound of embers, not diplomas. The story of Vincenzo Moretti and LUCENTE, the double Michelin-starred restaurant in Milan." : "Il a grandi au bruit de la braise, pas au son des diplômes. L'histoire de Vincenzo Moretti et de LUCENTE, restaurant doublement étoilé à Milan."}
         image="/images/chef-portrait.webp"
         path="/story"
         schema={storySchema}
@@ -62,18 +64,18 @@ export default function StoryPage({ onOpenBooking }) {
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center space-y-6">
           <span className="typo-eyebrow text-or block animate-float">
-            Capitolo I · L'Origine
+            {t('story.eyebrow')}
           </span>
 
           <h1 className="font-serif-luxury text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-ivoire font-light leading-tight tracking-[0.08em]">
-            Il a grandi au bruit<br />
-            <span className="italic text-or">de la braise.</span>
+            {t('story.heroTitle1')}<br />
+            <span className="italic text-or">{t('story.heroTitle2')}</span>
           </h1>
 
           <div className="w-16 h-[1px] bg-or mx-auto my-6" />
 
           <p className="typo-body text-base sm:text-xl text-ivoire/90 max-w-2xl mx-auto italic font-serif-luxury leading-relaxed font-light">
-            Pas au son des diplômes. Ce que Vincenzo Moretti sait faire, il l'a appris dans une cuisine de Reggio Emilia — avant de traverser Modène, Tokyo et Londres pour comprendre ce qu'il voulait retrouver.
+            {t('story.heroSubtitle')}
           </p>
         </div>
       </section>
@@ -90,8 +92,12 @@ export default function StoryPage({ onOpenBooking }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent opacity-85" />
           <div className="absolute bottom-6 left-8 right-8 flex justify-between items-end">
-            <span className="typo-eyebrow text-or text-[10px]">Langhe, Piemonte · Récolte à l'aube</span>
-            <span className="typo-caption text-muted hidden sm:inline">La matière brute, avant l'assiette</span>
+            <span className="typo-eyebrow text-or text-[10px]">
+              Langhe, Piemonte · {lang === 'it' ? "Raccolta all'alba" : lang === 'en' ? "Dawn harvest" : "Récolte à l'aube"}
+            </span>
+            <span className="typo-caption text-muted hidden sm:inline">
+              {lang === 'it' ? 'La materia prima, prima del piatto' : lang === 'en' ? 'Raw materials, before the plate' : "La matière brute, avant l'assiette"}
+            </span>
           </div>
         </div>
       </section>
@@ -100,24 +106,18 @@ export default function StoryPage({ onOpenBooking }) {
           02. ORIGINS (NARRATIVE)
           ========================================================================= */}
       <section className="py-24 max-w-4xl mx-auto px-6 md:px-12 space-y-8">
-        <span className="typo-eyebrow text-or block">01. Les Origines</span>
+        <span className="typo-eyebrow text-or block">{t('story.originsEyebrow')}</span>
         
         <h2 className="font-serif-luxury text-3xl sm:text-5xl text-ivoire font-light leading-tight">
-          L'Émilie-Romagne, d'abord.
+          {t('story.originsTitle')}
         </h2>
 
         <div className="space-y-6 typo-body text-base sm:text-lg leading-relaxed text-muted font-light">
           <p className="first-letter:font-serif-luxury first-letter:text-6xl first-letter:text-or first-letter:mr-3 first-letter:float-left text-ivoire/95">
-            Il y a quelque chose qu'aucune école de cuisine ne peut vous apprendre : le rythme. Le parfum de la braise de chêne en hiver. Le pétrissage des pâtes au lever du soleil. La lente maturation des balsamiques traditionnels pendant qu'une vie entière passe autour.
+            {t('story.originsText1')}
           </p>
           <p>
-            Vincenzo Moretti a grandi dans cette cuisine-là, à Reggio Emilia. Il y a tout appris — les gestes, les silences, la différence entre un produit médiocre et un produit juste.
-          </p>
-          <p>
-            Modène, Tokyo, Londres sont venus ensuite. Pas pour remplacer Reggio Emilia. Pour comprendre ce que Reggio Emilia avait d'irremplaçable.
-          </p>
-          <p>
-            LUCENTE est la réponse à cette question. Une cuisine italienne qui n'a pas peur d'être italienne — et qui n'a aucune nostalgie d'être autre chose.
+            {t('story.originsText2')}
           </p>
         </div>
       </section>
@@ -139,15 +139,19 @@ export default function StoryPage({ onOpenBooking }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent" />
                 <span className="absolute bottom-4 left-4 px-3 py-1 bg-nero/90 border border-or-subtle text-or typo-eyebrow text-[9px]">
-                  Chef Exécutif & Propriétaire
+                  {lang === 'it' ? 'Chef Esecutivo & Proprietario' : lang === 'en' ? 'Executive Chef & Owner' : 'Chef Exécutif & Propriétaire'}
                 </span>
               </div>
               <h3 className="font-serif-luxury text-3xl text-ivoire">Vincenzo Moretti</h3>
               <p className="typo-body text-sm text-muted leading-relaxed">
-                {chef.bio}
+                {lang === 'it'
+                  ? "Cresciuto al calore della brace emiliana, Vincenzo Moretti ha affinato la sua arte tra Modena, Tokyo e Londra. Da LUCENTE non reinventa la cucina italiana: la spoglia di ogni artificio."
+                  : lang === 'en'
+                  ? "Raised by the warmth of Emilian embers, Vincenzo Moretti refined his craft across Modena, Tokyo, and London. At LUCENTE, he does not reinvent Italian cuisine: he strips it of all excess."
+                  : (typeof chef.bio === 'object' ? chef.bio.fr : chef.bio)}
               </p>
               <blockquote className="border-l-2 border-or pl-4 italic text-ivoire/80 font-serif text-sm">
-                « {chef.quote} »
+                « {lang === 'it' ? "Non si migliora un'albicocca di luglio. Si impara a non rovinarla." : lang === 'en' ? "You don't improve a July apricot. You learn how not to ruin it." : (typeof chef.quote === 'object' ? chef.quote.fr : chef.quote)} »
               </blockquote>
             </div>
 
@@ -161,12 +165,16 @@ export default function StoryPage({ onOpenBooking }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent" />
                 <span className="absolute bottom-4 left-4 px-3 py-1 bg-nero/90 border border-or-subtle text-or typo-eyebrow text-[9px]">
-                  Directeur de la Cave · 1 400 références
+                  {lang === 'it' ? 'Direttore di Cantina · 1.400 referenze' : lang === 'en' ? 'Cellar Director · 1,400 references' : 'Directeur de Cave · 1 400 références'}
                 </span>
               </div>
               <h3 className="font-serif-luxury text-3xl text-ivoire">Gianluca Ferri</h3>
               <p className="typo-body text-sm text-muted leading-relaxed">
-                {sommelier.philosophy}
+                {lang === 'it'
+                  ? "1.400 referenze selezionate per emozione. Dai leggendari Barolo ai vini in anfora dell'Etna, Gianluca Ferri cerca ciò che prolunga il piatto anziché fargli concorrenza."
+                  : lang === 'en'
+                  ? "1,400 references curated by emotion. From legendary Barolos to amphora wines from Etna, Gianluca Ferri seeks what elevates the dish rather than competes with it."
+                  : (typeof sommelier.philosophy === 'object' ? sommelier.philosophy.fr : sommelier.philosophy)}
               </p>
             </div>
 
@@ -178,17 +186,27 @@ export default function StoryPage({ onOpenBooking }) {
           04. PRESS
           ========================================================================= */}
       <section className="py-24 max-w-4xl mx-auto px-6 md:px-12 space-y-10">
-        <span className="typo-eyebrow text-or block">Ce qu'on dit de nous</span>
+        <span className="typo-eyebrow text-or block">
+          {lang === 'it' ? 'Cosa si dice di noi' : lang === 'en' ? 'What they say about us' : 'Ce que la presse en dit'}
+        </span>
 
         <div className="space-y-8">
           {[
             {
-              quote: "LUCENTE fait quelque chose de rare : une cuisine italienne qui n'a pas peur d'être italienne. Ni nostalgique, ni fusionnelle — juste précise, profonde, et étrangement émouvante.",
-              source: "Guide Michelin 2026"
+              quote: lang === 'it'
+                ? "LUCENTE fa qualcosa di raro: una cucina italiana che non ha paura di essere italiana. Né nostalgica, né fusion — solo precisa, profonda, e stranamente commovente."
+                : lang === 'en'
+                ? "LUCENTE does something rare: an Italian cuisine that is not afraid to be Italian. Neither nostalgic nor fusion — just precise, deep, and strangely moving."
+                : "LUCENTE accomplit quelque chose de rare : une cuisine italienne qui n'a pas peur d'être italienne. Ni nostalgique, ni fusion — simplement précise, profonde et étrangement émouvante.",
+              source: lang === 'it' ? "Guida Michelin 2026" : lang === 'en' ? "Michelin Guide 2026" : "Guide Michelin 2026"
             },
             {
-              quote: "La salle plonge dans un demi-obscur doré. Les assiettes arrivent comme des révélations. Vincenzo Moretti a fait de Milan une destination au sens strict du terme.",
-              source: "Le Figaro Gastronomie 2025"
+              quote: lang === 'it'
+                ? "La sala è immersa in una penombra dorata. I piatti arrivano come rivelazioni. Vincenzo Moretti ha reso Milano una destinazione nel senso letterale del termine."
+                : lang === 'en'
+                ? "The room is immersed in golden half-light. The plates arrive like revelations. Vincenzo Moretti has made Milan a destination in the strictest sense of the word."
+                : "La salle est plongée dans une pénombre dorée. Les assiettes arrivent comme des révélations. Vincenzo Moretti a fait de Milan une destination au sens le plus noble.",
+              source: lang === 'it' ? 'Il Corriere del Gusto 2025' : lang === 'en' ? 'The Financial Times 2025' : 'Le Figaro Gastronomie 2025'
             }
           ].map((item, i) => (
             <blockquote key={i} className="border-l-2 border-or pl-6 space-y-2">
@@ -202,13 +220,17 @@ export default function StoryPage({ onOpenBooking }) {
       {/* CTA */}
       <section className="py-24 text-center bg-nero border-t border-white/5">
         <div className="max-w-2xl mx-auto px-6 space-y-6">
-          <h2 className="font-serif-luxury text-3xl sm:text-5xl text-ivoire">Venir à LUCENTE</h2>
-          <p className="text-muted text-sm">28 couverts. Réservations 30 jours à l'avance.</p>
+          <h2 className="font-serif-luxury text-3xl sm:text-5xl text-ivoire">
+            {lang === 'it' ? 'Venire da LUCENTE' : lang === 'en' ? 'Experience LUCENTE' : 'Venir chez LUCENTE'}
+          </h2>
+          <p className="text-muted text-sm">
+            {lang === 'it' ? '28 coperti. Prenotazioni 30 giorni prima.' : lang === 'en' ? '28 covers. Reservations 30 days in advance.' : '28 couverts. Réservations 30 jours à l\'avance.'}
+          </p>
           <button
             onClick={() => onOpenBooking()}
             className="px-10 py-4 bg-or text-nero font-semibold text-xs uppercase tracking-widest hover:bg-ivoire transition-all"
           >
-            Réserver une Table
+            {lang === 'it' ? 'Prenota un Tavolo' : lang === 'en' ? 'Reserve a Table' : 'Réserver une Table'}
           </button>
         </div>
       </section>

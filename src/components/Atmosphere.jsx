@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { spaces } from '../data/restaurantData';
 import { Users, Sparkles, Eye, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Atmosphere({ onOpenBooking }) {
+  const { lang, t } = useLanguage();
   const [selectedSpaceIndex, setSelectedSpaceIndex] = useState(0);
   const activeSpace = spaces[selectedSpaceIndex];
 
@@ -12,12 +14,18 @@ export default function Atmosphere({ onOpenBooking }) {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <p className="text-[11px] uppercase tracking-[0.3em] text-[#C5A880] font-sans">Capitolo IV</p>
+          <p className="text-[11px] uppercase tracking-[0.3em] text-[#C5A880] font-sans">
+            {lang === 'it' ? 'Capitolo V' : lang === 'en' ? 'Chapter V' : 'Capitolo V'}
+          </p>
           <h2 className="font-serif-luxury text-3xl sm:text-4xl md:text-5xl text-[#F3EFEA] font-light">
-            L'Ambiente & L'Atelier
+            {lang === 'it' ? "L'Ambiente & L'Atelier" : lang === 'en' ? 'The Space & Atelier' : "L'Ambiente & L'Atelier"}
           </h2>
           <p className="text-[#A39F97] text-xs sm:text-sm tracking-wider">
-            Une architecture minérale milanaise conçue pour préserver l'intimité et magnifier chaque plat.
+            {lang === 'it'
+              ? "Un'architettura minerale milanese pensata per preservare l'intimità e magnificare ogni piatto."
+              : lang === 'en'
+              ? 'A mineral Milanese architecture designed to preserve intimacy and elevate each dish.'
+              : "Une architecture minérale milanaise conçue pour préserver l'intimité et magnifier chaque plat."}
           </p>
           <div className="w-12 h-[1px] bg-[#C5A880] mx-auto mt-4" />
         </div>
@@ -75,11 +83,13 @@ export default function Atmosphere({ onOpenBooking }) {
                 onClick={() => onOpenBooking(activeSpace.name)}
                 className="w-full py-3.5 bg-[#C5A880] hover:bg-[#DFCA97] text-[#0C0B0A] uppercase tracking-[0.2em] text-xs font-semibold transition-all duration-300 shadow-lg flex items-center justify-center space-x-2"
               >
-                <span>Privatiser ou Réserver cet Espace</span>
+                <span>
+                  {lang === 'it' ? 'Privatizzare o Prenotare questo Spazio' : lang === 'en' ? 'Buyout or Reserve this Space' : 'Privatiser ou Réserver cet Espace'}
+                </span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
-              <p className="text-[10px] text-center text-[#A39F97] tracking-wider">
-                Réservation recommandée 3 semaines à l'avance
+              <p className="text-[10px] text-center text-[#A39F97] tracking-wider font-mono">
+                {lang === 'it' ? 'Prenotazione consigliata 3 settimane in anticipo' : lang === 'en' ? 'Reservation recommended 3 weeks in advance' : "Réservation recommandée 3 semaines à l'avance"}
               </p>
             </div>
           </div>

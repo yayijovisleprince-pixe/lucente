@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Award, ArrowRight, Sparkles, ChevronDown, Feather, Wine, Users, Clock, Flame, Droplet, ArrowUpRight } from 'lucide-react';
+import { Award, ChevronDown, ArrowRight, Feather } from 'lucide-react';
 import { restaurantInfo } from '../data/restaurantData';
 import SEOHead from '../components/SEOHead';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function HomePage({ onOpenBooking }) {
   const [heroLoaded, setHeroLoaded] = useState(false);
   const [activeDishIndex, setActiveDishIndex] = useState(0);
+  const { lang } = useLanguage();
 
   useEffect(() => {
     const timer = setTimeout(() => setHeroLoaded(true), 150);
@@ -17,42 +19,74 @@ export default function HomePage({ onOpenBooking }) {
     {
       id: 'chianina-truffe',
       name: 'Filetto di Chianina, Tartufo Bianco & Oro',
-      subtitle: 'Bœuf Chianina de Toscane · Truffe blanche d\'Alba · Réduction de Barolo',
-      description: 'Maturé 45 jours, fumé au sarment de vigne, posé sur une mousseline de céleri brûlé. Le balsamique de Modène, 25 ans d\'âge, arrive en dernier — une goutte, pas une sauce.',
+      subtitle: lang === 'it'
+        ? "Manzo Chianina toscano · Tartufo bianco d'Alba · Riduzione al Barolo"
+        : lang === 'en'
+        ? "Tuscan Chianina beef · Alba white truffle · Glossy Barolo reduction"
+        : "Bœuf Chianina de Toscane · Truffe blanche d'Alba · Réduction de Barolo",
+      description: lang === 'it'
+        ? "Frollato 45 giorni, affumicato con tralci di vite, adagiato su mousseline di sedano bruciato e balsamico tradizionale di Modena DOP 25 anni."
+        : lang === 'en'
+        ? "45-day dry-aged tenderloin, smoked over vine shoots, set upon charred celeriac purée and 25-year traditional Modena balsamic DOP."
+        : "Maturé 45 jours, fumé au sarment de vigne, posé sur une mousseline de céleri brûlé. Le balsamique de Modène, 25 ans d'âge, arrive en dernier — une goutte, pas une sauce.",
       price: '85 €',
       pairing: 'Barolo Monprivato 2017 — Mascarello',
       image: '/images/hero-dish.webp',
-      tag: 'Acte IV · Terra'
+      tag: lang === 'it' ? 'Atto IV · Terra' : lang === 'en' ? 'Act IV · Terra' : 'Acte IV · Terra'
     },
     {
       id: 'raviolo-caviar',
       name: 'Raviolo Imperiale al Caviale Oscietra',
-      subtitle: 'Un seul raviolo · Langoustine de Méditerranée · 15g Oscietra Royal',
-      description: 'Un raviolo. Pas deux. La pâte est étirée chaque matin à la main jusqu\'à ce qu\'elle soit translucide. À l\'intérieur : langoustine crue, jamais chauffée. Le caviar arrive après.',
+      subtitle: lang === 'it'
+        ? "Un solo raviolo · Scampo mediterraneo · 15g Oscietra Royal"
+        : lang === 'en'
+        ? "Single imperial raviolo · Mediterranean langoustine · 15g Royal Oscietra"
+        : "Un seul raviolo · Langoustine de Méditerranée · 15g Oscietra Royal",
+      description: lang === 'it'
+        ? "Un solo raviolo. La sfoglia è tirata a mano ogni mattina fino alla trasparenza. All'interno: scampo crudo marinato e caviale Oscietra."
+        : lang === 'en'
+        ? "A single handcrafted raviolo. The pasta sheet is rolled every morning until translucent. Inside: raw langoustine and Royal Oscietra caviar."
+        : "Un raviolo. Pas deux. La pâte est étirée chaque matin à la main jusqu'à ce qu'elle soit translucide. À l'intérieur : langoustine crue, jamais chauffée. Le caviar arrive après.",
       price: '75 €',
       pairing: 'Trebbiano d\'Abruzzo 2019 — Valentini',
       image: '/images/pasta-caviar.webp',
-      tag: 'Acte III · Mare'
+      tag: lang === 'it' ? 'Atto III · Mare' : lang === 'en' ? 'Act III · Mare' : 'Acte III · Mare'
     },
     {
       id: 'gambero-rosso',
       name: 'Gambero Rosso di Mazara & Stracciatella',
-      subtitle: 'Crevette rouge crue · Stracciatella fumée · Gel de bergamote',
-      description: 'Pêchée à 700 mètres de profondeur entre la Sicile et la Tunisie. Servie à 12°C exactement — ni plus froide, ni plus chaude. Jamais cuite. Trois éléments. Pas quatre.',
+      subtitle: lang === 'it'
+        ? "Gambero rosso crudo · Stracciatella affumicata · Gel di bergamotto"
+        : lang === 'en'
+        ? "Raw red prawn · Smoked stracciatella · Wild bergamot gel"
+        : "Crevette rouge crue · Stracciatella fumée · Gel de bergamote",
+      description: lang === 'it'
+        ? "Pescato a 700 metri di profondità tra la Sicilia e la Tunisia. Servito a 12°C esatti. Mai cotto. Tre elementi essenziali."
+        : lang === 'en'
+        ? "Fished 700 meters deep between Sicily and Tunisia. Served at precisely 12°C. Never cooked. Three pure elements."
+        : "Pêchée à 700 mètres de profondeur entre la Sicile et la Tunisie. Servie à 12°C exactement — ni plus froide, ni plus chaude. Jamais cuite. Trois éléments. Pas quatre.",
       price: '60 €',
       pairing: 'Etna Bianco Superiore 2021 — Pietradolce',
       image: '/images/prawn-dish.webp',
-      tag: 'Acte II · Sicile'
+      tag: lang === 'it' ? 'Atto II · Sicilia' : lang === 'en' ? 'Act II · Sicily' : 'Acte II · Sicile'
     },
     {
       id: 'tartufo-harvest',
       name: 'Risotto Carnaroli Riserva 7 Anni',
-      subtitle: 'Riz affiné 7 ans · Beurre de montagne · Truffe d\'Alba râpée minute',
-      description: 'Le riz a attendu sept ans dans des silos froids. L\'amidon s\'est cristallisé. La truffe, elle, est râpée en salle, sur le riz chaud — pour que le parfum s\'exhale devant vous.',
+      subtitle: lang === 'it'
+        ? "Riso affinato 7 anni · Burro di malga · Tartufo d'Alba grattugiato al tavolo"
+        : lang === 'en'
+        ? "7-year aged rice · Mountain butter · Freshly shaved Alba truffle"
+        : "Riz affiné 7 ans · Beurre de montagne · Truffe d'Alba râpée minute",
+      description: lang === 'it'
+        ? "Il riso ha riposato 7 anni in silos refrigerati per cristallizzare l'amido. Il tartufo viene grattugiato al momento direttamente sul risotto caldo."
+        : lang === 'en'
+        ? "The rice aged seven years in temperature-controlled silos to crystallize the starch. The truffle is shaved tableside over the steaming risotto."
+        : "Le riz a attendu sept ans dans des silos froids. L'amidon s'est cristallisé. La truffe, elle, est râpée en salle, sur le riz chaud — pour que le parfum s'exhale devant vous.",
       price: '65 €',
       pairing: 'Barbaresco Asili 2016 — Bruno Giacosa',
       image: '/images/truffle-harvest.webp',
-      tag: 'Acte V · Signature'
+      tag: lang === 'it' ? 'Atto V · Firma' : lang === 'en' ? 'Act V · Signature' : 'Acte V · Signature'
     }
   ];
 
@@ -61,30 +95,42 @@ export default function HomePage({ onOpenBooking }) {
   const journalArticles = [
     {
       slug: 'manifeste-du-chiaroscuro-culinaire',
-      category: 'Philosophie & Vision',
-      title: 'Le Manifeste du Chiaroscuro Culinaire',
-      date: '18 Août 2026',
-      readTime: '5 min',
+      category: lang === 'it' ? 'Filosofia & Visione' : lang === 'en' ? 'Philosophy & Vision' : 'Philosophie & Vision',
+      title: lang === 'it' ? 'Il Manifesto del Chiaroscuro Culinario' : lang === 'en' ? 'The Culinary Chiaroscuro Manifesto' : 'Le Manifeste du Chiaroscuro Culinaire',
+      date: lang === 'it' ? '18 Agosto 2026' : lang === 'en' ? 'August 18, 2026' : '18 Août 2026',
+      readTime: lang === 'it' ? '5 min lettura' : lang === 'en' ? '5 min read' : '5 min',
       image: '/images/hero-dish.webp',
-      excerpt: 'L\'ombre n\'est pas l\'absence de lumière. C\'est ce qui lui donne sa direction. Vincenzo Moretti explique pourquoi chaque assiette commence dans le noir.'
+      excerpt: lang === 'it' 
+        ? "L'ombra non è l'assenza di luce. È ciò che le dà direzione. Vincenzo Moretti spiega perché ogni piatto di LUCENTE inizia nel buio."
+        : lang === 'en'
+        ? "Shadow is not the absence of light. It is what gives it direction. Vincenzo Moretti explains why each plate at LUCENTE starts in darkness."
+        : "L'ombre n'est pas l'absence de lumière. C'est ce qui lui donne sa direction. Vincenzo Moretti explique pourquoi chaque assiette commence dans le noir."
     },
     {
       slug: 'secret-des-vins-en-amphore-etna',
-      category: 'Cave & Terroirs',
-      title: 'Le Secret des Vins en Amphore de l\'Etna',
-      date: '11 Août 2026',
-      readTime: '7 min',
+      category: lang === 'it' ? 'Cantina & Terroir' : lang === 'en' ? 'Cellar & Terroir' : 'Cave & Terroirs',
+      title: lang === 'it' ? "Il Segreto dei Vini in Anfora dell'Etna" : lang === 'en' ? 'The Secret of Etna Amphora Wines' : 'Le Secret des Vins en Amphore de l\'Etna',
+      date: lang === 'it' ? '11 Agosto 2026' : lang === 'en' ? 'August 11, 2026' : '11 Août 2026',
+      readTime: lang === 'it' ? '7 min lettura' : lang === 'en' ? '7 min read' : '7 min',
       image: '/images/cellar-architecture.webp',
-      excerpt: 'Dans notre cave, une section entière consacrée aux vins en jarre de terre cuite. Gianluca Ferri explique pourquoi l\'argile dit la vérité là où le bois ment.'
+      excerpt: lang === 'it'
+        ? "Nella nostra cantina, una sezione intera è dedicata ai vini affinati in giare di terracotta dell'Etna. Gianluca Ferri racconta la purezza dell'argilla."
+        : lang === 'en'
+        ? "In our cellar, an entire vault is dedicated to wines aged in terracotta jars from Mount Etna. Gianluca Ferri explains why clay tells the truth."
+        : "Dans notre cave, une section entière consacrée aux vins en jarre de terre cuite. Gianluca Ferri explique pourquoi l'argile dit la vérité là où le bois ment."
     },
     {
       slug: 'alchimie-du-gambero-rosso-mazara',
-      category: 'Saveurs & Technique',
-      title: 'L\'Alchimie du Gambero Rosso de Mazara del Vallo',
-      date: '04 Août 2026',
-      readTime: '4 min',
+      category: lang === 'it' ? 'Sapori & Tecnica' : lang === 'en' ? 'Flavours & Technique' : 'Saveurs & Technique',
+      title: lang === 'it' ? "L'Alchimia del Gambero Rosso di Mazara del Vallo" : lang === 'en' ? 'The Alchemy of Mazara del Vallo Red Prawn' : 'L\'Alchimie du Gambero Rosso de Mazara del Vallo',
+      date: lang === 'it' ? '04 Agosto 2026' : lang === 'en' ? 'August 04, 2026' : '04 Août 2026',
+      readTime: lang === 'it' ? '4 min lettura' : lang === 'en' ? '4 min read' : '4 min',
       image: '/images/prawn-dish.webp',
-      excerpt: 'Il vit à 700 mètres de profondeur. On ne le cuit jamais. On le sert à 12°C. Et il n\'a besoin de rien d\'autre.'
+      excerpt: lang === 'it'
+        ? "Vive a 700 metri di profondità. Non viene mai cotto. Servito a 12°C. E non ha bisogno di nient'altro."
+        : lang === 'en'
+        ? "It lives 700 meters below sea level. Never cooked. Served at 12°C. And needs nothing else."
+        : "Il vit à 700 mètres de profondeur. On ne le cuit jamais. On le sert à 12°C. Et il n'a besoin de rien d'autre."
     }
   ];
 
@@ -178,7 +224,7 @@ export default function HomePage({ onOpenBooking }) {
     <div className="bg-nero text-ivoire">
       <SEOHead
         title="LUCENTE | Alta Cucina Contemporanea — Milano"
-        description="Restaurant doublement étoilé Michelin à Milan. Via Monte Napoleone, 14. Chef Vincenzo Moretti. 28 couverts. Réservations ouvertes 30 jours à l'avance."
+        description={lang === 'it' ? 'Ristorante stellato Michelin a Milano. Via Monte Napoleone, 14. Chef Vincenzo Moretti. 28 coperti. Prenotazioni aperte 30 giorni in anticipo.' : lang === 'en' ? 'Michelin-starred restaurant in Milan. Via Monte Napoleone, 14. Chef Vincenzo Moretti. 28 covers. Reservations open 30 days in advance.' : "Restaurant doublement étoilé Michelin à Milan. Via Monte Napoleone, 14. Chef Vincenzo Moretti. 28 couverts. Réservations ouvertes 30 jours à l'avance."}
         image="/images/hero-dish.webp"
         path="/"
         schema={homeSchema}
@@ -238,13 +284,13 @@ export default function HomePage({ onOpenBooking }) {
               onClick={() => onOpenBooking()}
               className="w-full sm:w-auto px-10 py-4 bg-or hover:bg-ivoire text-nero typo-cta text-xs shadow-2xl transition-all duration-300 hover:scale-105"
             >
-              RÉSERVER UNE TABLE
+              {lang === 'it' ? 'PRENOTA UN TAVOLO' : lang === 'en' ? 'RESERVE A TABLE' : 'RÉSERVER UNE TABLE'}
             </button>
             <Link
               to="/cuisine"
               className="w-full sm:w-auto px-10 py-4 border border-or-subtle hover:border-or bg-surface/80 hover:bg-surface-elevated text-ivoire typo-cta text-xs transition-all duration-300 text-center"
             >
-              DÉCOUVRIR NOTRE CUISINE
+              {lang === 'it' ? 'SCOPRI LA CUCINA' : lang === 'en' ? 'DISCOVER OUR CUISINE' : 'DÉCOUVRIR LA CUISINE'}
             </Link>
           </div>
 
@@ -275,7 +321,7 @@ export default function HomePage({ onOpenBooking }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent opacity-80" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <p className="typo-eyebrow text-or text-[9px]">Langhe, Piemonte · Récolte à l'aube</p>
+                  <p className="typo-eyebrow text-or text-[9px]">Langhe, Piemonte · {lang === 'it' ? "Raccolta all'alba" : lang === 'en' ? "Dawn harvest" : "Récolte à l'aube"}</p>
                   <p className="font-serif-luxury text-xl text-ivoire italic">Tuber Magnatum Pico</p>
                 </div>
               </div>
@@ -284,19 +330,34 @@ export default function HomePage({ onOpenBooking }) {
 
             {/* Right: Manifesto */}
             <div className="lg:col-span-7 space-y-8 lg:pl-6">
-              <span className="typo-eyebrow text-or block">Capitolo I · Filosofia</span>
+              <span className="typo-eyebrow text-or block">
+                {lang === 'it' ? 'Capitolo I · Filosofia' : lang === 'en' ? 'Chapter I · Philosophy' : 'Capitolo I · Philosophie'}
+              </span>
               
               <h2 className="font-serif-luxury text-3xl sm:text-5xl md:text-6xl text-ivoire font-light leading-tight">
-                « Une cuisine italienne<br />
-                <span className="italic text-or">sans nostalgie. »</span>
+                {lang === 'it' ? (
+                  <>« Una cucina italiana<br /><span className="italic text-or">senza nostalgia. »</span></>
+                ) : lang === 'en' ? (
+                  <>« An Italian cuisine<br /><span className="italic text-or">without nostalgia. »</span></>
+                ) : (
+                  <>« Une cuisine italienne<br /><span className="italic text-or">sans nostalgie. »</span></>
+                )}
               </h2>
 
               <p className="typo-body text-base sm:text-lg leading-relaxed text-muted">
-                Vincenzo Moretti n'a pas ouvert LUCENTE pour vous rappeler une trattoria de votre enfance. Il l'a ouvert pour vous montrer ce que la cuisine italienne devient quand on la débarrasse de tout ce qui la couvre.
+                {lang === 'it'
+                  ? "Vincenzo Moretti non ha aperto LUCENTE per ricordarvi una trattoria dell'infanzia. L'ha aperto per mostrare cosa diventa la cucina italiana quando la si spoglia di ogni artificio."
+                  : lang === 'en'
+                  ? "Vincenzo Moretti did not open LUCENTE to remind you of a childhood trattoria. He opened it to show what Italian cuisine becomes when stripped of all disguise."
+                  : "Vincenzo Moretti n'a pas ouvert LUCENTE pour vous rappeler une trattoria de votre enfance. Il l'a ouvert pour vous montrer ce que la cuisine italienne devient quand on la débarrasse de tout ce qui la couvre."}
               </p>
 
               <p className="typo-body text-sm sm:text-base leading-relaxed text-muted">
-                42 producteurs. Pas un supermarché. Chaque produit a un nom, une adresse, une saison. La carte change quand la terre change — pas quand l'imprimeur passe.
+                {lang === 'it'
+                  ? "42 produttori. Nessun supermercato. Ogni prodotto ha un nome, un indirizzo, una stagione. La carta cambia quando cambia la terra."
+                  : lang === 'en'
+                  ? "42 producers. No supermarket. Every product has a name, an address, a season. The menu changes when the earth changes."
+                  : "42 producteurs. Pas un supermarché. Chaque produit a un nom, une adresse, une saison. La carte change quand la terre change — pas quand l'imprimeur passe."}
               </p>
 
               <div className="pt-4 flex items-center space-x-6">
@@ -304,7 +365,7 @@ export default function HomePage({ onOpenBooking }) {
                   to="/story"
                   className="inline-flex items-center space-x-2 text-xs uppercase tracking-widest text-or hover:text-ivoire font-semibold transition-colors"
                 >
-                  <span>Lire l'Histoire de la Maison</span>
+                  <span>{lang === 'it' ? 'Leggi la Storia della Casa' : lang === 'en' ? 'Read the House Story' : "Lire l'Histoire de la Maison"}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -322,13 +383,19 @@ export default function HomePage({ onOpenBooking }) {
         <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
           
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <p className="typo-eyebrow text-or">Capitolo II · Trois Engagements</p>
+            <p className="typo-eyebrow text-or">
+              {lang === 'it' ? 'Capitolo II · Tre Impegni' : lang === 'en' ? 'Chapter II · Three Commitments' : 'Capitolo II · Trois Engagements'}
+            </p>
             <h2 className="typo-h2 text-3xl sm:text-5xl">
-              Ce qui ne change pas.
+              {lang === 'it' ? 'Ciò che non cambia mai.' : lang === 'en' ? 'What never changes.' : 'Ce qui ne change pas.'}
             </h2>
             <div className="w-16 h-[1px] bg-or mx-auto mt-4" />
             <p className="typo-body text-sm max-w-xl mx-auto text-muted">
-              La carte évolue chaque semaine. Ces trois principes, jamais.
+              {lang === 'it'
+                ? 'La carta evolve ogni settimana. Questi tre principi, mai.'
+                : lang === 'en'
+                ? 'The menu evolves every week. These three principles, never.'
+                : 'La carte évolue chaque semaine. Ces trois principes, jamais.'}
             </p>
           </div>
 
@@ -344,7 +411,7 @@ export default function HomePage({ onOpenBooking }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent" />
                 <span className="absolute top-4 left-4 px-3 py-1 bg-nero/90 border border-or-subtle text-or typo-eyebrow text-[9px] rounded">
-                  01. ORIGINE
+                  01. {lang === 'it' ? 'ORIGINE' : lang === 'en' ? 'ORIGIN' : 'ORIGINE'}
                 </span>
               </div>
               <div className="p-8 space-y-3">
@@ -352,7 +419,11 @@ export default function HomePage({ onOpenBooking }) {
                   Radici & Terroirs
                 </h3>
                 <p className="typo-body text-xs leading-relaxed text-muted">
-                  42 producteurs italiens. Chacun a un nom, pas un code EAN. Vincenzo Moretti leur rend visite — il ne leur passe pas de commande par mail.
+                  {lang === 'it'
+                    ? "42 produttori italiani. Ognuno con un nome. Vincenzo Moretti fa loro visita personalmente."
+                    : lang === 'en'
+                    ? "42 Italian producers. Each with a name, not a barcode. Vincenzo Moretti visits them in person."
+                    : "42 producteurs italiens. Chacun a un nom, pas un code EAN. Vincenzo Moretti leur rend visite — il ne leur passe pas de commande par mail."}
                 </p>
               </div>
             </div>
@@ -367,7 +438,7 @@ export default function HomePage({ onOpenBooking }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent" />
                 <span className="absolute top-4 left-4 px-3 py-1 bg-nero/90 border border-or-subtle text-or typo-eyebrow text-[9px] rounded">
-                  02. TECHNIQUE
+                  02. {lang === 'it' ? 'TECNICA' : lang === 'en' ? 'TECHNIQUE' : 'TECHNIQUE'}
                 </span>
               </div>
               <div className="p-8 space-y-3">
@@ -375,7 +446,11 @@ export default function HomePage({ onOpenBooking }) {
                   Mestiere & Precisione
                 </h3>
                 <p className="typo-body text-xs leading-relaxed text-muted">
-                  14 cuisiniers. Chaque geste répété jusqu'à ce qu'il devienne invisible. Le client ne devrait jamais voir l'effort — seulement sentir le résultat.
+                  {lang === 'it'
+                    ? "14 cuochi. Ogni gesto ripetuto fino a diventare invisibile. L'ospite percepisce solo il risultato."
+                    : lang === 'en'
+                    ? "14 chefs. Every gesture repeated until invisible. The guest only experiences the result."
+                    : "14 cuisiniers. Chaque geste répété jusqu'à ce qu'il devienne invisible. Le client ne devrait jamais voir l'effort — seulement sentir le résultat."}
                 </p>
               </div>
             </div>
@@ -390,7 +465,7 @@ export default function HomePage({ onOpenBooking }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent" />
                 <span className="absolute top-4 left-4 px-3 py-1 bg-nero/90 border border-or-subtle text-or typo-eyebrow text-[9px] rounded">
-                  03. SAISON
+                  03. {lang === 'it' ? 'STAGIONE' : lang === 'en' ? 'SEASON' : 'SAISON'}
                 </span>
               </div>
               <div className="p-8 space-y-3">
@@ -398,7 +473,11 @@ export default function HomePage({ onOpenBooking }) {
                   Il Tempo Naturale
                 </h3>
                 <p className="typo-body text-xs leading-relaxed text-muted">
-                  La carte change avec les marchés, pas avec les saisons au sens calendaire. Quand la truffe blanche est belle, elle est là. Quand elle ne l'est pas, elle n'y est pas.
+                  {lang === 'it'
+                    ? "La carta cambia con i mercati. Quando il tartufo bianco è perfetto, è presente. Altrimenti, no."
+                    : lang === 'en'
+                    ? "The menu changes with the markets. When white truffle is exceptional, it is served. When not, it is not."
+                    : "La carte change avec les marchés, pas avec les saisons au sens calendaire. Quand la truffe blanche est belle, elle est là. Quand elle ne l'est pas, elle n'y est pas."}
                 </p>
               </div>
             </div>
@@ -416,16 +495,24 @@ export default function HomePage({ onOpenBooking }) {
           
           <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-8 gap-6">
             <div className="space-y-2">
-              <span className="typo-eyebrow text-or">Capitolo III · Carte & Créations</span>
+              <span className="typo-eyebrow text-or">
+                {lang === 'it' ? 'Capitolo III · Carta & Creazioni' : lang === 'en' ? 'Chapter III · Menu & Creations' : 'Capitolo III · Carte & Créations'}
+              </span>
               <h2 className="typo-h2 text-3xl sm:text-5xl">
-                Quelques plats.<br />Pour commencer.
+                {lang === 'it' ? (
+                  <>Alcuni piatti.<br />Per iniziare.</>
+                ) : lang === 'en' ? (
+                  <>Signature dishes.<br />To begin.</>
+                ) : (
+                  <>Quelques plats.<br />Pour commencer.</>
+                )}
               </h2>
             </div>
             <Link
               to="/menu"
               className="inline-flex items-center space-x-2 text-xs uppercase tracking-widest text-or hover:text-ivoire font-semibold transition-colors"
             >
-              <span>Voir les Menus Dégustation</span>
+              <span>{lang === 'it' ? 'Vedi i Menu Degustazione' : lang === 'en' ? 'View Tasting Menus' : 'Voir les Menus Dégustation'}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -461,7 +548,10 @@ export default function HomePage({ onOpenBooking }) {
                     {isActive && (
                       <div className="mt-3 space-y-2 text-xs text-muted animate-fadeIn">
                         <p>{dish.description}</p>
-                        <p className="text-[11px] text-or/90 italic">Accord conseillé : {dish.pairing}</p>
+                        <p className="text-[11px] text-or/90 italic">
+                          {lang === 'it' ? 'Abbinamento consigliato: ' : lang === 'en' ? 'Recommended pairing: ' : 'Accord conseillé : '}
+                          {dish.pairing}
+                        </p>
                       </div>
                     )}
                   </div>
@@ -510,7 +600,9 @@ export default function HomePage({ onOpenBooking }) {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent opacity-80" />
                 <div className="absolute bottom-6 left-6">
-                  <span className="typo-eyebrow text-or text-[9px]">Chef Exécutif & Propriétaire</span>
+                  <span className="typo-eyebrow text-or text-[9px]">
+                    {lang === 'it' ? 'Chef Esecutivo & Proprietario' : lang === 'en' ? 'Executive Chef & Owner' : 'Chef Exécutif & Propriétaire'}
+                  </span>
                   <p className="font-serif-luxury text-2xl text-ivoire">Vincenzo Moretti</p>
                 </div>
               </div>
@@ -518,14 +610,16 @@ export default function HomePage({ onOpenBooking }) {
 
             {/* Right: Bio & Quote */}
             <div className="lg:col-span-7 space-y-6 lg:pl-6">
-              <span className="typo-eyebrow text-or">Capitolo IV · La Direction Culinaire</span>
+              <span className="typo-eyebrow text-or">
+                {lang === 'it' ? 'Capitolo IV · La Direzione Culinaria' : lang === 'en' ? 'Chapter IV · Culinary Leadership' : 'Capitolo IV · La Direction Culinaire'}
+              </span>
               
               <h2 className="font-serif-luxury text-3xl sm:text-5xl text-ivoire font-light leading-tight">
-                « {restaurantInfo.chef.quote} »
+                « {typeof restaurantInfo.chef.quote === 'object' ? (restaurantInfo.chef.quote[lang] || restaurantInfo.chef.quote.fr) : restaurantInfo.chef.quote} »
               </h2>
 
               <p className="typo-body text-base leading-relaxed text-muted">
-                {restaurantInfo.chef.bio}
+                {typeof restaurantInfo.chef.bio === 'object' ? (restaurantInfo.chef.bio[lang] || restaurantInfo.chef.bio.fr) : restaurantInfo.chef.bio}
               </p>
 
               <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border-t border-white/10">
@@ -533,7 +627,7 @@ export default function HomePage({ onOpenBooking }) {
                   to="/story"
                   className="px-8 py-3.5 bg-or hover:bg-ivoire text-nero typo-cta text-xs transition-all shadow-lg"
                 >
-                  SON HISTOIRE
+                  {lang === 'it' ? 'LA SUA STORIA' : lang === 'en' ? 'HIS STORY' : 'SON HISTOIRE'}
                 </Link>
 
                 <div className="flex items-center space-x-3">
@@ -555,12 +649,18 @@ export default function HomePage({ onOpenBooking }) {
         <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="typo-eyebrow text-or">Capitolo V · L'Ambiente</span>
+            <span className="typo-eyebrow text-or">
+              {lang === 'it' ? "Capitolo V · L'Ambiente" : lang === 'en' ? 'Chapter V · The Space' : "Capitolo V · L'Ambiente"}
+            </span>
             <h2 className="typo-h2 text-3xl sm:text-5xl">
-              28 couverts. Pas un de plus.
+              {lang === 'it' ? '28 coperti. Non uno di più.' : lang === 'en' ? '28 covers. Not one more.' : '28 couverts. Pas un de plus.'}
             </h2>
             <p className="typo-body text-sm max-w-xl mx-auto text-muted">
-              Pierre de lave, noyer canaletto, lumière à la bonne hauteur. L'architecte a conçu la salle pour que deux tablées ne s'entendent jamais — ni ne se voient.
+              {lang === 'it'
+                ? "Pietra lavica, noce canaletto, luce all'altezza perfetta. Due tavoli non si disturbano mai."
+                : lang === 'en'
+                ? "Lava stone, Canaletto walnut, precise lighting. Two tables never overhear nor see each other."
+                : "Pierre de lave, noyer canaletto, lumière à la bonne hauteur. L'architecte a conçu la salle pour que deux tablées ne s'entendent jamais — ni ne se voient."}
             </p>
           </div>
 
@@ -575,13 +675,15 @@ export default function HomePage({ onOpenBooking }) {
               <div className="space-y-1">
                 <span className="typo-eyebrow text-or text-[9px]">Via Monte Napoleone 14, Milano</span>
                 <p className="font-serif-luxury text-2xl text-ivoire">La Sala Chiaroscuro · La Cantina Segreta</p>
-                <p className="typo-caption text-muted">Acoustique feutrée · 28 couverts exclusifs</p>
+                <p className="typo-caption text-muted">
+                  {lang === 'it' ? 'Acustica soffusa · 28 coperti esclusivi' : lang === 'en' ? 'Subdued acoustics · 28 exclusive covers' : 'Acoustique feutrée · 28 couverts exclusifs'}
+                </p>
               </div>
               <Link
                 to="/private-dining"
                 className="px-6 py-3 border border-or-subtle hover:border-or bg-nero/80 text-ivoire typo-cta text-xs transition-all"
               >
-                SALONS PRIVÉS
+                {lang === 'it' ? 'SALE PRIVATE' : lang === 'en' ? 'PRIVATE ROOMS' : 'SALONS PRIVÉS'}
               </Link>
             </div>
           </div>
@@ -597,16 +699,18 @@ export default function HomePage({ onOpenBooking }) {
           
           <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-8 gap-6">
             <div className="space-y-2">
-              <span className="typo-eyebrow text-or">Capitolo VI · Publications</span>
+              <span className="typo-eyebrow text-or">
+                {lang === 'it' ? 'Capitolo VI · Pubblicazioni' : lang === 'en' ? 'Chapter VI · Publications' : 'Capitolo VI · Publications'}
+              </span>
               <h2 className="typo-h2 text-3xl sm:text-5xl">
-                Le Journal de la Maison
+                {lang === 'it' ? 'Il Giornale della Casa' : lang === 'en' ? 'The House Journal' : 'Le Journal de la Maison'}
               </h2>
             </div>
             <Link
               to="/journal"
               className="inline-flex items-center space-x-2 text-xs uppercase tracking-widest text-or hover:text-ivoire font-semibold transition-colors"
             >
-              <span>Toutes les Chroniques</span>
+              <span>{lang === 'it' ? 'Tutte le Cronache' : lang === 'en' ? 'All Chronicles' : 'Toutes les Chroniques'}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -649,7 +753,7 @@ export default function HomePage({ onOpenBooking }) {
                 </div>
 
                 <div className="p-6 pt-0 flex items-center space-x-1.5 text-xs uppercase tracking-wider text-or font-semibold group-hover:translate-x-1 transition-transform">
-                  <span>Lire</span>
+                  <span>{lang === 'it' ? 'Leggi' : lang === 'en' ? 'Read' : 'Lire'}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </Link>
@@ -666,14 +770,20 @@ export default function HomePage({ onOpenBooking }) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-or/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 space-y-8">
-          <span className="typo-eyebrow text-or text-[10px]">Mardi au Samedi · 28 Couverts</span>
+          <span className="typo-eyebrow text-or text-[10px]">
+            {lang === 'it' ? 'Martedì al Sabato · 28 Coperti' : lang === 'en' ? 'Tuesday to Saturday · 28 Covers' : 'Mardi au Samedi · 28 Couverts'}
+          </span>
 
           <h2 className="font-serif-luxury text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-ivoire font-light leading-tight">
-            Votre table vous attend.
+            {lang === 'it' ? 'La vostra tavola vi attende.' : lang === 'en' ? 'Your table is waiting.' : 'Votre table vous attend.'}
           </h2>
 
           <p className="typo-body text-base sm:text-lg text-muted max-w-xl mx-auto font-light leading-relaxed">
-            Les réservations ouvrent 30 jours à l'avance, à minuit. Via Monte Napoleone, 14 — Milan.
+            {lang === 'it'
+              ? 'Le prenotazioni aprono con 30 giorni di anticipo, a mezzanotte. Via Monte Napoleone, 14 — Milano.'
+              : lang === 'en'
+              ? 'Reservations open 30 days in advance, at midnight. Via Monte Napoleone, 14 — Milan.'
+              : "Les réservations ouvrent 30 jours à l'avance, à minuit. Via Monte Napoleone, 14 — Milan."}
           </p>
 
           <div className="pt-4">
@@ -681,12 +791,16 @@ export default function HomePage({ onOpenBooking }) {
               onClick={() => onOpenBooking()}
               className="px-12 py-5 bg-or hover:bg-ivoire text-nero typo-cta text-sm shadow-2xl transition-all duration-300 hover:scale-105"
             >
-              RÉSERVER UNE TABLE
+              {lang === 'it' ? 'PRENOTA UN TAVOLO' : lang === 'en' ? 'RESERVE A TABLE' : 'RÉSERVER UNE TABLE'}
             </button>
           </div>
 
           <p className="typo-caption text-xs text-muted pt-4">
-            Conciergerie : +39 02 8945 7700 &nbsp;·&nbsp; Service voiturier disponible
+            {lang === 'it'
+              ? 'Concierge: +39 02 8945 7700 · Servizio valet parking disponibile'
+              : lang === 'en'
+              ? 'Concierge: +39 02 8945 7700 · Valet parking available'
+              : 'Conciergerie : +39 02 8945 7700 · Service voiturier disponible'}
           </p>
         </div>
       </section>

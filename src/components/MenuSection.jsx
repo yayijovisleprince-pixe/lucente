@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { tastingMenus } from '../data/restaurantData';
+import React, { useState, useMemo } from 'react';
+import { getTastingMenus } from '../data/restaurantData';
 import { Wine, Sparkles, Check, ArrowRight, Info } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function MenuSection({ onSelectMenuForBooking }) {
-  const [activeMenuId, setActiveMenuId] = useState(tastingMenus[0].id);
+  const { lang, t } = useLanguage();
+  const localizedTastingMenus = useMemo(() => getTastingMenus(lang), [lang]);
+  const [activeMenuId, setActiveMenuId] = useState(localizedTastingMenus[0].id);
   const [showPairings, setShowPairings] = useState(true);
 
-  const activeMenu = tastingMenus.find((m) => m.id === activeMenuId) || tastingMenus[0];
+  const activeMenu = localizedTastingMenus.find((m) => m.id === activeMenuId) || localizedTastingMenus[0];
 
   return (
     <section id="percorsi" className="py-24 bg-[#0F0E0D] relative border-t border-white/5">
@@ -19,17 +22,21 @@ export default function MenuSection({ onSelectMenuForBooking }) {
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <p className="text-[11px] uppercase tracking-[0.3em] text-[#C5A880] font-sans">Capitolo II</p>
           <h2 className="font-serif-luxury text-3xl sm:text-4xl md:text-5xl text-[#F3EFEA] font-light">
-            I Percorsi Gastronomici
+            {t('menu.eyebrow')}
           </h2>
           <p className="text-[#A39F97] text-xs sm:text-sm tracking-wider">
-            Trois voyages de dégustation pensés comme des suites poétiques et théâtrales.
+            {lang === 'it'
+              ? 'Tre percorsi di degustazione concepiti come suite poetiche e teatrali.'
+              : lang === 'en'
+              ? 'Three tasting journeys conceived as poetic and theatrical suites.'
+              : 'Trois voyages de dégustation pensés comme des suites poétiques et théâtrales.'}
           </p>
           <div className="w-12 h-[1px] bg-[#C5A880] mx-auto mt-4" />
         </div>
 
         {/* Menu Navigation Tabs */}
         <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12">
-          {tastingMenus.map((menu) => {
+          {localizedTastingMenus.map((menu) => {
             const isActive = menu.id === activeMenuId;
             return (
               <button
@@ -67,7 +74,9 @@ export default function MenuSection({ onSelectMenuForBooking }) {
 
             <div className="flex flex-col sm:flex-row sm:items-center gap-6 lg:text-right">
               <div>
-                <p className="text-[10px] uppercase tracking-widest text-[#A39F97]">Tarif par convive</p>
+                <p className="text-[10px] uppercase tracking-widest text-[#A39F97]">
+                  {lang === 'it' ? 'Prezzo per persona' : lang === 'en' ? 'Price per guest' : 'Tarif par convive'}
+                </p>
                 <p className="font-serif-luxury text-3xl sm:text-4xl text-[#DFCA97] font-light">{activeMenu.price}</p>
                 <p className="text-[11px] text-[#A39F97] font-mono mt-0.5">{activeMenu.winePairingPrice}</p>
               </div>
@@ -76,7 +85,7 @@ export default function MenuSection({ onSelectMenuForBooking }) {
                 onClick={() => onSelectMenuForBooking(activeMenu.name)}
                 className="px-6 py-3.5 bg-[#C5A880] hover:bg-[#DFCA97] text-[#0C0B0A] uppercase tracking-[0.2em] text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-[#C5A880]/20 flex items-center justify-center space-x-2"
               >
-                <span>Réserver ce Menu</span>
+                <span>{lang === 'it' ? 'Prenota questo Menu' : lang === 'en' ? 'Reserve this Menu' : 'Réserver ce Menu'}</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -86,13 +95,21 @@ export default function MenuSection({ onSelectMenuForBooking }) {
           <div className="flex items-center justify-between bg-[#1C1A18] px-5 py-3 rounded border border-white/5 mb-8">
             <div className="flex items-center space-x-3 text-xs text-[#E8E2D5]">
               <Wine className="w-4 h-4 text-[#C5A880]" />
-              <span>Accords Mets & Vins recommandés par le Chef Sommelier Gianluca Ferri</span>
+              <span>
+                {lang === 'it'
+                  ? 'Abbinamento Vini suggerito dal Capo Sommelier Gianluca Ferri'
+                  : lang === 'en'
+                  ? 'Wine pairings recommended by Head Sommelier Gianluca Ferri'
+                  : 'Accords Mets & Vins recommandés par le Chef Sommelier Gianluca Ferri'}
+              </span>
             </div>
             <button
               onClick={() => setShowPairings(!showPairings)}
               className="text-[11px] uppercase tracking-wider text-[#C5A880] hover:underline"
             >
-              {showPairings ? 'Masquer les accords' : 'Afficher les accords'}
+              {showPairings
+                ? (lang === 'it' ? 'Nascondi abbinamenti' : lang === 'en' ? 'Hide pairings' : 'Masquer les accords')
+                : (lang === 'it' ? 'Mostra abbinamenti' : lang === 'en' ? 'Show pairings' : 'Afficher les accords')}
             </button>
           </div>
 
@@ -103,7 +120,9 @@ export default function MenuSection({ onSelectMenuForBooking }) {
                 
                 {/* Act Index */}
                 <div className="md:col-span-2 flex items-baseline space-x-2">
-                  <span className="font-serif-luxury text-[#C5A880] text-lg font-light">Acto {course.act}</span>
+                  <span className="font-serif-luxury text-[#C5A880] text-lg font-light">
+                    {lang === 'it' ? 'Atto' : lang === 'en' ? 'Act' : 'Acte'} {course.act}
+                  </span>
                   <span className="text-white/20 text-xs">—</span>
                 </div>
 
@@ -122,7 +141,7 @@ export default function MenuSection({ onSelectMenuForBooking }) {
                   <div className="md:col-span-4 bg-[#181715] p-3 rounded border border-white/5 md:border-l md:border-t-0 md:border-r-0 md:border-b-0 md:border-[#C5A880]/30">
                     <p className="text-[10px] uppercase tracking-widest text-[#C5A880] flex items-center space-x-1.5 font-mono">
                       <Wine className="w-3 h-3" />
-                      <span>Calice Associato</span>
+                      <span>{lang === 'it' ? 'Calice Associato' : lang === 'en' ? 'Paired Glass' : 'Calice Associé'}</span>
                     </p>
                     <p className="text-xs text-[#E8E2D5] font-serif-luxury italic mt-0.5">
                       {course.pairing}
@@ -138,9 +157,17 @@ export default function MenuSection({ onSelectMenuForBooking }) {
           <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between text-[11px] text-[#A39F97] gap-4">
             <div className="flex items-center space-x-2">
               <Info className="w-4 h-4 text-[#C5A880] flex-shrink-0" />
-              <span>Nos menus évoluent au fil des arrivages quotidiens des artisans italiens. Options végétariennes et ajustements pour allergies sur demande préalable.</span>
+              <span>
+                {lang === 'it'
+                  ? 'I nostri menu evolvono secondo gli arrivi quotidiani dei produttori italiani. Alternative vegetariane e opzioni per allergie su richiesta.'
+                  : lang === 'en'
+                  ? 'Our menus evolve according to daily arrivals from Italian artisans. Vegetarian alternatives and allergen accommodations available on request.'
+                  : 'Nos menus évoluent au fil des arrivages quotidiens des artisans italiens. Options végétariennes et ajustements pour allergies sur demande préalable.'}
+              </span>
             </div>
-            <span className="text-[#C5A880] font-mono tracking-wider flex-shrink-0">Service 100% à Table</span>
+            <span className="text-[#C5A880] font-mono tracking-wider flex-shrink-0">
+              {lang === 'it' ? 'Servizio 100% al Tavolo' : lang === 'en' ? '100% Table Service' : 'Service 100% à Table'}
+            </span>
           </div>
 
         </div>

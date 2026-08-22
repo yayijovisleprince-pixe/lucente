@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function PhilosophySection() {
+  const { lang, t } = useLanguage();
+
   return (
     <section id="philosophy" className="py-28 sm:py-36 bg-nero relative overflow-hidden border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -12,19 +15,34 @@ export default function PhilosophySection() {
           
           {/* Left Column: Monumental Statement */}
           <div className="lg:col-span-7 space-y-8">
-            <span className="typo-eyebrow text-or text-[10px]">SECTION 02 — PHILOSOPHY</span>
+            <span className="typo-eyebrow text-or text-[10px]">
+              {lang === 'it' ? 'FILOSOFIA' : lang === 'en' ? 'PHILOSOPHY' : 'PHILOSOPHIE'}
+            </span>
 
             <h2 className="font-serif-luxury text-3xl sm:text-5xl md:text-6xl text-ivoire font-light leading-[1.15]">
-              « Tradition is not preserved. <br />
-              <span className="italic text-or font-normal">It is reimagined.</span> »
+              {lang === 'it' ? (
+                <>« La tradizione non si conserva. <br /><span className="italic text-or font-normal">Si reinventa.</span> »</>
+              ) : lang === 'en' ? (
+                <>« Tradition is not preserved. <br /><span className="italic text-or font-normal">It is reimagined.</span> »</>
+              ) : (
+                <>« La tradition ne se conserve pas. <br /><span className="italic text-or font-normal">Elle se réinvente.</span> »</>
+              )}
             </h2>
 
             <div className="space-y-6 typo-body text-base text-muted max-w-xl">
               <p>
-                At LUCENTE, we do not view Italian gastronomy as an untouchable museum piece, but as a vibrant, living language. We distill centuries of transalpine culinary memory down to its absolute sensory essence.
+                {lang === 'it'
+                  ? "Da LUCENTE, non consideriamo la gastronomia italiana come un reperto intoccabile, ma come una lingua viva. Distilliamo secoli di memoria culinaria transalpina fino alla sua essenza sensoriale."
+                  : lang === 'en'
+                  ? "At LUCENTE, we do not view Italian gastronomy as an untouchable museum piece, but as a vibrant, living language. We distill centuries of transalpine culinary memory down to its absolute sensory essence."
+                  : "Chez LUCENTE, la gastronomie italienne n'est pas un monument intouchable, mais une langue vivante. Nous distillons des siècles de mémoire culinaire transalpine jusqu'à son essence sensorielle la plus pure."}
               </p>
               <p>
-                Every dish is a precise architectural dialogue between raw, dark mineral textures and the illuminating clarity of modern culinary craft.
+                {lang === 'it'
+                  ? "Ogni piatto è un dialogo architettonico preciso tra materia grezza e chiarezza della cucina contemporanea."
+                  : lang === 'en'
+                  ? "Every dish is a precise architectural dialogue between raw, dark mineral textures and the illuminating clarity of modern culinary craft."
+                  : "Chaque plat est un dialogue architectural précis entre la matière brute et la clarté lumineuse du geste contemporain."}
               </p>
             </div>
 
@@ -33,7 +51,7 @@ export default function PhilosophySection() {
                 to="/story"
                 className="inline-flex items-center space-x-2 text-xs uppercase tracking-[0.25em] text-or hover:text-ivoire font-semibold transition-colors group"
               >
-                <span>Read Our Full Story</span>
+                <span>{lang === 'it' ? 'Leggi la Nostra Storia' : lang === 'en' ? 'Read Our Full Story' : 'Découvrir Notre Histoire'}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
               </Link>
             </div>
@@ -50,8 +68,12 @@ export default function PhilosophySection() {
               <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent opacity-80" />
               
               <div className="absolute bottom-6 left-6 right-6">
-                <span className="typo-eyebrow text-or text-[9px]">L'Atelier de Création</span>
-                <p className="font-serif-luxury text-xl text-ivoire italic">Précision millimétrique & feuillage d'or</p>
+                <span className="typo-eyebrow text-or text-[9px]">
+                  {lang === 'it' ? 'Atelier di Creazione' : lang === 'en' ? 'Creative Atelier' : "L'Atelier de Création"}
+                </span>
+                <p className="font-serif-luxury text-xl text-ivoire italic">
+                  {lang === 'it' ? 'Precisione millimetrica & foglia d’oro' : lang === 'en' ? 'Millimetric precision & gold leaf' : 'Précision millimétrique & feuillage d\'or'}
+                </p>
               </div>
             </div>
 

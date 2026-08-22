@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Send, CheckCircle2, Award, Sparkles } from 'lucide-react';
 import { restaurantInfo } from '../data/restaurantData';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Footer({ onOpenBooking }) {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [emailSubscribed, setEmailSubscribed] = useState(false);
+  const { lang, t } = useLanguage();
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -28,12 +30,12 @@ export default function Footer({ onOpenBooking }) {
         {/* Top Newsletter & Private Circle Invitation */}
         <div className="bg-surface border border-or-subtle rounded-none p-5 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center shadow-2xl">
           <div className="lg:col-span-6 space-y-2">
-            <p className="typo-eyebrow text-or text-[10px] sm:text-[11px]">Cercle Privé · Lettre de la Maison</p>
+            <p className="typo-eyebrow text-or text-[10px] sm:text-[11px]">{t('footer.newsletterEyebrow')}</p>
             <h3 className="font-serif-luxury text-2xl sm:text-3xl lg:text-4xl text-ivoire leading-tight">
-              Avant les autres, connaître la carte.
+              {t('footer.newsletterTitle')}
             </h3>
             <p className="typo-body text-xs sm:text-sm text-muted max-w-lg leading-relaxed">
-              Accès prioritaire aux tables libérées la veille, primeurs de cave et créations de saison. Zéro spam.
+              {t('footer.newsletterText')}
             </p>
           </div>
 
@@ -41,7 +43,7 @@ export default function Footer({ onOpenBooking }) {
             {emailSubscribed ? (
               <div className="p-4 bg-surface-elevated border border-or/40 rounded-none text-center text-xs sm:text-sm text-or font-medium flex items-center justify-center gap-2.5">
                 <CheckCircle2 className="w-5 h-5 text-or flex-shrink-0" />
-                <span>Bienvenue dans le Cercle Privé LUCENTE.</span>
+                <span>{t('footer.newsletterSuccess')}</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="space-y-2">
@@ -49,24 +51,24 @@ export default function Footer({ onOpenBooking }) {
                   <input
                     type="email"
                     required
-                    aria-label="Adresse email pour la newsletter"
-                    placeholder="Votre adresse email"
+                    aria-label={t('footer.newsletterPlaceholder')}
+                    placeholder={t('footer.newsletterPlaceholder')}
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     className="flex-1 bg-[#121210] border border-white/20 focus:border-or text-ivoire placeholder:text-muted/60 px-3.5 sm:px-4 py-3 sm:py-3.5 text-xs sm:text-sm outline-none transition-colors rounded-none w-full"
                   />
                   <button
                     type="submit"
-                    aria-label="S'inscrire à la lettre de la maison"
+                    aria-label={t('footer.newsletterBtn')}
                     style={{ backgroundColor: '#B89B5E', color: '#10100E' }}
                     className="w-full sm:w-auto px-6 py-3 sm:py-3.5 hover:!bg-[#F2EBDD] font-extrabold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 flex-shrink-0 shadow-xl cursor-pointer touch-manipulation group"
                   >
-                    <span className="font-sans font-black text-[#10100E] tracking-widest text-xs">S'INSCRIRE</span>
+                    <span className="font-sans font-black text-[#10100E] tracking-widest text-xs">{t('footer.newsletterBtn')}</span>
                     <Send className="w-3.5 h-3.5 text-[#10100E] stroke-[2.5] group-hover:translate-x-0.5 transition-transform shrink-0" />
                   </button>
                 </div>
                 <p className="text-[10px] text-muted/70">
-                  Confidentialité garantie. Vous pouvez vous désinscrire à tout moment via le lien dédié.
+                  {t('footer.newsletterPrivacy')}
                 </p>
               </form>
             )}
@@ -90,34 +92,40 @@ export default function Footer({ onOpenBooking }) {
               </div>
               <div className="space-y-1">
                 <p className="text-ivoire font-serif-luxury text-base sm:text-lg">PARIS</p>
-                <p className="typo-body text-xs">Avenue Montaigne, 75008 Paris (Ouverture 2027)</p>
+                <p className="typo-body text-xs">
+                  Avenue Montaigne, 75008 Paris ({lang === 'it' ? 'Apertura 2027' : lang === 'en' ? 'Opening 2027' : 'Ouverture 2027'})
+                </p>
               </div>
             </div>
 
             <p className="typo-caption text-[11px] text-muted max-w-sm pt-1">
-              Via Monte Napoleone, 14 · 20121 Milano. 28 couverts. Ouvert mardi au samedi.
+              {lang === 'it'
+                ? 'Via Monte Napoleone, 14 · 20121 Milano. 28 coperti. Aperto da martedì a sabato.'
+                : lang === 'en'
+                ? 'Via Monte Napoleone, 14 · 20121 Milano. 28 covers. Open Tuesday to Saturday.'
+                : 'Via Monte Napoleone, 14 · 20121 Milano. 28 couverts. Ouvert du mardi au samedi.'}
             </p>
           </div>
 
           {/* Col 2: Navigation & Sections (3 cols) */}
           <div className="lg:col-span-3 space-y-3 sm:space-y-4">
             <p className="typo-eyebrow text-ivoire border-b border-white/10 pb-2">
-              EXPLORER
+              {t('footer.navTitle')}
             </p>
             <div className="flex flex-col space-y-2">
-              <Link to="/story" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">NOTRE HISTOIRE</Link>
-              <Link to="/cuisine" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">LA CUISINE</Link>
-              <Link to="/menu" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">MENUS DÉGUSTATION</Link>
-              <Link to="/private-dining" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">ESPACES PRIVÉS</Link>
-              <Link to="/gallery" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">GALERIE</Link>
-              <Link to="/journal" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">JOURNAL</Link>
+              <Link to="/menu" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">{t('nav.menu')}</Link>
+              <Link to="/cuisine" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">{t('nav.cuisine')}</Link>
+              <Link to="/private-dining" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">{t('nav.privateDining')}</Link>
+              <Link to="/story" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">{t('nav.story')}</Link>
+              <Link to="/gallery" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">{t('nav.gallery')}</Link>
+              <Link to="/journal" className="typo-navigation text-muted hover:text-or transition-colors py-0.5">{t('nav.journal')}</Link>
             </div>
           </div>
 
           {/* Col 3: Concierge & Reserve (4 cols) */}
           <div className="lg:col-span-4 space-y-3 sm:space-y-4">
             <p className="typo-eyebrow text-ivoire border-b border-white/10 pb-2">
-              CONCIERGERIE & CONTACT
+              {t('footer.contactTitle')}
             </p>
             <div className="space-y-2.5 text-xs">
               <p className="flex items-center space-x-2">
@@ -132,7 +140,7 @@ export default function Footer({ onOpenBooking }) {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Suivre LUCENTE sur Instagram"
+                aria-label="Follow LUCENTE on Instagram"
                 className="inline-flex items-center space-x-2 text-or hover:text-ivoire transition-colors pt-1 font-mono"
               >
                 <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
@@ -145,10 +153,10 @@ export default function Footer({ onOpenBooking }) {
             <div className="pt-3">
               <button
                 onClick={() => onOpenBooking()}
-                aria-label="Réserver une table à LUCENTE"
+                aria-label={t('footer.reserveBtn')}
                 className="w-full py-3.5 border border-or hover:bg-or hover:text-nero text-or typo-cta text-xs transition-all text-center shadow-lg"
               >
-                RÉSERVER UNE TABLE
+                {t('footer.reserveBtn')}
               </button>
             </div>
           </div>
@@ -158,35 +166,35 @@ export default function Footer({ onOpenBooking }) {
         {/* Bottom Legal, Privacy & Credits - Optimized for mobile tap & clearance */}
         <div className="pt-6 sm:pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-muted gap-4 sm:gap-6">
           <p className="text-center md:text-left text-[11px] tracking-wide text-muted/90">
-            © 2026 LUCENTE S.r.l. Milano. Tous droits réservés.
+            © 2026 LUCENTE S.r.l. Milano. {t('footer.copyright')}
           </p>
-          <nav aria-label="Liens légaux et réglementaires" className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 sm:gap-y-3 text-[11px] uppercase tracking-wider">
+          <nav aria-label="Legal links" className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 sm:gap-y-3 text-[11px] uppercase tracking-wider">
             <Link 
               to="/legal#rgpd" 
               className="text-muted hover:text-or transition-colors py-1 px-1 underline-offset-4 hover:underline"
             >
-              Politique de Confidentialité
+              {t('legal.tabs.privacy')}
             </Link>
             <span className="text-white/20 hidden sm:inline">·</span>
             <Link 
               to="/legal" 
               className="text-muted hover:text-or transition-colors py-1 px-1 underline-offset-4 hover:underline"
             >
-              Mentions Légales
+              {t('legal.tabs.legal')}
             </Link>
             <span className="text-white/20 hidden sm:inline">·</span>
             <Link 
               to="/contact" 
               className="text-muted hover:text-or transition-colors py-1 px-1 underline-offset-4 hover:underline"
             >
-              Contact
+              {lang === 'it' ? 'Contatti' : lang === 'en' ? 'Contact' : 'Contact'}
             </Link>
             <span className="text-white/20 hidden sm:inline">·</span>
             <Link 
               to="/careers" 
               className="text-muted hover:text-or transition-colors py-1 px-1 underline-offset-4 hover:underline"
             >
-              Carrières
+              {lang === 'it' ? 'Carriere' : lang === 'en' ? 'Careers' : 'Carrières'}
             </Link>
           </nav>
         </div>

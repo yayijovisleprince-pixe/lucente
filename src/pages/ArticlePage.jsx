@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Clock, Calendar, Share2, Check, ArrowRight, Feather, Sparkles } from 'lucide-react';
-import { articles } from '../data/journalData';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft, Clock, Share2, Check } from 'lucide-react';
+import { getArticleBySlug, getArticles } from '../data/journalData';
 import SEOHead from '../components/SEOHead';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function ArticlePage() {
   const { slug } = useParams();
-  const navigate = useNavigate();
+  const { lang, t } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copied, setCopied] = useState(false);
 
-  const article = articles.find(a => a.slug === slug) || articles[0];
+  const article = useMemo(() => {
+    return getArticleBySlug(slug, lang) || getArticles(lang)[0];
+  }, [slug, lang]);
 
-  const relatedArticles = articles
-    .filter(a => a.slug !== article.slug)
-    .slice(0, 3);
+  const relatedArticles = useMemo(() => {
+    return getArticles(lang)
+      .filter(a => a.slug !== article.slug)
+      .slice(0, 3);
+  }, [article, lang]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,53 +43,14 @@ export default function ArticlePage() {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const articleSchema = {
-    '@type': 'Article',
-    '@id': `https://lucente-milano.com/journal/${article.slug}#article`,
-    'headline': article.title,
-    'description': article.excerpt,
-    'image': `https://lucente-milano.com${article.image}`,
-    'datePublished': '2026-08-18',
-    'dateModified': '2026-08-22',
-    'author': {
-      '@type': 'Person',
-      'name': article.author?.name || 'Vincenzo Moretti',
-      'jobTitle': article.author?.role || 'Chef Exécutif'
-    },
-    'publisher': {
-      '@type': 'Restaurant',
-      'name': 'LUCENTE',
-      'url': 'https://lucente-milano.com',
-      'logo': 'https://lucente-milano.com/images/hero-dish.webp'
-    },
-    'mainEntityOfPage': {
-      '@type': 'WebPage',
-      '@id': `https://lucente-milano.com/journal/${article.slug}`
-    },
-    'breadcrumb': {
-      '@type': 'BreadcrumbList',
-      'itemListElement': [
-        { '@type': 'ListItem', 'position': 1, 'name': 'Accueil', 'item': 'https://lucente-milano.com/' },
-        { '@type': 'ListItem', 'position': 2, 'name': 'Le Journal', 'item': 'https://lucente-milano.com/journal' },
-        { '@type': 'ListItem', 'position': 3, 'name': article.title, 'item': `https://lucente-milano.com/journal/${article.slug}` }
-      ]
-    }
-  };
-
   return (
     <div className="bg-nero text-ivoire min-h-screen pt-28 pb-32 selection:bg-or selection:text-nero">
       <SEOHead
-        title={`${article.title} | Le Journal LUCENTE — Milano`}
+        title={`${article.title} | ${lang === 'it' ? 'Il Giornale' : lang === 'en' ? 'The Journal' : 'Le Journal'} LUCENTE — Milano`}
         description={article.excerpt}
         image={article.image}
         path={`/journal/${article.slug}`}
         type="article"
-        article={{
-          datePublished: '2026-08-18',
-          author: article.author?.name || 'Vincenzo Moretti',
-          section: article.categoryLabel || 'Gastronomie'
-        }}
-        schema={articleSchema}
       />
 
       {/* Reading Progress Indicator */}
@@ -98,10 +64,10 @@ export default function ArticlePage() {
         <div>
           <Link
             to="/journal"
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-muted hover:text-or transition-colors font-mono"
+            className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-muted hover:text-or transition-colors"
           >
             <ArrowLeft size={14} />
-            <span>Retour aux Chroniques</span>
+            <span>{lang === 'it' ? 'Torna al Giornale' : lang === 'en' ? 'Back to Journal' : 'Retour au Journal'}</span>
           </Link>
         </div>
 
@@ -144,7 +110,11 @@ export default function ArticlePage() {
               className="flex items-center gap-2 px-3 py-1.5 bg-surface text-muted hover:text-or text-xs border border-white/10 transition-all"
             >
               {copied ? <Check size={14} className="text-or" /> : <Share2 size={14} />}
-              <span>{copied ? 'Lien copié' : 'Partager'}</span>
+              <span>
+                {copied
+                  ? (lang === 'it' ? 'Link copiato' : lang === 'en' ? 'Link copied' : 'Lien copié')
+                  : (lang === 'it' ? 'Condividi' : lang === 'en' ? 'Share' : 'Partager')}
+              </span>
             </button>
           </div>
         </header>
@@ -191,7 +161,9 @@ export default function ArticlePage() {
 
         {/* Related Articles */}
         <section className="pt-16 border-t border-white/10 space-y-8">
-          <h3 className="font-serif-luxury text-2xl text-ivoire">Autres Chroniques</h3>
+          <h3 className="font-serif-luxury text-2xl text-ivoire">
+            {lang === 'it' ? 'Altre Cronache' : lang === 'en' ? 'Other Chronicles' : 'Autres Chroniques'}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedArticles.map((rel) => (
               <Link

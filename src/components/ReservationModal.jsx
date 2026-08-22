@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 import ReservationFlow from './ReservationFlow';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function ReservationModal({
   isOpen,
@@ -8,6 +9,8 @@ export default function ReservationModal({
   initialMenu = '',
   initialSpace = ''
 }) {
+  const { lang } = useLanguage();
+
   // ESC key listener to close modal
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -44,7 +47,7 @@ export default function ReservationModal({
         {/* Modal Close Button */}
         <button
           onClick={onClose}
-          aria-label="Fermer la fenêtre de réservation"
+          aria-label={lang === 'it' ? 'Chiudi finestra di prenotazione' : lang === 'en' ? 'Close reservation window' : 'Fermer la fenêtre de réservation'}
           className="absolute top-6 right-6 z-20 p-2.5 rounded-full bg-nero/80 border border-white/10 text-muted hover:text-ivoire hover:border-or transition-all group"
         >
           <X className="w-5 h-5 text-muted group-hover:text-ivoire" />
@@ -52,7 +55,7 @@ export default function ReservationModal({
 
         {/* Modal Header Title for Screen Readers */}
         <h2 id="modal-booking-title" className="sr-only">
-          Conciergerie & Réservation de Table — LUCENTE Milano
+          {lang === 'it' ? 'Conciergerie & Prenotazione Tavolo — LUCENTE Milano' : lang === 'en' ? 'Concierge & Table Reservation — LUCENTE Milano' : 'Conciergerie & Réservation de Table — LUCENTE Milano'}
         </h2>
 
         {/* Modal Body: Embedded Step-by-Step Concierge Flow */}

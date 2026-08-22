@@ -1,7 +1,9 @@
 import React from 'react';
 import { CheckCircle2, AlertCircle, X } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Toast({ toast, onClose }) {
+  const { lang, t } = useLanguage();
   if (!toast) return null;
 
   const isSuccess = toast.type === 'success';
@@ -14,10 +16,16 @@ export default function Toast({ toast, onClose }) {
         <AlertCircle className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" />
       )}
       <div className="flex-1 space-y-1">
-        <p className="typo-eyebrow text-[10px] text-ivoire">{toast.title || (isSuccess ? 'Succès' : 'Information')}</p>
+        <p className="typo-eyebrow text-[10px] text-ivoire">
+          {toast.title || (isSuccess ? (lang === 'it' ? 'Completato' : lang === 'en' ? 'Success' : 'Succès') : (lang === 'it' ? 'Informazione' : lang === 'en' ? 'Information' : 'Information'))}
+        </p>
         <p className="typo-body text-xs text-muted leading-relaxed">{toast.message}</p>
       </div>
-      <button onClick={onClose} aria-label="Fermer la notification" className="text-muted hover:text-ivoire p-1">
+      <button
+        onClick={onClose}
+        aria-label={lang === 'it' ? 'Chiudi la notifica' : lang === 'en' ? 'Close notification' : 'Fermer la notification'}
+        className="text-muted hover:text-ivoire p-1"
+      >
         <X className="w-4 h-4" />
       </button>
     </div>

@@ -8,8 +8,7 @@ export default defineConfig({
     react()
   ],
   server: {
-    port: 5175,
-    open: false
+    host: true
   },
   build: {
     cssCodeSplit: true,

@@ -3,24 +3,28 @@ import { Link } from 'react-router-dom';
 import { 
   BookOpen, ArrowRight, Clock, Calendar, Sparkles, Search, Feather, Layers, ArrowUpRight
 } from 'lucide-react';
-import { journalCategories, articles } from '../data/journalData';
+import { journalCategories, getArticles } from '../data/journalData';
 import SEOHead from '../components/SEOHead';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function JournalPage() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
+  const { lang, t } = useLanguage();
+
+  const localizedArticles = useMemo(() => getArticles(lang), [lang]);
 
   const filteredArticles = useMemo(() => {
-    return articles.filter(art => {
+    return localizedArticles.filter(art => {
       const matchesCategory = selectedCategory === 'ALL' || art.category === selectedCategory;
       const matchesSearch = searchQuery === '' || 
         art.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         art.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, localizedArticles]);
 
-  const featuredArticle = articles.find(a => a.featured) || articles[0];
+  const featuredArticle = localizedArticles.find(a => a.featured) || localizedArticles[0];
 
   const journalSchema = {
     '@type': 'CollectionPage',
@@ -40,8 +44,8 @@ export default function JournalPage() {
   return (
     <div className="bg-nero text-ivoire min-h-screen pt-32 pb-28">
       <SEOHead
-        title="Le Journal — Chroniques & Essais | LUCENTE — Milano"
-        description="Philosophie du Chiaroscuro, vins en amphore de l'Etna, portraits de brigade. Les chroniques de LUCENTE par Vincenzo Moretti et Gianluca Ferri."
+        title={lang === 'it' ? 'Il Giornale — Cronache & Saggi | LUCENTE — Milano' : lang === 'en' ? 'The Journal — Chronicles & Essays | LUCENTE — Milano' : 'Le Journal — Chroniques & Essais | LUCENTE — Milano'}
+        description={lang === 'it' ? 'Filosofia del Chiaroscuro, vini in anfora dell\'Etna, ritratti di brigata. Le cronache di LUCENTE per Vincenzo Moretti e Gianluca Ferri.' : lang === 'en' ? 'Chiaroscuro philosophy, amphora wines from Etna, brigade portraits. The chronicles of LUCENTE by Vincenzo Moretti and Gianluca Ferri.' : 'Philosophie du Chiaroscuro, vins en amphore de l\'Etna, portraits de brigade. Les chroniques de LUCENTE par Vincenzo Moretti et Gianluca Ferri.'}
         image="/images/hero-dish.webp"
         path="/journal"
         schema={journalSchema}
@@ -52,12 +56,18 @@ export default function JournalPage() {
         {/* Header */}
         <div className="border-b border-white/10 pb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="space-y-4 max-w-2xl">
-            <span className="typo-eyebrow text-or block">Publications & Réflexions</span>
+            <span className="typo-eyebrow text-or block">
+              {lang === 'it' ? 'Pubblicazioni & Riflessioni' : lang === 'en' ? 'Publications & Reflections' : 'Publications & Réflexions'}
+            </span>
             <h1 className="font-serif-luxury text-4xl sm:text-6xl md:text-7xl text-ivoire font-light leading-tight">
-              Le Journal
+              {lang === 'it' ? 'Il Giornale' : lang === 'en' ? 'The Journal' : 'Le Journal'}
             </h1>
             <p className="typo-body text-base text-muted">
-              Ce que la cuisine ne peut pas dire dans l'assiette, on l'écrit ici. Philosophie, technique, portraits — par Vincenzo Moretti et la brigade.
+              {lang === 'it'
+                ? "Ciò che la cucina non può dire nel piatto, lo scriviamo qui. Filosofia, tecnica, ritratti — di Vincenzo Moretti e la brigata."
+                : lang === 'en'
+                ? "What the cuisine cannot say on the plate, we write here. Philosophy, technique, portraits — by Vincenzo Moretti and the brigade."
+                : "Ce que la cuisine ne peut pas dire dans l'assiette, nous l'écrivons ici. Philosophie, technique, portraits — par Vincenzo Moretti et la brigade."}
             </p>
           </div>
 
@@ -66,7 +76,7 @@ export default function JournalPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Chercher dans le journal..."
+              placeholder={lang === 'it' ? 'Cerca nel giornale...' : lang === 'en' ? 'Search the journal...' : 'Chercher dans le journal...'}
               className="w-full bg-surface border border-white/10 px-4 py-2.5 pl-10 text-xs text-ivoire placeholder:text-muted/60 focus:outline-none focus:border-or/50 transition-colors"
             />
             <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted" />
@@ -75,19 +85,31 @@ export default function JournalPage() {
 
         {/* Category filters */}
         <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none">
-          {journalCategories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 text-xs uppercase tracking-widest font-medium transition-all ${
-                selectedCategory === cat.id
-                  ? 'bg-or text-nero font-semibold shadow-lg'
-                  : 'bg-surface text-muted hover:text-ivoire border border-white/5'
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+          {journalCategories.map((cat) => {
+            const catLabel = cat.id === 'ALL'
+              ? (lang === 'it' ? 'Tutte' : lang === 'en' ? 'All' : 'Toutes')
+              : cat.id === 'PHILOSOPHY'
+              ? (lang === 'it' ? 'Filosofia' : lang === 'en' ? 'Philosophy' : 'Philosophie')
+              : cat.id === 'WINE'
+              ? (lang === 'it' ? 'Cantina & Vini' : lang === 'en' ? 'Cellar & Wines' : 'Cave & Vins')
+              : cat.id === 'FOOD'
+              ? (lang === 'it' ? 'Sapori' : lang === 'en' ? 'Flavours' : 'Saveurs')
+              : (lang === 'it' ? 'Ritratti' : lang === 'en' ? 'Portraits' : 'Portraits');
+
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-4 py-2 text-xs uppercase tracking-widest font-medium transition-all ${
+                  selectedCategory === cat.id
+                    ? 'bg-or text-nero font-semibold shadow-lg'
+                    : 'bg-surface text-muted hover:text-ivoire border border-white/5'
+                }`}
+              >
+                {catLabel}
+              </button>
+            );
+          })}
         </div>
 
         {/* Featured Article */}
@@ -108,7 +130,7 @@ export default function JournalPage() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <span className="px-3 py-1 bg-or text-nero text-[10px] uppercase font-mono font-bold tracking-widest">
-                      Chronique Signature
+                      {lang === 'it' ? 'Cronaca d\'Autore' : lang === 'en' ? 'Signature Chronicle' : 'Chronique Signature'}
                     </span>
                     <span className="text-xs uppercase font-mono text-muted tracking-widest">
                       {featuredArticle.categoryLabel}
@@ -126,7 +148,9 @@ export default function JournalPage() {
 
                 <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs text-muted font-mono">
                   <span>{featuredArticle.date} · {featuredArticle.readingTime}</span>
-                  <span className="text-or inline-flex items-center gap-1">Lire <ArrowUpRight size={13} /></span>
+                  <span className="text-or inline-flex items-center gap-1">
+                    {lang === 'it' ? 'Leggi' : lang === 'en' ? 'Read' : 'Lire'} <ArrowUpRight size={13} />
+                  </span>
                 </div>
               </div>
             </div>
@@ -172,7 +196,7 @@ export default function JournalPage() {
               </div>
 
               <div className="p-6 pt-0 flex items-center gap-1.5 text-xs text-or font-semibold font-sans group-hover:translate-x-1 transition-transform">
-                <span>Lire</span>
+                <span>{lang === 'it' ? 'Leggi' : lang === 'en' ? 'Read' : 'Lire'}</span>
                 <ArrowRight size={13} />
               </div>
             </Link>

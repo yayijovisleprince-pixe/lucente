@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { VolumeX, Calendar, SkipForward, Menu, X } from 'lucide-react';
+import { VolumeX, Calendar, SkipForward, Menu, X, Globe } from 'lucide-react';
 import { audioTracks } from './AudioPlayer';
 import { restaurantInfo } from '../data/restaurantData';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Navigation({ 
   onOpenBooking, 
@@ -16,6 +17,7 @@ export default function Navigation({
   const [hoveredImage, setHoveredImage] = useState('/images/hero-dish.webp');
   const [milanTime, setMilanTime] = useState('');
   const location = useLocation();
+  const { lang, setLang, t } = useLanguage();
 
   const activeTrack = audioTracks[currentTrackIndex] || audioTracks[0];
 
@@ -45,12 +47,12 @@ export default function Navigation({
   }, [location.pathname]);
 
   const navLinks = [
-    { label: 'HISTOIRE', path: '/story', image: '/images/chef-craft.webp', sub: "L'Héritage & Le Chef" },
-    { label: 'CUISINE', path: '/cuisine', image: '/images/hero-dish.webp', sub: 'Manifeste & Matière' },
-    { label: 'MENU', path: '/menu', image: '/images/pasta-caviar.webp', sub: 'Les 3 Percorsi Gastronomiques' },
-    { label: 'ESPACES PRIVÉS', path: '/private-dining', image: '/images/dining-room.webp', sub: 'Salons & Table du Chef' },
-    { label: 'GALERIE', path: '/gallery', image: '/images/table-ambiance.webp', sub: 'Anthologie Visuelle' },
-    { label: 'JOURNAL', path: '/journal', image: '/images/dining-room.webp', sub: 'Chroniques Culinaires' },
+    { labelKey: 'nav.menu',          path: '/menu',          image: '/images/pasta-caviar.webp',  sub: t('menu.eyebrow') },
+    { labelKey: 'nav.cuisine',       path: '/cuisine',       image: '/images/hero-dish.webp',     sub: lang === 'it' ? 'Manifesto & Materia' : lang === 'en' ? 'Manifesto & Matter' : 'Manifeste & Matière' },
+    { labelKey: 'nav.privateDining', path: '/private-dining',image: '/images/dining-room.webp',   sub: lang === 'it' ? "Sale & Chef's Table" : lang === 'en' ? "Rooms & Chef's Table" : "Salons & Chef's Table" },
+    { labelKey: 'nav.story',         path: '/story',         image: '/images/chef-craft.webp',    sub: lang === 'it' ? "L'Origine & Lo Chef" : lang === 'en' ? "The Origin & The Chef" : "L'Origine & Le Chef" },
+    { labelKey: 'nav.gallery',       path: '/gallery',       image: '/images/table-ambiance.webp',sub: lang === 'it' ? 'Antologia Visiva' : lang === 'en' ? 'Visual Anthology' : 'Anthologie Visuelle' },
+    { labelKey: 'nav.journal',       path: '/journal',       image: '/images/dining-room.webp',   sub: lang === 'it' ? 'Cronache Culinarie' : lang === 'en' ? 'Culinary Chronicles' : 'Chroniques Culinaires' },
   ];
 
   return (
@@ -77,13 +79,13 @@ export default function Navigation({
               const isActive = location.pathname === link.path;
               return (
                 <Link
-                  key={link.label}
+                  key={link.labelKey}
                   to={link.path}
                   className={`typo-navigation text-[11px] xl:text-xs tracking-[0.16em] xl:tracking-[0.18em] transition-all duration-300 relative py-1 ${
                     isActive ? 'text-or' : 'text-ivoire/80 hover:text-or'
                   }`}
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                   {isActive && (
                     <span className="absolute bottom-0 left-0 right-0 h-[1px] bg-or" />
                   )}
@@ -102,18 +104,49 @@ export default function Navigation({
               <span className="text-ivoire font-medium font-mono">{milanTime || '20:00'}</span>
             </div>
 
+            {/* Language Switcher Desktop (FR / IT / EN) */}
+            <div className="flex items-center gap-0.5 bg-surface border border-white/10 rounded-full p-0.5">
+              <button
+                onClick={() => setLang('fr')}
+                aria-label="Français"
+                className={`px-2 py-1 text-[10px] font-mono uppercase tracking-wider rounded-full transition-all ${
+                  lang === 'fr' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
+                }`}
+              >
+                FR
+              </button>
+              <button
+                onClick={() => setLang('it')}
+                aria-label="Italiano"
+                className={`px-2 py-1 text-[10px] font-mono uppercase tracking-wider rounded-full transition-all ${
+                  lang === 'it' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
+                }`}
+              >
+                IT
+              </button>
+              <button
+                onClick={() => setLang('en')}
+                aria-label="English"
+                className={`px-2 py-1 text-[10px] font-mono uppercase tracking-wider rounded-full transition-all ${
+                  lang === 'en' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+
             {/* Audio Toggle & 6-Track Selector */}
             <div className="flex items-center bg-surface border border-or-subtle rounded-full p-1 gap-1">
               <button
                 onClick={onToggleAudio}
                 data-cursor="SOUND"
-                aria-label={isAudioPlaying ? "Couper la musique" : "Activer la musique"}
+                aria-label={isAudioPlaying ? (lang === 'it' ? 'Disattiva musica' : lang === 'en' ? 'Mute music' : 'Couper la musique') : (lang === 'it' ? 'Attiva musica' : lang === 'en' ? 'Enable music' : 'Activer la musique')}
                 className={`h-7 px-2.5 flex items-center justify-center gap-1.5 rounded-full transition-all text-[10px] font-mono uppercase tracking-wider ${
                   isAudioPlaying
                     ? 'bg-or text-nero font-bold shadow-md'
                     : 'text-muted hover:text-ivoire'
                 }`}
-                title={isAudioPlaying ? "Couper la musique" : "Activer la musique"}
+                title={isAudioPlaying ? (lang === 'it' ? 'Disattiva musica' : lang === 'en' ? 'Mute music' : 'Couper la musique') : (lang === 'it' ? 'Attiva musica' : lang === 'en' ? 'Enable music' : 'Activer la musique')}
               >
                 {isAudioPlaying ? (
                   <>
@@ -133,8 +166,8 @@ export default function Navigation({
               {isAudioPlaying && onNextTrack && (
                 <button
                   onClick={onNextTrack}
-                  aria-label="Morceau suivant"
-                  title={`Changer de morceau (${currentTrackIndex + 1}/6) : ${activeTrack.title}`}
+                  aria-label={lang === 'it' ? 'Brano successivo' : lang === 'en' ? 'Next track' : 'Morceau suivant'}
+                  title={`${lang === 'it' ? 'Cambia brano' : lang === 'en' ? 'Change track' : 'Changer de morceau'} (${currentTrackIndex + 1}/6) : ${activeTrack.title}`}
                   className="w-6 h-6 rounded-full flex items-center justify-center text-or hover:text-ivoire hover:bg-white/10 transition-colors"
                 >
                   <SkipForward size={11} />
@@ -142,15 +175,15 @@ export default function Navigation({
               )}
             </div>
 
-            {/* CTA RÉSERVER — Bouton d'or plein et prestigieux */}
+            {/* CTA RESERVE — Premium gold button */}
             <button
               onClick={() => onOpenBooking()}
               data-cursor="RESERVE"
-              aria-label="Réserver une table à LUCENTE"
+              aria-label={t('nav.reserve')}
               className="px-5 py-2 bg-or hover:bg-ivoire text-nero font-semibold text-xs uppercase tracking-[0.18em] transition-all duration-300 shadow-md shadow-or/20 hover:shadow-or/40 border border-or shrink-0 flex items-center gap-2"
             >
               <Calendar className="w-3.5 h-3.5" />
-              <span>RÉSERVER</span>
+              <span>{t('nav.reserve')}</span>
             </button>
           </div>
 
@@ -161,13 +194,13 @@ export default function Navigation({
             <div className="flex items-center bg-surface border border-or-subtle rounded-full p-0.5 gap-0.5 shadow-sm">
               <button
                 onClick={onToggleAudio}
-                aria-label={isAudioPlaying ? "Couper la musique" : "Activer la musique"}
+                aria-label={isAudioPlaying ? (lang === 'it' ? 'Disattiva musica' : lang === 'en' ? 'Mute music' : 'Couper la musique') : (lang === 'it' ? 'Attiva musica' : lang === 'en' ? 'Enable music' : 'Activer la musique')}
                 className={`p-1.5 h-8 w-8 rounded-full flex items-center justify-center transition-all shrink-0 ${
                   isAudioPlaying 
                     ? 'bg-or text-nero font-bold shadow-md' 
                     : 'text-muted hover:text-ivoire'
                 }`}
-                title={isAudioPlaying ? `Musique active : ${activeTrack.title}` : "Activer la musique"}
+                title={isAudioPlaying ? `${lang === 'it' ? 'Musica attiva' : lang === 'en' ? 'Music active' : 'Musique active'} : ${activeTrack.title}` : (lang === 'it' ? 'Attiva musica' : lang === 'en' ? 'Enable music' : 'Activer la musique')}
               >
                 {isAudioPlaying ? (
                   <div className="flex items-center gap-0.5 h-2.5">
@@ -184,8 +217,8 @@ export default function Navigation({
               {isAudioPlaying && onNextTrack && (
                 <button
                   onClick={onNextTrack}
-                  aria-label="Morceau suivant"
-                  title={`Changer de morceau (${currentTrackIndex + 1}/${audioTracks.length}) : ${activeTrack.title}`}
+                  aria-label={lang === 'it' ? 'Brano successivo' : lang === 'en' ? 'Next track' : 'Morceau suivant'}
+                  title={`${lang === 'it' ? 'Cambia brano' : lang === 'en' ? 'Change track' : 'Changer de morceau'} (${currentTrackIndex + 1}/${audioTracks.length}) : ${activeTrack.title}`}
                   className="w-7 h-7 rounded-full flex items-center justify-center text-or hover:text-ivoire hover:bg-white/10 transition-colors"
                 >
                   <SkipForward size={11} />
@@ -193,21 +226,21 @@ export default function Navigation({
               )}
             </div>
 
-            {/* Bouton RÉSERVER sur Mobile/Tablette */}
+            {/* Bouton RESERVE sur Mobile/Tablette */}
             <button
               onClick={() => onOpenBooking()}
-              aria-label="Réserver une table à LUCENTE"
+              aria-label={t('nav.reserve')}
               className="px-2.5 sm:px-4 py-1.5 sm:py-2 bg-or text-nero font-bold text-[10px] sm:text-xs uppercase tracking-wider border border-or shadow-md shrink-0 flex items-center gap-1 sm:gap-1.5"
             >
               <Calendar size={12} className="shrink-0" />
-              <span>RÉSERVER</span>
+              <span>{t('nav.reserve')}</span>
             </button>
 
             {/* Menu Hamburger Accessible sur Mobile & Tablette */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-1.5 sm:p-2 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded bg-surface border border-white/15 text-ivoire hover:text-or hover:border-or/50 transition-all focus:outline-none shrink-0"
-              aria-label={mobileMenuOpen ? "Fermer le menu de navigation" : "Ouvrir le menu de navigation"}
+              aria-label={mobileMenuOpen ? (lang === 'it' ? 'Chiudi menu di navigazione' : lang === 'en' ? 'Close navigation menu' : 'Fermer le menu de navigation') : (lang === 'it' ? 'Apri menu di navigazione' : lang === 'en' ? 'Open navigation menu' : 'Ouvrir le menu de navigation')}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu-overlay"
             >
@@ -233,10 +266,10 @@ export default function Navigation({
             </Link>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              aria-label="Fermer le menu"
+              aria-label={lang === 'it' ? 'Chiudi il menu' : lang === 'en' ? 'Close menu' : 'Fermer le menu'}
               className="flex items-center space-x-1.5 px-3 py-1.5 bg-surface border border-white/10 rounded-full text-ivoire hover:text-or hover:border-or text-[11px] sm:text-xs uppercase tracking-widest transition-colors"
             >
-              <span>Fermer</span>
+              <span>{lang === 'it' ? 'Chiudi' : lang === 'en' ? 'Close' : 'Fermer'}</span>
               <X size={13} className="text-or" />
             </button>
           </div>
@@ -251,8 +284,16 @@ export default function Navigation({
             <div className="absolute inset-0 bg-gradient-to-t from-nero via-transparent to-transparent opacity-90" />
             <div className="absolute bottom-12 left-12 right-12 space-y-2">
               <p className="typo-eyebrow text-or text-[9px]">Milano · Via Monte Napoleone, 14</p>
-              <p className="font-serif-luxury text-2xl text-ivoire italic">« Il ne s'agit pas d'un repas. Il s'agit d'une soirée. »</p>
-              <p className="typo-metadata text-muted">28 Couverts Exclusifs</p>
+              <p className="font-serif-luxury text-2xl text-ivoire italic">
+                {lang === 'it'
+                  ? '« Non si tratta di una cena. Si tratta di una serata. »'
+                  : lang === 'en'
+                  ? '« It is not merely dinner. It is an evening. »'
+                  : "« Il ne s'agit pas d'un repas. Il s'agit d'une soirée. »"}
+              </p>
+              <p className="typo-metadata text-muted">
+                {lang === 'it' ? '28 Coperti Esclusivi' : lang === 'en' ? '28 Exclusive Covers' : '28 Couverts Exclusifs'}
+              </p>
             </div>
           </div>
 
@@ -261,17 +302,49 @@ export default function Navigation({
             
             <div className="space-y-6 sm:space-y-8">
               <div className="flex items-center justify-between">
-                <p className="typo-eyebrow text-or">Navigation</p>
-                <span className="text-[10px] font-mono text-muted uppercase tracking-wider">
-                  Milano · {milanTime || '20:00'}
-                </span>
+                <p className="typo-eyebrow text-or">{t('nav.navigation')}</p>
+                <div className="flex items-center gap-2">
+                  {/* Language Switcher in mobile overlay */}
+                  <div className="flex items-center gap-0.5 bg-surface border border-white/10 rounded-full p-0.5">
+                    <button
+                      onClick={() => setLang('fr')}
+                      aria-label="Français"
+                      className={`px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider rounded-full transition-all ${
+                        lang === 'fr' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
+                      }`}
+                    >
+                      FR
+                    </button>
+                    <button
+                      onClick={() => setLang('it')}
+                      aria-label="Italiano"
+                      className={`px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider rounded-full transition-all ${
+                        lang === 'it' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
+                      }`}
+                    >
+                      IT
+                    </button>
+                    <button
+                      onClick={() => setLang('en')}
+                      aria-label="English"
+                      className={`px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider rounded-full transition-all ${
+                        lang === 'en' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
+                      }`}
+                    >
+                      EN
+                    </button>
+                  </div>
+                  <span className="text-[10px] font-mono text-muted uppercase tracking-wider">
+                    Milano · {milanTime || '20:00'}
+                  </span>
+                </div>
               </div>
               
               {/* Primary Links with Staggered Hover Effect */}
               <nav aria-label="Menu plein écran" className="flex flex-col space-y-3 sm:space-y-5">
                 {navLinks.map((link, idx) => (
                   <Link
-                    key={link.label}
+                    key={link.labelKey}
                     to={link.path}
                     onMouseEnter={() => setHoveredImage(link.image)}
                     onClick={() => setMobileMenuOpen(false)}
@@ -282,7 +355,7 @@ export default function Navigation({
                         0{idx + 1}.
                       </span>
                       <span className="font-serif-luxury text-2xl sm:text-4xl text-ivoire group-hover:text-or group-hover:translate-x-2 transition-all duration-300">
-                        {link.label}
+                        {t(link.labelKey)}
                       </span>
                     </div>
                     <span className="hidden sm:inline-block typo-caption text-[11px] text-muted group-hover:text-ivoire transition-colors">
@@ -310,7 +383,7 @@ export default function Navigation({
                   </div>
                   <div className="min-w-0">
                     <p className="text-[10px] uppercase font-mono text-or tracking-wider truncate">
-                      Ambiance ({currentTrackIndex + 1}/{audioTracks.length})
+                      {lang === 'it' ? 'Atmosfera Sonora' : lang === 'en' ? 'Soundtrack' : 'Ambiance Sonore'} ({currentTrackIndex + 1}/{audioTracks.length})
                     </p>
                     <p className="font-serif text-sm text-ivoire truncate">
                       {activeTrack.title} <span className="text-muted text-xs italic font-sans">({activeTrack.genre})</span>
@@ -327,14 +400,14 @@ export default function Navigation({
                         : 'bg-surface-elevated text-ivoire border border-white/10 hover:border-or/40'
                     }`}
                   >
-                    {isAudioPlaying ? 'PAUSE' : 'ÉCOUTER'}
+                    {isAudioPlaying ? t('nav.pause') : t('nav.listenAmbiance')}
                   </button>
                   {onNextTrack && (
                     <button
                       onClick={onNextTrack}
-                      aria-label="Morceau suivant"
+                      aria-label={lang === 'it' ? 'Brano successivo' : lang === 'en' ? 'Next track' : 'Morceau suivant'}
                       className="p-1.5 sm:p-2 bg-surface-elevated hover:bg-white/10 text-or hover:text-ivoire border border-white/10 transition-colors flex items-center justify-center"
-                      title="Changer de morceau"
+                      title={lang === 'it' ? 'Cambia brano' : lang === 'en' ? 'Change track' : 'Changer de morceau'}
                     >
                       <SkipForward size={13} />
                     </button>
@@ -349,7 +422,7 @@ export default function Navigation({
                   onClick={() => setMobileMenuOpen(false)} 
                   className="typo-navigation text-xs text-muted hover:text-or transition-colors tracking-widest py-1 px-1.5"
                 >
-                  CONTACT
+                  {lang === 'it' ? 'CONTATTI' : lang === 'en' ? 'CONTACT' : 'CONTACT'}
                 </Link>
                 <span className="text-white/20 hidden sm:inline">✦</span>
                 <Link 
@@ -357,7 +430,7 @@ export default function Navigation({
                   onClick={() => setMobileMenuOpen(false)} 
                   className="typo-navigation text-xs text-muted hover:text-or transition-colors tracking-widest py-1 px-1.5"
                 >
-                  CARRIÈRES
+                  {lang === 'it' ? 'CARRIERE' : lang === 'en' ? 'CAREERS' : 'CARRIÈRES'}
                 </Link>
                 <span className="text-white/20 hidden sm:inline">✦</span>
                 <Link 
@@ -365,7 +438,7 @@ export default function Navigation({
                   onClick={() => setMobileMenuOpen(false)} 
                   className="typo-navigation text-xs text-muted hover:text-or transition-colors tracking-widest py-1 px-1.5"
                 >
-                  CONFIDENTIALITÉ
+                  {lang === 'it' ? 'PRIVACY (GDPR)' : lang === 'en' ? 'PRIVACY POLICY' : 'CONFIDENTIALITÉ'}
                 </Link>
                 <span className="text-white/20 hidden sm:inline">✦</span>
                 <Link 
@@ -373,7 +446,7 @@ export default function Navigation({
                   onClick={() => setMobileMenuOpen(false)} 
                   className="typo-navigation text-xs text-muted hover:text-or transition-colors tracking-widest py-1 px-1.5"
                 >
-                  MENTIONS LÉGALES
+                  {lang === 'it' ? 'NOTE LEGALI' : lang === 'en' ? 'LEGAL NOTICE' : 'MENTIONS LÉGALES'}
                 </Link>
               </div>
             </div>
@@ -381,7 +454,7 @@ export default function Navigation({
             {/* Bottom Actions */}
             <div className="pt-8 sm:pt-10 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6">
               <div className="space-y-1 text-center sm:text-left">
-                <p className="typo-metadata text-muted">Réservations & Conciergerie</p>
+                <p className="typo-metadata text-muted">{t('nav.reservationsLabel')}</p>
                 <p className="font-serif-luxury text-lg text-ivoire font-mono">{restaurantInfo?.phone || '+39 02 8905 4321'}</p>
               </div>
               <button
@@ -391,7 +464,7 @@ export default function Navigation({
                 }}
                 className="w-full sm:w-auto px-6 sm:px-8 py-3.5 bg-or text-nero font-bold typo-cta hover:bg-ivoire transition-colors shadow-xl text-center"
               >
-                RÉSERVER UNE TABLE
+                {t('nav.reserveTable')}
               </button>
             </div>
 

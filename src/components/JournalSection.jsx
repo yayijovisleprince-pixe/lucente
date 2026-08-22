@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, BookOpen } from 'lucide-react';
 import { articles as journalArticles } from '../data/journalData';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function JournalSection() {
+  const { lang, t } = useLanguage();
   const displayArticles = journalArticles.slice(0, 3);
 
   return (
@@ -13,16 +15,18 @@ export default function JournalSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-8 gap-4">
           <div className="space-y-3">
-            <span className="typo-eyebrow text-or text-[10px]">CHAPITRE VII — LE JOURNAL</span>
+            <span className="typo-eyebrow text-or text-[10px]">
+              {lang === 'it' ? 'IL GIORNALE' : lang === 'en' ? 'THE JOURNAL' : 'LE JOURNAL'}
+            </span>
             <h2 className="font-serif-luxury text-3xl sm:text-5xl text-ivoire font-light">
-              Chroniques & Récits de la Maison
+              {lang === 'it' ? 'Cronache & Racconti della Casa' : lang === 'en' ? 'Chronicles & Stories from the House' : 'Chroniques & Récits de la Maison'}
             </h2>
           </div>
           <Link
             to="/journal"
             className="typo-cta text-xs text-or hover:text-ivoire flex items-center space-x-2 transition-colors"
           >
-            <span>Explorer Tout le Journal</span>
+            <span>{lang === 'it' ? 'Esplora Tutto il Giornale' : lang === 'en' ? 'Explore Full Journal' : 'Explorer Tout le Journal'}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -59,9 +63,11 @@ export default function JournalSection() {
               </div>
 
               <div className="p-6 pt-0 flex items-center justify-between text-[10px] text-muted border-t border-white/5 mt-4 font-mono">
-                <span>{art.readingTime || "5 min"} de lecture</span>
+                <span>
+                  {art.readingTime || "5 min"} {lang === 'it' ? 'di lettura' : lang === 'en' ? 'read' : 'de lecture'}
+                </span>
                 <span className="text-or font-semibold group-hover:translate-x-1 transition-transform font-sans">
-                  Lire l'Article →
+                  {lang === 'it' ? 'Leggi l\'Articolo →' : lang === 'en' ? 'Read Article →' : 'Lire l\'Article →'}
                 </span>
               </div>
             </Link>

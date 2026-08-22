@@ -1,32 +1,47 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Compass, Sparkles, Sun, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function ThreeDimensionsSection() {
+  const { lang, t } = useLanguage();
+
   const dimensions = [
     {
       id: 'origin',
-      tag: 'DIMENSION 01',
-      title: 'ORIGIN',
-      sub: 'The Terroir & Artisans',
+      tag: lang === 'it' ? 'DIMENSIONE 01' : lang === 'en' ? 'DIMENSION 01' : 'DIMENSION 01',
+      title: lang === 'it' ? 'ORIGINE' : lang === 'en' ? 'ORIGIN' : 'ORIGINE',
+      sub: lang === 'it' ? 'Terroir & Artigiani' : lang === 'en' ? 'Terroir & Micro-Growers' : 'Terroirs & Artisans',
       image: '/images/dining-room.webp',
-      description: 'Exclusive relationships with 42 independent Italian micro-growers. From wild Sicilian sea fennel to century-old olive groves in Puglia.'
+      description: lang === 'it'
+        ? 'Relazioni esclusive con 42 micro-produttori indipendenti. Dalla salicornia selvatica siciliana agli uliveti secolari pugliesi.'
+        : lang === 'en'
+        ? 'Exclusive relationships with 42 independent Italian micro-growers. From wild Sicilian sea fennel to century-old olive groves in Puglia.'
+        : "Relations exclusives avec 42 micro-producteurs indépendants italiens. De la salicorne sauvage sicilienne aux oliveraies séculaires des Pouilles."
     },
     {
       id: 'craft',
-      tag: 'DIMENSION 02',
-      title: 'CRAFT',
-      sub: 'Chiaroscuro & Technique',
+      tag: lang === 'it' ? 'DIMENSIONE 02' : lang === 'en' ? 'DIMENSION 02' : 'DIMENSION 02',
+      title: lang === 'it' ? 'TECNICA' : lang === 'en' ? 'CRAFT' : 'TECHNIQUE',
+      sub: lang === 'it' ? 'Chiaroscuro & Mestiere' : lang === 'en' ? 'Chiaroscuro & Technique' : 'Chiaroscuro & Savoir-faire',
       image: '/images/chef-craft.webp',
-      description: 'Handmade daily pasta rolled with 30 yolks per kilo, cold-extracted broths, and precision charcoal roasting over dried vine shoots.'
+      description: lang === 'it'
+        ? 'Pasta fresca tirata ogni giorno con 30 tuorli al chilo, brodi estratti a freddo e cottura precisa su tralci di vite.'
+        : lang === 'en'
+        ? 'Handmade daily pasta rolled with 30 yolks per kilo, cold-extracted broths, and precision charcoal roasting over dried vine shoots.'
+        : 'Pâtes fraîches laminées chaque matin à 30 jaunes au kilo, bouillons centrifugés à froid et cuisson précise sur sarments de vigne.'
     },
     {
       id: 'season',
-      tag: 'DIMENSION 03',
-      title: 'SEASON',
-      sub: 'Ephemeral Rhythm',
+      tag: lang === 'it' ? 'DIMENSIONE 03' : lang === 'en' ? 'DIMENSION 03' : 'DIMENSION 03',
+      title: lang === 'it' ? 'STAGIONE' : lang === 'en' ? 'SEASON' : 'SAISON',
+      sub: lang === 'it' ? 'Ritmo Effimero' : lang === 'en' ? 'Ephemeral Rhythm' : 'Rythme Éphémère',
       image: '/images/hero-dish.webp',
-      description: 'A menu that breathes with nature. Alba white truffles harvested at dawn, winter citrus from Sorrento, and spring artichokes from Liguria.'
+      description: lang === 'it'
+        ? "Una carta che respira con la natura. Tartufo bianco d'Alba colto all'alba, agrumi invernali di Sorrento e carciofi liguri."
+        : lang === 'en'
+        ? 'A menu that breathes with nature. Alba white truffles harvested at dawn, winter citrus from Sorrento, and spring artichokes from Liguria.'
+        : "Une carte qui respire avec la nature. Truffe blanche d'Alba cueillie à l'aube, agrumes d'hiver de Sorrente et artichauts de Ligurie."
     }
   ];
 
@@ -36,9 +51,11 @@ export default function ThreeDimensionsSection() {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <span className="typo-eyebrow text-or text-[10px]">SECTION 03 — THE CUISINE</span>
+          <span className="typo-eyebrow text-or text-[10px]">
+            {lang === 'it' ? 'CAPITOLO II — LA CUCINA' : lang === 'en' ? 'CHAPTER II — THE CUISINE' : 'CHAPITRE II — LA CUISINE'}
+          </span>
           <h2 className="font-serif-luxury text-3xl sm:text-5xl text-ivoire font-light">
-            Three Sacred Dimensions
+            {lang === 'it' ? 'Tre Dimensioni Sacre' : lang === 'en' ? 'Three Sacred Dimensions' : 'Trois Dimensions Sacrées'}
           </h2>
           <div className="w-16 h-[1px] bg-or mx-auto mt-4" />
         </div>
@@ -76,7 +93,7 @@ export default function ThreeDimensionsSection() {
                 </div>
 
                 <div className="pt-6 border-t border-white/5 flex items-center justify-between text-xs text-or font-mono">
-                  <span>Explore Dimension</span>
+                  <span>{lang === 'it' ? 'Esplora la Dimensione' : lang === 'en' ? 'Explore Dimension' : 'Explorer la Dimension'}</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform" />
                 </div>
               </div>
@@ -90,7 +107,7 @@ export default function ThreeDimensionsSection() {
             to="/cuisine"
             className="px-8 py-3.5 border border-or text-or hover:bg-or hover:text-nero typo-cta transition-all inline-block shadow-lg"
           >
-            Discover All Culinary Techniques
+            {lang === 'it' ? 'Scopri Tutte le Tecniche Culinarie' : lang === 'en' ? 'Discover All Culinary Techniques' : 'Découvrir Toutes les Techniques'}
           </Link>
         </div>
 
