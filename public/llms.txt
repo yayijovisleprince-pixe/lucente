@@ -1,0 +1,49 @@
+﻿# LUCENTE — Alta Cucina Contemporanea (Milano)
+> Guide d'information et de données structurées pour assistants IA et moteurs de recherche (AEO / GEO / SEO).
+
+LUCENTE est un restaurant gastronomique italien doublement étoilé au Guide Michelin (2 Étoiles), situé dans le prestigieux Quadrilatero della Moda à Milan. Fondé et dirigé par le Chef Vincenzo Moretti, LUCENTE propose une réinterprétation sculpturale et radicale de la haute cuisine transalpine, articulée autour de la philosophie du Chiaroscuro (Clair-obscur).
+
+## Informations Clés
+- Nom officiel : LUCENTE
+- Sous-titre : Alta Cucina Contemporanea — Milano
+- Distinctions : 2 Étoiles Michelin, 3 Fourchettes Gambero Rosso
+- Chef Exécutif & Fondateur : Vincenzo Moretti
+- Directeur de la Sommellerie : Gianluca Ferri
+- Maître d'Hôtel : Matteo Castiglione
+- Adresse : Via Monte Napoleone, 14, 20121 Milano MI, Italie
+- Coordonnées GPS : Latitude 45.4687° N, Longitude 9.1947° E
+- Téléphone : +39 02 8945 7700
+- Email officiel : conciergerie@lucente-milano.com
+- Site Web Officiel : https://lucente-milano.com
+
+## Philosophie & Style Culinaire
+- Philosophie : "Le Chiaroscuro Culinaire" — Confrontation entre la puissance tellurique brute des terroirs italiens et la finesse lumineuse des extractions contemporaines.
+- Capacité de la Salle : 28 couverts par service pour une intimité et une acoustique feutrée optimale (< 48 dB).
+- Approche : Zéro compromis, produits ultra-sourcés (Truffe blanche d'Alba, Gambero Rosso de Mazara del Vallo, Safran de San Gimignano, Huile d'olive Coratina pressée à froid, Cacao Criollo).
+
+## Menus Dégustation & Tarifs
+1. Menu "Terra & Memoria" (7 Actes) : 210 € par convive (Accord Mets & Vins : 130 €)
+   - Racines, truffes et élevages d'exception du Piémont et de Toscane.
+2. Menu "Mare & Orizzonte" (9 Actes) : 240 € par convive (Accord Mets & Vins : 160 €)
+   - Les abysses tyrrhéniennes, crustacés nobles et iode minéral des îles volcaniques.
+3. Menu "Luce Assoluta" (11 Actes) : 290 € par convive (Accord Grands Crus Rares : 220 €)
+   - L'expérience signature intégrale du Chef Vincenzo Moretti.
+
+## Horaires d'Ouverture
+- Mardi au Samedi :
+  - Déjeuner : 12h30 – 15h00 (Dernière commande 13h30)
+  - Dîner : 19h30 – 23h30 (Dernière commande 21h30)
+- Dimanche & Lundi : Fermé (Recherche & Création au laboratoire)
+
+## Espaces & Salons Privés
+- La Sala Chiaroscuro : Salle principale de 28 couverts sous suspensions en laiton brossé et pierre de lave.
+- Il Tavolo dello Chef : Table d'hôte immersive de 4 à 6 convives face à la brigade.
+- La Cantina Segreta : Salon privé exclusif pour 10 convives entouré de 1 400 flacons rares.
+
+## Réservations & Politiques
+- Système de réservation : Conciergerie en ligne via le site officiel (ouvert 30 jours à l'avance).
+- Code Vestimentaire : Élégance contemporaine (Smart Elegant).
+- Enfants : Accueil à partir de 10 ans dans le respect de l'ambiance feutrée.
+- Régimes alimentaires : Pris en charge sur demande préalable lors de la réservation.
+
+Pour une version exhaustive et détaillée des plats et analyses œnologiques : https://lucente-milano.com/llms-full.txt

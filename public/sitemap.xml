@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Homepage -->
+  <url>
+    <loc>https://lucente-milano.com/</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/hero-dish.jpg</image:loc>
+      <image:title>LUCENTE Milano - Filetto al Tartufo Bianco &amp; Chiaroscuro</image:title>
+      <image:caption>Haute Cuisine Contemporaine à Milan par le Chef Vincenzo Moretti</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Story / Maison & Chef -->
+  <url>
+    <loc>https://lucente-milano.com/story</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/chef-portrait.jpg</image:loc>
+      <image:title>Chef Vincenzo Moretti - Fondateur de LUCENTE</image:title>
+      <image:caption>Deux Étoiles Michelin, Milan</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Cuisine & Philosophie -->
+  <url>
+    <loc>https://lucente-milano.com/cuisine</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/chef-craft.jpg</image:loc>
+      <image:title>Le Geste Culinaire &amp; La Philosophie du Chiaroscuro</image:title>
+    </image:image>
+  </url>
+
+  <!-- Menus & Accords -->
+  <url>
+    <loc>https://lucente-milano.com/menu</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/pasta-caviar.jpg</image:loc>
+      <image:title>Raviolo Imperiale &amp; Caviar Oscietra - Menu LUCENTE</image:title>
+    </image:image>
+  </url>
+
+  <!-- Private Dining / Salons Privés -->
+  <url>
+    <loc>https://lucente-milano.com/private-dining</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/private-table.jpg</image:loc>
+      <image:title>La Cantina Segreta &amp; Salons Privés</image:title>
+    </image:image>
+  </url>
+
+  <!-- Galerie Éditoriale -->
+  <url>
+    <loc>https://lucente-milano.com/gallery</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/dining-room.jpg</image:loc>
+      <image:title>Galerie Éditoriale - L'Espace Chiaroscuro</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/table-ambiance.jpg</image:loc>
+      <image:title>L'Art de la Table chez LUCENTE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/truffle-harvest.jpg</image:loc>
+      <image:title>Les Ingrédients - Truffe Blanche d'Alba</image:title>
+    </image:image>
+  </url>
+
+  <!-- Journal & Chroniques -->
+  <url>
+    <loc>https://lucente-milano.com/journal</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Articles du Journal -->
+  <url>
+    <loc>https://lucente-milano.com/journal/manifeste-du-chiaroscuro-culinaire</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/hero-dish.jpg</image:loc>
+      <image:title>Le Manifeste du Chiaroscuro Culinaire</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lucente-milano.com/journal/secret-des-vins-en-amphore-etna</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/cellar-architecture.jpg</image:loc>
+      <image:title>Le Secret des Vins en Amphore de l'Etna</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lucente-milano.com/journal/alchimie-du-gambero-rosso-mazara</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/prawn-dish.jpg</image:loc>
+      <image:title>L'Alchimie du Gambero Rosso de Mazara del Vallo</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lucente-milano.com/journal/visages-du-pass-la-brigade-de-lombre</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/kitchen-fire.jpg</image:loc>
+      <image:title>Les Visages du Pass : Dans l'Intimité de la Brigade</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lucente-milano.com/journal/or-de-san-gimignano-safran-toscane</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/tomato-saffron.jpg</image:loc>
+      <image:title>L'Or Rouge de San Gimignano : Trois Siècles de Safran</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lucente-milano.com/journal/art-du-service-en-salle-elegance-feutree</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/table-ambiance.jpg</image:loc>
+      <image:title>L'Art du Service en Salle : La Chorégraphie Invisible</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://lucente-milano.com/journal/dolce-obscur-chocolat-criollo-foin</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://lucente-milano.com/images/chocolate-dolce.jpg</image:loc>
+      <image:title>Le Crépuscule Gourmand : Chocolat Criollo et Foin d'Alpage</image:title>
+    </image:image>
+  </url>
+
+  <!-- Reservations -->
+  <url>
+    <loc>https://lucente-milano.com/reservations</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Contact & Accès -->
+  <url>
+    <loc>https://lucente-milano.com/contact</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Carrières -->
+  <url>
+    <loc>https://lucente-milano.com/careers</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Mentions Légales & Confidentialité -->
+  <url>
+    <loc>https://lucente-milano.com/legal</loc>
+    <lastmod>2026-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

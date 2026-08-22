@@ -1,0 +1,348 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   LUCENTE — Direction Artistique & Système Typographique
+   Palette : Nero Profondo #10100E | Ivoire #F2EBDD | Terracotta #A94E35 | Olive #4E5940 | Or #B89B5E
+   ========================================================================== */
+
+:root {
+  --color-nero: #10100E;
+  --color-ivoire: #F2EBDD;
+  --color-terracotta: #A94E35;
+  --color-olive: #4E5940;
+  --color-or: #B89B5E;
+  --color-or-light: #D4BD88;
+  --color-or-dark: #8E733D;
+  
+  --color-surface: #171714;
+  --color-surface-elevated: #1F1E1A;
+  --color-surface-card: #24231E;
+  
+  --color-text-main: #F2EBDD;
+  --color-text-muted: #A39D91;
+  --color-text-dim: #68645C;
+  
+  --color-border: rgba(184, 155, 94, 0.2);
+  --color-border-subtle: rgba(242, 235, 221, 0.08);
+
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Cinzel', serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  background-color: var(--color-nero);
+}
+
+body {
+  background-color: var(--color-nero);
+  color: var(--color-text-main);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--color-or);
+  color: var(--color-nero);
+}
+
+/* ==========================================================================
+   TYPOGRAPHIC SCALE
+   ========================================================================== */
+
+.typo-h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(3.2rem, 7.5vw, 7.5rem);
+  line-height: 1.05;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ivoire);
+}
+
+.typo-h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.15;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--color-ivoire);
+}
+
+.typo-h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2vw, 1.85rem);
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-ivoire);
+}
+
+.typo-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-or);
+}
+
+.typo-body {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+
+.typo-caption {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--color-text-dim);
+}
+
+.typo-prix {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--color-or);
+  letter-spacing: 0.05em;
+}
+
+.typo-navigation {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.typo-cta {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.typo-metadata {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+
+.font-serif-luxury {
+  font-family: var(--font-serif);
+}
+
+.font-display-luxury {
+  font-family: var(--font-display);
+}
+
+/* ==========================================================================
+   LUXURY UTILITIES & AWWARDS POLISH
+   ========================================================================== */
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #F2EBDD 0%, #B89B5E 50%, #D4BD88 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gold-subtle {
+  border-color: rgba(184, 155, 94, 0.22);
+}
+
+.bg-surface {
+  background-color: var(--color-surface);
+}
+
+.bg-surface-elevated {
+  background-color: var(--color-surface-elevated);
+}
+
+.bg-nero {
+  background-color: var(--color-nero);
+}
+
+.text-ivoire {
+  color: var(--color-ivoire);
+}
+
+.text-or {
+  color: var(--color-or);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.text-terracotta {
+  color: var(--color-terracotta);
+}
+
+.bg-or {
+  background-color: var(--color-or);
+}
+
+.border-or {
+  border-color: var(--color-or);
+}
+
+.border-or-subtle {
+  border-color: var(--color-border);
+}
+
+.bg-or-subtle {
+  background-color: rgba(184, 155, 94, 0.12);
+}
+
+.bg-noise {
+  background-image: radial-gradient(rgba(184, 155, 94, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-nero);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(184, 155, 94, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(184, 155, 94, 0.6);
+}
+
+/* ==========================================================================
+   ANIMATIONS & TRANSITIONS
+   ========================================================================== */
+
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-pageEnter {
+  animation: pageEnter 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes equalizer {
+  0%, 100% { height: 4px; }
+  50% { height: 14px; }
+}
+
+.animate-eq-1 { animation: equalizer 0.8s ease-in-out infinite; }
+.animate-eq-2 { animation: equalizer 0.8s ease-in-out 0.25s infinite; }
+.animate-eq-3 { animation: equalizer 0.8s ease-in-out 0.5s infinite; }
+
+/* Luxury Button & Input Styles */
+.input-luxury {
+  background-color: var(--color-surface-elevated);
+  border: 1px solid rgba(242, 235, 221, 0.12);
+  color: var(--color-ivoire);
+  font-size: 0.8125rem;
+  border-radius: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.input-luxury:hover {
+  border-color: rgba(184, 155, 94, 0.35);
+}
+
+.input-luxury:focus {
+  outline: none;
+  border-color: var(--color-or);
+  box-shadow: 0 0 0 1px var(--color-or), 0 0 15px rgba(184, 155, 94, 0.15);
+  background-color: var(--color-surface);
+}
+
+.btn-luxury-primary {
+  background-color: var(--color-or);
+  color: var(--color-nero);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  border: 1px solid var(--color-or);
+  border-radius: 0;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-luxury-primary:hover {
+  background-color: var(--color-ivoire);
+  border-color: var(--color-ivoire);
+  box-shadow: 0 8px 25px rgba(184, 155, 94, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-luxury-primary:active {
+  transform: scale(0.98) translateY(0);
+}
+
+/* Focus Visible WCAG AA */
+:focus-visible {
+  outline: 2px solid var(--color-or) !important;
+  outline-offset: 3px !important;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+  .animate-pageEnter,
+  .animate-fadeIn,
+  .animate-bounce,
+  .animate-eq-1,
+  .animate-eq-2,
+  .animate-eq-3 {
+    animation: none !important;
+  }
+}

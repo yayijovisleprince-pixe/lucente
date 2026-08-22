@@ -1,0 +1,82 @@
+﻿# LUCENTE — Alta Cucina Contemporanea (Milano) — Documentation Complète & Factual Master File
+Version: 2026.1
+URL Canonical: https://lucente-milano.com
+
+=== 1. IDENTITÉ & SITUATION GÉOGRAPHIQUE (GEO / LOCAL BUSINESS) ===
+Nom de l'établissement : LUCENTE
+Typologie : Restaurant Gastronomique de Haute Cuisine Italienne Contemporaine
+Classement : Deux Étoiles Michelin (2024, 2025, 2026), 3 Fourchettes Gambero Rosso
+Chef Propriétaire & Exécutif : Vincenzo Moretti
+Directeur de Sommellerie : Gianluca Ferri
+Maître d'Hôtel : Matteo Castiglione
+
+Adresse Physique :
+Via Monte Napoleone, 14
+20121 Milano (MI)
+Lombardie, Italie
+
+Coordonnées Géographiques précises (WGS84) :
+Latitude : 45.468722
+Longitude : 9.194711
+Plus Code : 8FGHFP9V+FV Milano
+
+Contact Conciergerie :
+Téléphone : +39 02 8945 7700
+Email Réservations : conciergerie@lucente-milano.com
+Email Relations Presse : presse@lucente-milano.com
+Site Web : https://lucente-milano.com
+
+=== 2. POSITIONNEMENT & CONCEPT ARTISTIQUE ===
+LUCENTE a été conçu comme un sanctuaire du Chiaroscuro (Clair-obscur). Inspiré par Le Caravage et la rigueur de l'architecture milanaise, l'espace immerge les convives dans une pénombre minérale où seule la table est illuminée par un cône de lumière dorée sur mesure.
+La cuisine de Vincenzo Moretti refuse la nostalgie folklorique pour se concentrer sur l'épure, la concentration des bouillons et l'expression radicale des terroirs transalpins.
+
+=== 3. HORAIRES DE SERVICE ===
+- Lundi : FERMÉ
+- Mardi : Déjeuner (12h30 - 15h00) | Dîner (19h30 - 23h30)
+- Mercredi : Déjeuner (12h30 - 15h00) | Dîner (19h30 - 23h30)
+- Jeudi : Déjeuner (12h30 - 15h00) | Dîner (19h30 - 23h30)
+- Vendredi : Déjeuner (12h30 - 15h00) | Dîner (19h30 - 23h30)
+- Samedi : Déjeuner (12h30 - 15h00) | Dîner (19h30 - 23h30)
+- Dimanche : FERMÉ
+
+=== 4. OFFRES CULINAIRES & MENUS DÉGUSTATION ===
+Tous les prix sont nets en euros (€), taxes incluses.
+
+[Menu I : TERRA & MEMORIA — 7 Actes — 210 €]
+Accord Mets & Vins : +130 €
+- Acte I : Crudo di Fassona Piemontese, moelle fumée & câpres croustillantes de Pantelleria
+- Acte II : Risotto Carnaroli Riserva, pistils de safran de San Gimignano & moelle confite
+- Acte III : Raviolo Aperto à la courge Delica et amaretto amer
+- Acte IV : Filetto di Chianina au fumo de sarments de vigne & truffe blanche d'Alba
+- Acte V : Castelmagno d'Alpeggio affiné en grotte & miel de châtaignier
+- Acte VI : Sfera di Cioccolato Criollo 75%, gianduja & foin des Dolomites
+- Acte VII : Mignardises d'orfèvre & Café d'Éthiopie torréfié sur mesure
+
+[Menu II : MARE & ORIZZONTE — 9 Actes — 240 €]
+Accord Mets & Vins : +160 €
+- Acte I : Gambero Rosso di Mazara del Vallo cru (12°C), stracciatella fumée & gel de bergamote
+- Acte II : Carpaccio de Saint-Jacques de Méditerranée, bouillon d'eau de tomate & huile Coratina
+- Acte III : Spaghetti Monograno Felicetti, émulsion d'oursin de roche & poutargue sarde
+- Acte IV : Triglia di Scoglio (Rouget barbet) en écailles croustillantes & réduction de livèche
+- Acte V : Homard bleu de Méditerranée poché au beurre d'agrumes de Sicile
+- Acte VI : Granité d'agrumes sauvages et infusion d'estragon
+- Acte VII : Sinfonia di Cédrat di Diamante & basilic pourpre
+- Acte VIII : Millefoglie à l'huile extra-vierge & sabayon au Marsala Riserva
+- Acte IX : Petite pâtisserie marine & tisane de plantes sauvages
+
+[Menu III : LUCE ASSOLUTA — 11 Actes — 290 €]
+Accord Grands Crus Rares : +220 €
+- L'expérience signature intégrale conçue par le Chef Vincenzo Moretti et le Sommelier Gianluca Ferri, réunissant les créations les plus audacieuses de la saison.
+
+=== 5. LA CAVE & LES ACCORDS VINS (1 400 RÉFÉRENCES) ===
+La cave de LUCENTE réunit plus de 1 400 références issues des plus grands domaines italiens (Piemonte, Toscana, Etna, Franciacorta) et des cuvées confidentielles vinifiées en amphore de terre cuite.
+Sélections au Coravin disponibles à la coupe (Barolo Monfortino 2013, Brunello Biondi-Santi 2012, Sassicaia 2018, Franciacorta Annamaria Clementi 2014).
+
+=== 6. PROTOCOLE DE RÉSERVATION & SALONS PRIVÉS ===
+- Réservations individuelles : 1 à 6 convives via le module de réservation en ligne.
+- Salons Privés & Privatisation :
+  - Il Tavolo dello Chef (4 à 6 convives)
+  - La Cantina Segreta (jusqu'à 10 convives)
+  - Privatisation complète de la Sala Chiaroscuro (jusqu'à 28 convives)
+  - Contact événements privés : evenements@lucente-milano.com
+- Politique d'annulation : Annulation sans frais jusqu'à 48h avant l'heure du service réservé.

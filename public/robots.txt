@@ -1,0 +1,39 @@
+﻿# robots.txt for LUCENTE Milano (Alta Cucina Contemporanea)
+# https://lucente-milano.com
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*?*preview=true
+
+# AI Answer Engines & Search Bots (AEO & Indexing)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: CCBot
+Allow: /
+
+# Sitemaps
+Sitemap: https://lucente-milano.com/sitemap.xml
