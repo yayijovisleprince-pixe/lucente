@@ -136,7 +136,7 @@ export default function Navigation({
             </div>
 
             {/* Audio Toggle & 6-Track Selector */}
-            <div className="flex items-center bg-surface border border-or-subtle rounded-full p-1 gap-1">
+            <div className="flex items-center bg-surface border border-or-subtle rounded-full p-1 gap-1 min-w-0 max-w-[160px] xl:max-w-[190px] overflow-hidden">
               <button
                 onClick={onToggleAudio}
                 data-cursor="SOUND"
@@ -155,7 +155,7 @@ export default function Navigation({
                       <span className="w-[2px] bg-nero rounded-full animate-eq-2" />
                       <span className="w-[2px] bg-nero rounded-full animate-eq-3" />
                     </div>
-                    <span className="max-w-[85px] xl:max-w-[110px] truncate">{activeTrack.genre} ({currentTrackIndex + 1}/6)</span>
+                    <span className="max-w-[72px] xl:max-w-[96px] truncate block">{activeTrack.genre} ({currentTrackIndex + 1}/6)</span>
                   </>
                 ) : (
                   <VolumeX className="w-3.5 h-3.5 text-muted" />
@@ -180,9 +180,9 @@ export default function Navigation({
               onClick={() => onOpenBooking()}
               data-cursor="RESERVE"
               aria-label={t('nav.reserve')}
-              className="px-5 py-2 bg-or hover:bg-or-light text-nero hover:text-nero font-semibold text-xs uppercase tracking-[0.18em] transition-all duration-300 shadow-md shadow-or/20 hover:shadow-or/40 border border-or shrink-0 flex items-center gap-2"
+              className="flex-none px-5 py-2 bg-or hover:bg-or-light text-nero hover:text-nero font-semibold text-xs uppercase tracking-[0.18em] transition-all duration-300 shadow-md shadow-or/20 hover:shadow-or/40 border border-or flex items-center gap-2 whitespace-nowrap"
             >
-              <Calendar className="w-3.5 h-3.5" />
+              <Calendar className="w-3.5 h-3.5 shrink-0" />
               <span>{t('nav.reserve')}</span>
             </button>
           </div>
