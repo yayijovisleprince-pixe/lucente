@@ -10,6 +10,7 @@ import Toast from './components/Toast';
 import AudioPlayer, { audioTracks } from './components/AudioPlayer';
 import Footer from './components/Footer';
 import ReservationModal from './components/ReservationModal';
+import ScrollToTop from './components/ScrollToTop';
 
 // Direct import for Critical Path (HomePage)
 import HomePage from './pages/HomePage';
@@ -148,6 +149,9 @@ export default function App() {
             </Suspense>
           </PageTransition>
         </main>
+
+        {/* Floating Luxury Back to Top Button */}
+        <ScrollToTop />
 
         {/* Mobile Floating Concierge Action Bar */}
         <MobileBottomBar onOpenBooking={() => handleOpenBooking()} />
