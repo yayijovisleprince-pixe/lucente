@@ -69,6 +69,29 @@ export default function App() {
     if (!isAudioPlaying) setIsAudioPlaying(true);
   };
 
+  // Arrêt automatique du son dès que l'utilisateur quitte l'onglet ou le site
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setIsAudioPlaying(false);
+      }
+    };
+
+    const handlePageHide = () => {
+      setIsAudioPlaying(false);
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', handlePageHide);
+    window.addEventListener('beforeunload', handlePageHide);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', handlePageHide);
+      window.removeEventListener('beforeunload', handlePageHide);
+    };
+  }, []);
+
   const showToast = (toastObj) => {
     setToast(toastObj);
     setTimeout(() => {

@@ -133,5 +133,32 @@ export default function AudioPlayer({ isPlaying, currentTrackIndex = 0, onTrackE
     };
   }, [isPlaying]);
 
+  // Arrêt physique immédiat lorsque l'onglet est masqué ou que la page est quittée
+  useEffect(() => {
+    const handleSilence = () => {
+      if (audioElRef.current) {
+        if (fadeIntervalRef.current) clearInterval(fadeIntervalRef.current);
+        audioElRef.current.pause();
+        audioElRef.current.volume = 0;
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        handleSilence();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    window.addEventListener('pagehide', handleSilence);
+    window.addEventListener('beforeunload', handleSilence);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('pagehide', handleSilence);
+      window.removeEventListener('beforeunload', handleSilence);
+    };
+  }, []);
+
   return null;
 }
