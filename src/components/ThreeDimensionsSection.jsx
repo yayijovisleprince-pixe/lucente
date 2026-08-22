@@ -9,7 +9,7 @@ export default function ThreeDimensionsSection() {
       tag: 'DIMENSION 01',
       title: 'ORIGIN',
       sub: 'The Terroir & Artisans',
-      image: '/images/dining-room.jpg',
+      image: '/images/.webp',
       description: 'Exclusive relationships with 42 independent Italian micro-growers. From wild Sicilian sea fennel to century-old olive groves in Puglia.'
     },
     {
@@ -17,7 +17,7 @@ export default function ThreeDimensionsSection() {
       tag: 'DIMENSION 02',
       title: 'CRAFT',
       sub: 'Chiaroscuro & Technique',
-      image: '/images/chef-craft.jpg',
+      image: '/images/.webp',
       description: 'Handmade daily pasta rolled with 30 yolks per kilo, cold-extracted broths, and precision charcoal roasting over dried vine shoots.'
     },
     {
@@ -25,7 +25,7 @@ export default function ThreeDimensionsSection() {
       tag: 'DIMENSION 03',
       title: 'SEASON',
       sub: 'Ephemeral Rhythm',
-      image: '/images/hero-dish.jpg',
+      image: '/images/.webp',
       description: 'A menu that breathes with nature. Alba white truffles harvested at dawn, winter citrus from Sorrento, and spring artichokes from Liguria.'
     }
   ];

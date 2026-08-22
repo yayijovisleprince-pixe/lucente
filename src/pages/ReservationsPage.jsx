@@ -51,7 +51,7 @@ export default function ReservationsPage() {
       <SEOHead
         title="Réservations en Ligne | LUCENTE — Milano"
         description="Réservez votre table au restaurant LUCENTE à Milan. 28 couverts par service. Déjeuner 12h30–15h00 · Dîner 19h30–23h30. Réservations 30 jours à l'avance."
-        image="/images/dining-room.jpg"
+        image="/images/.webp"
         path="/reservations"
         schema={reservationsSchema}
       />

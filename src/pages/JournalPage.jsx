@@ -42,7 +42,7 @@ export default function JournalPage() {
       <SEOHead
         title="Le Journal — Chroniques & Essais | LUCENTE — Milano"
         description="Philosophie du Chiaroscuro, vins en amphore de l'Etna, portraits de brigade. Les chroniques de LUCENTE par Vincenzo Moretti et Gianluca Ferri."
-        image="/images/hero-dish.jpg"
+        image="/images/.webp"
         path="/journal"
         schema={journalSchema}
       />

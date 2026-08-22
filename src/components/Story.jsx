@@ -25,7 +25,7 @@ export default function Story() {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-lg overflow-hidden border border-[#C5A880]/20 shadow-2xl shadow-black group">
               <img
-                src="/images/chef-craft.jpg"
+                src="/images/.webp"
                 alt="Chef Vincenzo Moretti en pleine précision culinaire chez LUCENTE"
                 className="w-full h-[450px] sm:h-[520px] object-cover object-top filter brightness-95 group-hover:scale-105 transition-transform duration-700 ease-out"
               />

@@ -43,7 +43,7 @@ export default function PhilosophySection() {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded overflow-hidden border border-or-subtle shadow-2xl group">
               <img
-                src="/images/chef-craft.jpg"
+                src="/images/.webp"
                 alt="Chef Vincenzo Moretti à l'atelier"
                 className="w-full h-80 sm:h-[460px] object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
               />

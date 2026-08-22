@@ -55,7 +55,7 @@ export default function ArticlePage() {
       '@type': 'Restaurant',
       'name': 'LUCENTE',
       'url': 'https://lucente-milano.com',
-      'logo': 'https://lucente-milano.com/images/hero-dish.jpg'
+      'logo': 'https://lucente-milano.com/images/.webp'
     },
     'mainEntityOfPage': {
       '@type': 'WebPage',
@@ -128,7 +128,7 @@ export default function ArticlePage() {
           <div className="flex items-center justify-between border-y border-white/10 py-4">
             <div className="flex items-center gap-3">
               <img
-                src={article.author?.avatar || '/images/chef-portrait.jpg'}
+                src={article.author?.avatar || '/images/.webp'}
                 alt={article.author?.name}
                 loading="lazy"
                 className="w-11 h-11 rounded-full object-cover border border-or/40"

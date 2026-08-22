@@ -16,7 +16,7 @@ export default function Footer({ onOpenBooking }) {
   };
 
   return (
-    <footer className="bg-[#0A0A09] text-muted pt-24 pb-12 border-t border-white/10 relative overflow-hidden">
+    <footer className="bg-[#0A0A09] text-muted pt-24 pb-32 sm:pb-36 lg:pb-16 border-t border-white/10 relative overflow-hidden">
       
       {/* Subtle Background Watermark */}
       <div className="absolute right-8 -bottom-10 text-[180px] md:text-[240px] font-serif-luxury font-light text-white/[0.015] pointer-events-none select-none tracking-[0.2em]">
@@ -147,15 +147,40 @@ export default function Footer({ onOpenBooking }) {
 
         </div>
 
-        {/* Bottom Legal, Privacy & Credits */}
-        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-[10px] text-muted gap-4">
-          <p>© 2026 LUCENTE S.r.l. Milano. Tous droits réservés.</p>
-          <div className="flex flex-wrap space-x-6">
-            <Link to="/legal" className="hover:text-ivoire transition-colors">Politique de Confidentialité</Link>
-            <Link to="/legal" className="hover:text-ivoire transition-colors">Mentions Légales</Link>
-            <Link to="/contact" className="hover:text-ivoire transition-colors">Contact</Link>
-            <Link to="/careers" className="hover:text-ivoire transition-colors">Carrières</Link>
-          </div>
+        {/* Bottom Legal, Privacy & Credits - Optimized for mobile tap & clearance */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-muted gap-6">
+          <p className="text-center md:text-left text-[11px] tracking-wide text-muted/90">
+            © 2026 LUCENTE S.r.l. Milano. Tous droits réservés.
+          </p>
+          <nav aria-label="Liens légaux et réglementaires" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[11px] uppercase tracking-wider">
+            <Link 
+              to="/legal#rgpd" 
+              className="text-muted hover:text-or transition-colors py-1.5 px-1 underline-offset-4 hover:underline"
+            >
+              Politique de Confidentialité
+            </Link>
+            <span className="text-white/20 hidden sm:inline">·</span>
+            <Link 
+              to="/legal" 
+              className="text-muted hover:text-or transition-colors py-1.5 px-1 underline-offset-4 hover:underline"
+            >
+              Mentions Légales
+            </Link>
+            <span className="text-white/20 hidden sm:inline">·</span>
+            <Link 
+              to="/contact" 
+              className="text-muted hover:text-or transition-colors py-1.5 px-1 underline-offset-4 hover:underline"
+            >
+              Contact
+            </Link>
+            <span className="text-white/20 hidden sm:inline">·</span>
+            <Link 
+              to="/careers" 
+              className="text-muted hover:text-or transition-colors py-1.5 px-1 underline-offset-4 hover:underline"
+            >
+              Carrières
+            </Link>
+          </nav>
         </div>
 
       </div>

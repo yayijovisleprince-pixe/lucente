@@ -7,8 +7,14 @@ export default function MobileBottomBar({ onOpenBooking }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show floating bar after scrolling 120px
-      if (window.scrollY > 120) {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+      
+      // Auto-hide when reaching the bottom (footer in view) to never obstruct legal/privacy links
+      const isNearBottom = scrollY + windowHeight >= docHeight - 180;
+
+      if (scrollY > 100 && !isNearBottom) {
         setIsVisible(true);
       } else {
         setIsVisible(false);
@@ -16,6 +22,7 @@ export default function MobileBottomBar({ onOpenBooking }) {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

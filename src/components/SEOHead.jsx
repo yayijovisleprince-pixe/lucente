@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const BASE_URL = 'https://lucente-milano.com';
-const DEFAULT_IMAGE = `${BASE_URL}/images/hero-dish.jpg`;
+const DEFAULT_IMAGE = `${BASE_URL}/images/.webp`;
 
 /**
  * SEOHead - Dynamic SEO, GEO, AEO & JSON-LD Structured Data Manager
@@ -110,11 +110,11 @@ export default function SEOHead({
           'name': 'LUCENTE',
           'legalName': 'LUCENTE Alta Cucina S.r.l.',
           'url': BASE_URL,
-          'logo': `${BASE_URL}/images/hero-dish.jpg`,
+          'logo': `${BASE_URL}/images/.webp`,
           'image': [
-            `${BASE_URL}/images/hero-dish.jpg`,
-            `${BASE_URL}/images/dining-room.jpg`,
-            `${BASE_URL}/images/chef-craft.jpg`
+            `${BASE_URL}/images/.webp`,
+            `${BASE_URL}/images/.webp`,
+            `${BASE_URL}/images/.webp`
           ],
           'description': "Restaurant gastronomique italien doublement étoilé au Guide Michelin. Haute cuisine contemporaine au clair-obscur dirigée par le Chef Vincenzo Moretti à Milan.",
           'servesCuisine': ['Haute Cuisine Italienne', 'Contemporary Italian', 'Alta Cucina'],

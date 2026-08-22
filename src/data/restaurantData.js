@@ -39,49 +39,49 @@ export const tastingMenus = [
         name: "L'Ombra del Bosco",
         ingredients: "Tartare de bœuf Fassona piémontaise au couteau, émulsion de noisettes Tonda Gentile d'Alba et poussières de cèpes séchés.",
         pairing: "Barbera d'Alba Superiore DOC 2020 — Giacomo Conterno",
-        image: "/images/hero-dish.jpg"
+        image: "/images/.webp"
       },
       {
         act: "II",
         name: "Oro di Langhe",
         ingredients: "Risotto Carnaroli Riserva affiné 7 ans, beurre noisette de montagne, parmesan Vacche Rosse 36 mois et lamelles de truffe blanche d'Alba.",
         pairing: "Barolo Monprivato DOCG 2017 — Giuseppe Mascarello",
-        image: "/images/truffle-harvest.jpg"
+        image: "/images/.webp"
       },
       {
         act: "III",
         name: "Plin all'Antica",
         ingredients: "Agnolotti del Plin farcis aux trois viandes rôties, réduction brillante de jus de veau infusé au romarin sauvage et genièvre.",
         pairing: "Brunello di Montalcino DOCG 2016 — Biondi-Santi",
-        image: "/images/pasta-caviar.jpg"
+        image: "/images/.webp"
       },
       {
         act: "IV",
         name: "Fumo & Brace",
         ingredients: "Filet de bœuf Chianina fumé au bois de sarments de vigne, mousseline de céleri-rave brûlé et échalotes confites au balsamique traditionnel de Modène DOP 25 ans.",
         pairing: "Sassicaia Tenuta San Guido 2018 — Bolgheri",
-        image: "/images/hero-dish.jpg"
+        image: "/images/.webp"
       },
       {
         act: "V",
         name: "Transizione Minerale",
         ingredients: "Granité de cédrat de Calabre, gelée d'origan sauvage des Pouilles et filet d'huile d'olive nouvelle Coratina.",
         pairing: "Acqua Madre di Sicilia",
-        image: "/images/prawn-dish.jpg"
+        image: "/images/.webp"
       },
       {
         act: "VI",
         name: "Castelmagno d'Alpeggio",
         ingredients: "Affinage en crypte de 24 mois, mostarda di Cremona aux poires et réduction de vin Santo toscan.",
         pairing: "Vin Santo del Chianti Classico 2011 — Fontodi",
-        image: "/images/dining-room.jpg"
+        image: "/images/.webp"
       },
       {
         act: "VII",
         name: "Oro Bruciato",
         ingredients: "Feuilletage croustillant au gianduja torréfié, glace au lait de foin d'alpage et tuile au cacao amer Criollo.",
         pairing: "Moscato d'Asti Canelli DOCG — Bera Vittorio",
-        image: "/images/chocolate-dolce.jpg"
+        image: "/images/.webp"
       }
     ]
   },
@@ -99,63 +99,63 @@ export const tastingMenus = [
         name: "Il Rubino di Mazara",
         ingredients: "Gambero Rosso de Mazara del Vallo cru (12°C), stracciatella fumée au bois d'olivier, caviar Oscietra Royal et perles d'agrumes de Calabre.",
         pairing: "Etna Bianco Superiore 2021 — Pietradolce",
-        image: "/images/prawn-dish.jpg"
+        image: "/images/.webp"
       },
       {
         act: "II",
         name: "Voce del Mare",
         ingredients: "Crème froide d'oursin de Sicile, gelée de yuzu sauvage, algues wakame séchées à l'air marin et poudre de corail.",
         pairing: "Greco di Tufo DOCG 2022 — Feudi di San Gregorio",
-        image: "/images/prawn-dish.jpg"
+        image: "/images/.webp"
       },
       {
         act: "III",
         name: "Bottoni di Mare",
         ingredients: "Petites pâtes rondes farcies à la chair de tourteau bleu, bouillon de homard réduit à l'os et zeste de bergamote confite.",
         pairing: "Falanghina del Sannio 2020 — Mustilli",
-        image: "/images/pasta-caviar.jpg"
+        image: "/images/.webp"
       },
       {
         act: "IV",
         name: "Raviolo Imperiale",
         ingredients: "Un raviolo unique, farce de langoustine de Méditerranée, 15g de caviar Oscietra Royal et bouillon d'or au safran d'Abruzzo.",
         pairing: "Trebbiano d'Abruzzo 2019 — Valentini",
-        image: "/images/pasta-caviar.jpg"
+        image: "/images/.webp"
       },
       {
         act: "V",
         name: "Rombo Selvaggio",
         ingredients: "Turbot sauvage de l'Adriatique en croûte d'herbes aromatiques, jus concentré d'arêtes au vin blanc et fenouil marin.",
         pairing: "Vermentino di Gallura DOCG 2021 — Capichera",
-        image: "/images/chef-craft.jpg"
+        image: "/images/.webp"
       },
       {
         act: "VI",
         name: "La Roccia & il Sale",
         ingredients: "Moule de roche de Tarente grillée au feu vif, huile de piment de Soverato et granité au sel de Cervia.",
         pairing: "Rossese di Dolceacqua DOC 2020 — Foresti",
-        image: "/images/dining-room.jpg"
+        image: "/images/.webp"
       },
       {
         act: "VII",
         name: "Brace di Seppia",
         ingredients: "Seiche de Méditerranée grillée à la braise, encre réduite au mascarpone fumé et gremolata de citron noir.",
         pairing: "Etna Rosso 2019 — Terre Nere",
-        image: "/images/kitchen-fire.jpg"
+        image: "/images/.webp"
       },
       {
         act: "VIII",
         name: "Transizione Salina",
         ingredients: "Granité aux algues corallines, huile de framboise sauvage et eau de tomate fermentée.",
         pairing: "Acqua Madre di Sicilia",
-        image: "/images/tomato-saffron.jpg"
+        image: "/images/.webp"
       },
       {
         act: "IX",
         name: "Isola Dolce",
         ingredients: "Sphère de chocolat blanc Ivoire, gelée d'eau de mer filtrée, cédrat confit et fleur de sel de Trapani.",
         pairing: "Passito di Pantelleria 'Ben Ryé' 2020 — Donnafugata",
-        image: "/images/chocolate-dolce.jpg"
+        image: "/images/.webp"
       }
     ]
   },
@@ -173,77 +173,77 @@ export const tastingMenus = [
         name: "Benvenuto della Casa",
         ingredients: "Cinq amuse-bouches de la brigade : caillé de brebis fumé, tuile de riz soufflé au romarin, langoustine en tempura de nori, olive Taggiasca confite et bonbon de bouillon de poule.",
         pairing: "Franciacorta Brut Nature DOCG — Bellavista",
-        image: "/images/chef-craft.jpg"
+        image: "/images/.webp"
       },
       {
         act: "II",
         name: "L'Ombra del Bosco",
         ingredients: "Tartare de bœuf Fassona piémontaise au couteau, émulsion de noisettes Tonda Gentile d'Alba et poussières de cèpes séchés.",
         pairing: "Barbera d'Alba Superiore DOC 2020 — Giacomo Conterno",
-        image: "/images/hero-dish.jpg"
+        image: "/images/.webp"
       },
       {
         act: "III",
         name: "Il Rubino di Mazara",
         ingredients: "Gambero Rosso de Mazara del Vallo cru, stracciatella fumée, caviar Oscietra Royal 10g et perles d'agrumes.",
         pairing: "Etna Bianco Superiore 2021 — Pietradolce",
-        image: "/images/prawn-dish.jpg"
+        image: "/images/.webp"
       },
       {
         act: "IV",
         name: "Raviolo Imperiale al Caviale",
         ingredients: "Raviolo unique fait main, langoustine de Méditerranée, 15g de caviar et bouillon d'or au safran d'Abruzzo.",
         pairing: "Trebbiano d'Abruzzo 2019 — Valentini",
-        image: "/images/pasta-caviar.jpg"
+        image: "/images/.webp"
       },
       {
         act: "V",
         name: "Oro di Langhe",
         ingredients: "Risotto Carnaroli affiné 7 ans, beurre noisette de montagne, parmesan Vacche Rosse 36 mois et truffe blanche d'Alba.",
         pairing: "Barolo Monprivato DOCG 2017 — Giuseppe Mascarello",
-        image: "/images/truffle-harvest.jpg"
+        image: "/images/.webp"
       },
       {
         act: "VI",
         name: "Plin all'Antica",
         ingredients: "Agnolotti del Plin aux trois viandes, réduction de veau au romarin sauvage et genièvre.",
         pairing: "Brunello di Montalcino DOCG 2016 — Biondi-Santi",
-        image: "/images/pasta-caviar.jpg"
+        image: "/images/.webp"
       },
       {
         act: "VII",
         name: "Rombo Selvaggio",
         ingredients: "Turbot sauvage de l'Adriatique, croûte d'herbes aromatiques, jus concentré au vin blanc et fenouil marin.",
         pairing: "Vermentino di Gallura DOCG 2021 — Capichera",
-        image: "/images/chef-craft.jpg"
+        image: "/images/.webp"
       },
       {
         act: "VIII",
         name: "Fumo & Brace",
         ingredients: "Filet de bœuf Chianina fumé au sarment de vigne, mousseline de céleri brûlé et balsamique traditionnel de Modène 25 ans.",
         pairing: "Sassicaia Tenuta San Guido 2018 — Bolgheri",
-        image: "/images/hero-dish.jpg"
+        image: "/images/.webp"
       },
       {
         act: "IX",
         name: "Transizione Minerale",
         ingredients: "Granité de cédrat de Calabre, gelée d'origan sauvage et huile d'olive Coratina.",
         pairing: "Acqua Madre di Sicilia",
-        image: "/images/prawn-dish.jpg"
+        image: "/images/.webp"
       },
       {
         act: "X",
         name: "Castelmagno d'Alpeggio",
         ingredients: "Affinage en crypte 24 mois, mostarda di Cremona et réduction de vin Santo toscan.",
         pairing: "Vin Santo del Chianti Classico 2011 — Fontodi",
-        image: "/images/dining-room.jpg"
+        image: "/images/.webp"
       },
       {
         act: "XI",
         name: "L'Épilogue : Sfera di Cioccolato Criollo & Foin",
         ingredients: "Chocolat de plantation 75%, gianduja torréfié et glace au lait d'alpage.",
         pairing: "Barolo Chinato — Giulio Cocchi",
-        image: "/images/chocolate-dolce.jpg"
+        image: "/images/.webp"
       }
     ]
   }
@@ -260,21 +260,21 @@ export const aLaCarteSections = [
         description: "Tartare au couteau, émulsion de moelle fumée, câpres frites de Pantelleria et poussière d'olives taggiasche.",
         price: "48 €",
         allergens: "Aucun allergène majeur",
-        image: "/images/hero-dish.jpg"
+        image: "/images/.webp"
       },
       {
         name: "Gambero Rosso di Mazara, Stracciatella & Caviale",
         description: "Crevettes rouges crues, stracciatella di bufala fumée, 10g de caviar Oscietra Royal et zeste de cédrat confit.",
         price: "56 €",
         allergens: "Crustacés, Produits laitiers",
-        image: "/images/prawn-dish.jpg"
+        image: "/images/.webp"
       },
       {
         name: "Carciofo Spinoso di Sardegna alla Brace & Tuile de Pecorino",
         description: "Artichaut épineux rôti au feu de bois, émulsion d'herbes amères et sabayon tiède au Pecorino Romano DOP.",
         price: "42 €",
         allergens: "Produits laitiers, Œufs",
-        image: "/images/dining-room.jpg"
+        image: "/images/.webp"
       }
     ]
   },
@@ -288,21 +288,21 @@ export const aLaCarteSections = [
         description: "Riz affiné 7 ans, pistils de safran de San Gimignano, moelle de bœuf confite et parmesan Vacche Rosse 36 mois.",
         price: "58 €",
         allergens: "Produits laitiers",
-        image: "/images/truffle-harvest.jpg"
+        image: "/images/.webp"
       },
       {
         name: "Raviolo Imperiale di Scampo & Caviale Oscietra",
         description: "Un raviolo unique géant, farce fondante de langoustine de Méditerranée, bouillon d'or au safran et caviar.",
         price: "68 €",
         allergens: "Gluten, Crustacés, Œufs, Produits laitiers",
-        image: "/images/pasta-caviar.jpg"
+        image: "/images/.webp"
       },
       {
         name: "Bottoni di Zucca Mantovana, Amaretto & Tartufo Nero",
         description: "Petits raviolis sphériques à la courge de Mantoue, beurre noisette clarifié à la sauge et truffe noire d'Ombrie.",
         price: "52 €",
         allergens: "Gluten, Fruits à coque, Produits laitiers, Œufs",
-        image: "/images/pasta-caviar.jpg"
+        image: "/images/.webp"
       }
     ]
   },
@@ -316,14 +316,14 @@ export const aLaCarteSections = [
         description: "Chianina IGP maturée 45 jours, mousseline de céleri brûlé, balsamique traditionnel de Modène 25 ans.",
         price: "85 €",
         allergens: "Céleri",
-        image: "/images/hero-dish.jpg"
+        image: "/images/.webp"
       },
       {
         name: "Triglia di Scoglio in Crosta di Pane al Timo & Livèche",
         description: "Rouget de roche en écailles croustillantes, jus concentré d'arêtes au safran et fenouil marin.",
         price: "72 €",
         allergens: "Poisson, Gluten",
-        image: "/images/chef-craft.jpg"
+        image: "/images/.webp"
       }
     ]
   },
@@ -337,14 +337,14 @@ export const aLaCarteSections = [
         description: "Cœur coulant au gianduja torréfié, fumage minute au bois d'olivier et glace au lait de foin d'alpage.",
         price: "34 €",
         allergens: "Produits laitiers, Fruits à coque, Œufs",
-        image: "/images/chocolate-dolce.jpg"
+        image: "/images/.webp"
       },
       {
         name: "Sinfonia di Cédrat di Diamante & Basilico Porpora",
         description: "Mousse légère au cédrat, granité au pamplemousse rose de Calabre et gelée d'estragon sauvage.",
         price: "28 €",
         allergens: "Aucun allergène majeur",
-        image: "/images/tomato-saffron.jpg"
+        image: "/images/.webp"
       }
     ]
   }
@@ -405,20 +405,20 @@ export const spaces = [
     name: "La Sala Chiaroscuro",
     capacity: "28 couverts",
     description: "Pierre de lave, lin obscur, lumière sur mesure pour chaque table. 28 places. Pas une de plus. L'architecte a conçu la salle pour que deux tablées ne s'entendent pas — ni ne se voient.",
-    image: "/images/dining-room.jpg"
+    image: "/images/.webp"
   },
   {
     id: "tavolo-dello-chef",
     name: "Il Tavolo dello Chef",
     capacity: "4 à 6 convives",
     description: "Un bloc de marbre de Carrare brut, taillé dans une seule pièce, face à la brigade. Le service n'est pas le même ici — il se passe des explications. Vous regardez. Vous comprenez.",
-    image: "/images/chef-craft.jpg"
+    image: "/images/.webp"
   },
   {
     id: "la-cantina-privata",
     name: "La Cantina Segreta",
     capacity: "Jusqu'à 10 convives",
     description: "Descendez. 1 400 bouteilles encadrent la table. La cave est la cave — pas une mise en scène. Si vous souhaitez un dîner confidentiel, c'est ici qu'il se tient.",
-    image: "/images/cellar-architecture.jpg"
+    image: "/images/.webp"
   }
 ];

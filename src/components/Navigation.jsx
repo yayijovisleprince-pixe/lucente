@@ -13,7 +13,7 @@ export default function Navigation({
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [hoveredImage, setHoveredImage] = useState('/images/hero-dish.jpg');
+  const [hoveredImage, setHoveredImage] = useState('/images/.webp');
   const [milanTime, setMilanTime] = useState('');
   const location = useLocation();
 
@@ -45,12 +45,12 @@ export default function Navigation({
   }, [location.pathname]);
 
   const navLinks = [
-    { label: 'HISTOIRE', path: '/story', image: '/images/chef-craft.jpg', sub: "L'Héritage & Le Chef" },
-    { label: 'CUISINE', path: '/cuisine', image: '/images/hero-dish.jpg', sub: 'Manifeste & Matière' },
-    { label: 'MENU', path: '/menu', image: '/images/pasta-caviar.jpg', sub: 'Les 3 Percorsi Gastronomiques' },
-    { label: 'ESPACES PRIVÉS', path: '/private-dining', image: '/images/dining-room.jpg', sub: 'Salons & Table du Chef' },
-    { label: 'GALERIE', path: '/gallery', image: '/images/table-ambiance.jpg', sub: 'Anthologie Visuelle' },
-    { label: 'JOURNAL', path: '/journal', image: '/images/dining-room.jpg', sub: 'Chroniques Culinaires' },
+    { label: 'HISTOIRE', path: '/story', image: '/images/.webp', sub: "L'Héritage & Le Chef" },
+    { label: 'CUISINE', path: '/cuisine', image: '/images/.webp', sub: 'Manifeste & Matière' },
+    { label: 'MENU', path: '/menu', image: '/images/.webp', sub: 'Les 3 Percorsi Gastronomiques' },
+    { label: 'ESPACES PRIVÉS', path: '/private-dining', image: '/images/.webp', sub: 'Salons & Table du Chef' },
+    { label: 'GALERIE', path: '/gallery', image: '/images/.webp', sub: 'Anthologie Visuelle' },
+    { label: 'JOURNAL', path: '/journal', image: '/images/.webp', sub: 'Chroniques Culinaires' },
   ];
 
   return (

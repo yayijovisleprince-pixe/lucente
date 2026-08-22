@@ -25,7 +25,7 @@ export default function Hero({ onOpenBooking }) {
       {/* Background Image with Cinematic Zoom & Chiaroscuro Mask */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
-          src="/images/hero-dish.jpg"
+          src="/images/.webp"
           alt="LUCENTE — Haute Cuisine Italienne"
           className={`w-full h-full object-cover filter brightness-[0.45] contrast-[1.15] transition-all duration-[2200ms] ease-out ${
             isLoaded ? 'scale-100 opacity-100' : 'scale-110 opacity-0'

@@ -24,7 +24,7 @@ export default function StoryPage({ onOpenBooking }) {
       '@type': 'Person',
       'name': 'Vincenzo Moretti',
       'jobTitle': 'Chef Exécutif & Propriétaire',
-      'image': 'https://lucente-milano.com/images/chef-portrait.jpg',
+      'image': 'https://lucente-milano.com/images/.webp',
       'description': 'Chef doublement étoilé au Guide Michelin, fondateur de LUCENTE à Milan.',
       'worksFor': {
         '@type': 'Restaurant',
@@ -46,7 +46,7 @@ export default function StoryPage({ onOpenBooking }) {
       <SEOHead
         title="L'Histoire & Le Chef Vincenzo Moretti | LUCENTE — Milano"
         description="Il a grandi au bruit de la braise, pas au son des diplômes. L'histoire de Vincenzo Moretti et de LUCENTE, restaurant doublement étoilé à Milan."
-        image="/images/chef-portrait.jpg"
+        image="/images/.webp"
         path="/story"
         schema={storySchema}
       />
@@ -84,7 +84,7 @@ export default function StoryPage({ onOpenBooking }) {
       <section className="relative max-w-7xl mx-auto px-6 md:px-12 my-6">
         <div className="relative rounded-lg overflow-hidden border border-or-subtle shadow-2xl group">
           <img
-            src="/images/truffle-harvest.jpg"
+            src="/images/.webp"
             alt="Récolte de truffe blanche — Langhe, Piémont"
             className="w-full h-80 sm:h-[480px] lg:h-[540px] object-cover filter brightness-90 group-hover:scale-102 transition-transform duration-1000 ease-out"
           />
@@ -133,7 +133,7 @@ export default function StoryPage({ onOpenBooking }) {
             <div className="bg-nero border border-white/5 p-8 sm:p-12 space-y-6 shadow-2xl">
               <div className="relative h-80 overflow-hidden rounded mb-6">
                 <img
-                  src="/images/chef-portrait.jpg"
+                  src="/images/.webp"
                   alt="Chef Vincenzo Moretti"
                   className="w-full h-full object-cover object-top filter brightness-95"
                 />
@@ -155,7 +155,7 @@ export default function StoryPage({ onOpenBooking }) {
             <div className="bg-nero border border-white/5 p-8 sm:p-12 space-y-6 shadow-2xl">
               <div className="relative h-80 overflow-hidden rounded mb-6">
                 <img
-                  src="/images/sommelier-ritual.jpg"
+                  src="/images/.webp"
                   alt="Chef Sommelier Gianluca Ferri"
                   className="w-full h-full object-cover filter brightness-95"
                 />

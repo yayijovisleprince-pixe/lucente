@@ -90,7 +90,7 @@ export default function GalleryPage() {
       <SEOHead
         title="Galerie Éditoriale & Immersion Visuelle | LUCENTE — Milano"
         description="Explorez la galerie photographique de LUCENTE Milano : The Table, The Kitchen, The Space, The People, The Ingredients. Une anthologie visuelle au Chiaroscuro."
-        image="/images/dining-room.jpg"
+        image="/images/.webp"
         path="/gallery"
         schema={gallerySchema}
       />
@@ -370,7 +370,7 @@ loading="lazy"                 src={spreadBreak1.src}
             >
               <div className="h-80 sm:h-[440px] overflow-hidden">
                 <img
-loading="lazy"                   src="/images/olive-oil-stone.jpg"
+loading="lazy"                   src="/images/.webp"
                   alt="Huile d'olive Coratina sur basalte"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
@@ -394,7 +394,7 @@ loading="lazy"                   src="/images/olive-oil-stone.jpg"
             >
               <div className="h-80 sm:h-[440px] overflow-hidden">
                 <img
-loading="lazy"                   src="/images/chef-craft.jpg"
+loading="lazy"                   src="/images/.webp"
                   alt="Dressage de précision à la pince d'argent"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
