@@ -135,16 +135,21 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
               <span className="text-[10px] uppercase font-mono tracking-widest text-or">Le Cycle du Temps</span>
               <h2 className="font-serif text-3xl text-ivoire">Quatre micro-saisons.<br />Une seule règle : la carte suit la terre.</h2>
             </div>
-            <div className="flex bg-nero p-1 border border-white/5">
-              {['spring', 'summer', 'autumn', 'winter'].map((seasonKey) => (
+            <div className="w-full sm:w-auto grid grid-cols-4 sm:flex bg-nero p-1 border border-white/10 rounded-none">
+              {[
+                { key: 'spring', label: 'Printemps' },
+                { key: 'summer', label: 'Été' },
+                { key: 'autumn', label: 'Automne' },
+                { key: 'winter', label: 'Hiver' }
+              ].map((season) => (
                 <button
-                  key={seasonKey}
-                  onClick={() => setActiveSeason(seasonKey)}
-                  className={`px-4 py-2 text-xs uppercase tracking-widest font-semibold transition-all ${
-                    activeSeason === seasonKey ? 'bg-or text-nero shadow' : 'text-muted hover:text-ivoire'
+                  key={season.key}
+                  onClick={() => setActiveSeason(season.key)}
+                  className={`px-2 sm:px-4 py-2.5 text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest font-semibold transition-all text-center flex items-center justify-center ${
+                    activeSeason === season.key ? 'bg-or text-nero shadow-lg' : 'text-muted hover:text-ivoire'
                   }`}
                 >
-                  {seasonKey === 'spring' ? 'Printemps' : seasonKey === 'summer' ? 'Été' : seasonKey === 'autumn' ? 'Automne' : 'Hiver'}
+                  {season.label}
                 </button>
               ))}
             </div>
