@@ -41,41 +41,45 @@ export default function CustomCursor() {
       inner.style.opacity = '1';
     };
 
-    // Detect hover on interactive elements (data-cursor or buttons/links)
+    // Detect hover on interactive elements
     const handleHoverIn = (e) => {
-      const el = e.target.closest('[data-cursor], a, button');
+      const el = e.target.closest('[data-cursor], a, button, input, select, textarea');
       if (!el) return;
       isHovering.current = true;
       const cursorLabel = el.getAttribute('data-cursor');
-      // Expand outer ring
-      outer.style.width = '56px';
-      outer.style.height = '56px';
-      outer.style.borderColor = 'rgba(184,155,94,0.85)';
-      outer.style.backgroundColor = 'rgba(184,155,94,0.10)';
-      // Show label if any
-      if (cursorLabel && label) {
-        label.textContent = cursorLabel;
-        label.style.opacity = '1';
+
+      // Expand to opaque gold sphere
+      outer.style.width = '64px';
+      outer.style.height = '64px';
+      outer.style.borderColor = '#FAF8F5';
+      outer.style.backgroundColor = 'rgba(184, 155, 94, 0.92)';
+      outer.style.boxShadow = '0 0 25px rgba(184, 155, 94, 0.55)';
+
+      // Show label inside sphere
+      if (label) {
+        label.textContent = cursorLabel || '';
+        label.style.opacity = cursorLabel ? '1' : '0';
       }
-      // Shrink inner dot
-      inner.style.width = '4px';
-      inner.style.height = '4px';
+      // Hide inner dot while hovering
+      inner.style.opacity = '0';
     };
 
     const handleHoverOut = (e) => {
-      const el = e.target.closest('[data-cursor], a, button');
+      const el = e.target.closest('[data-cursor], a, button, input, select, textarea');
       if (!el) return;
       isHovering.current = false;
-      // Reset outer ring
-      outer.style.width = '28px';
-      outer.style.height = '28px';
-      outer.style.borderColor = 'rgba(184,155,94,0.45)';
-      outer.style.backgroundColor = 'transparent';
+
+      // Reset to idle semi-opaque gold sphere
+      outer.style.width = '32px';
+      outer.style.height = '32px';
+      outer.style.borderColor = 'rgba(184, 155, 94, 0.75)';
+      outer.style.backgroundColor = 'rgba(184, 155, 94, 0.45)';
+      outer.style.boxShadow = '0 0 15px rgba(184, 155, 94, 0.25)';
+
       // Hide label
       if (label) label.style.opacity = '0';
-      // Reset inner dot
-      inner.style.width = '6px';
-      inner.style.height = '6px';
+      // Restore inner dot
+      inner.style.opacity = '1';
     };
 
     document.addEventListener('mouseover', handleHoverIn);
@@ -85,7 +89,7 @@ export default function CustomCursor() {
     document.addEventListener('mouseenter', handleMouseEnter);
 
     const render = () => {
-      const ease = isHovering.current ? 0.12 : 0.18;
+      const ease = isHovering.current ? 0.16 : 0.22;
       currentPos.current.x += (targetPos.current.x - currentPos.current.x) * ease;
       currentPos.current.y += (targetPos.current.y - currentPos.current.y) * ease;
 
@@ -113,32 +117,34 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Outer ring — slow, expands on hover */}
+      {/* Outer opaque gold ball — expands on hover */}
       <div
         ref={cursorOuterRef}
         className="fixed top-0 left-0 pointer-events-none z-[9999] hidden lg:flex items-center justify-center opacity-0"
         style={{
-          width: '28px',
-          height: '28px',
+          width: '32px',
+          height: '32px',
           borderRadius: '50%',
-          border: '1px solid rgba(184,155,94,0.45)',
-          backgroundColor: 'transparent',
+          border: '1.5px solid rgba(184, 155, 94, 0.75)',
+          backgroundColor: 'rgba(184, 155, 94, 0.45)',
+          backdropFilter: 'blur(2px)',
+          boxShadow: '0 0 15px rgba(184, 155, 94, 0.25)',
           willChange: 'transform, width, height',
-          transition: 'width 0.35s cubic-bezier(0.25,0.46,0.45,0.94), height 0.35s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.3s, background-color 0.3s, opacity 0.3s',
+          transition: 'width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), border-color 0.25s, background-color 0.25s, box-shadow 0.25s, opacity 0.25s',
         }}
       >
-        {/* Label inside the expanded cursor */}
+        {/* Crisp black label inside the opaque gold sphere */}
         <span
           ref={labelRef}
           style={{
             opacity: 0,
             transition: 'opacity 0.2s',
-            fontSize: '7px',
+            fontSize: '8px',
             fontFamily: 'var(--font-sans, sans-serif)',
-            fontWeight: 700,
-            letterSpacing: '0.15em',
+            fontWeight: 800,
+            letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            color: '#B89B5E',
+            color: '#10100E',
             pointerEvents: 'none',
             whiteSpace: 'nowrap',
             userSelect: 'none',
@@ -146,17 +152,18 @@ export default function CustomCursor() {
         />
       </div>
 
-      {/* Inner dot — fast, stays on exact mouse position */}
+      {/* Inner bright point */}
       <div
         ref={cursorInnerRef}
         className="fixed top-0 left-0 pointer-events-none z-[9999] hidden lg:block opacity-0"
         style={{
-          width: '6px',
-          height: '6px',
+          width: '5px',
+          height: '5px',
           borderRadius: '50%',
-          backgroundColor: '#B89B5E',
+          backgroundColor: '#FAF8F5',
+          boxShadow: '0 0 6px #B89B5E',
           willChange: 'transform',
-          transition: 'width 0.2s, height 0.2s, opacity 0.3s',
+          transition: 'opacity 0.2s',
         }}
       />
     </>
