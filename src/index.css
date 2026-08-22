@@ -1,9 +1,57 @@
 @import "tailwindcss";
 
+@theme {
+  --color-nero: #10100E;
+  --color-ivoire: #F2EBDD;
+  --color-terracotta: #A94E35;
+  --color-olive: #4E5940;
+  --color-or: #B89B5E;
+  --color-or-light: #D4BD88;
+  --color-or-dark: #8E733D;
+  
+  --color-surface: #171714;
+  --color-surface-elevated: #1F1E1A;
+  --color-surface-card: #24231E;
+  
+  --color-text-main: #F2EBDD;
+  --color-text-muted: #A39D91;
+  --color-text-dim: #68645C;
+
+  --color-muted: #A39D91;
+  
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Cinzel', serif;
+}
+
 /* ==========================================================================
    LUCENTE — Direction Artistique & Système Typographique
    Palette : Nero Profondo #10100E | Ivoire #F2EBDD | Terracotta #A94E35 | Olive #4E5940 | Or #B89B5E
    ========================================================================== */
+
+.text-nero {
+  color: #10100E !important;
+}
+
+.bg-nero {
+  background-color: #10100E;
+}
+
+.text-ivoire {
+  color: #F2EBDD;
+}
+
+.bg-ivoire {
+  background-color: #F2EBDD;
+}
+
+.text-or {
+  color: #B89B5E;
+}
+
+.bg-or {
+  background-color: #B89B5E;
+}
 
 :root {
   --color-nero: #10100E;

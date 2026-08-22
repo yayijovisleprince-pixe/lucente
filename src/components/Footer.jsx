@@ -58,10 +58,11 @@ export default function Footer({ onOpenBooking }) {
                   <button
                     type="submit"
                     aria-label="S'inscrire à la lettre de la maison"
-                    className="px-6 py-3.5 bg-or hover:bg-ivoire text-nero font-bold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 flex-shrink-0 shadow-xl cursor-pointer touch-manipulation"
+                    style={{ backgroundColor: '#B89B5E', color: '#10100E' }}
+                    className="px-6 py-3.5 hover:!bg-[#F2EBDD] font-extrabold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 flex-shrink-0 shadow-xl cursor-pointer touch-manipulation group"
                   >
-                    <span className="font-sans font-bold">S'INSCRIRE</span>
-                    <Send className="w-3.5 h-3.5 text-nero" />
+                    <span className="font-sans font-black text-[#10100E] tracking-widest text-xs">S'INSCRIRE</span>
+                    <Send className="w-3.5 h-3.5 text-[#10100E] stroke-[2.5] group-hover:translate-x-0.5 transition-transform" />
                   </button>
                 </div>
                 <p className="text-[10px] text-muted/70">
