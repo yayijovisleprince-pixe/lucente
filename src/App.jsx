@@ -133,6 +133,8 @@ export default function App() {
                   <Route path="/contact" element={<ContactPage onShowToast={showToast} />} />
                   <Route path="/careers" element={<CareersPage />} />
                   <Route path="/legal" element={<LegalPage />} />
+                  <Route path="/privacy" element={<LegalPage />} />
+                  <Route path="/confidentialite" element={<LegalPage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </PageTransition>
