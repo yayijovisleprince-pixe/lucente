@@ -191,58 +191,22 @@ export default function Navigation({
           </div>
 
           {/* Mobile & Tablet Controls (Visible sur Écrans < 1024px) */}
-          <div className="flex lg:hidden items-center gap-1.5 sm:gap-2.5">
+          <div className="flex lg:hidden items-center gap-2 sm:gap-3">
             
-            {/* Audio Toggle & Track Changer sur Mobile/Tablette */}
-            <div className="flex items-center bg-surface border border-or-subtle rounded-full p-0.5 gap-0.5 shadow-sm">
-              <button
-                onClick={onToggleAudio}
-                aria-label={isAudioPlaying ? (lang === 'it' ? 'Disattiva musica' : lang === 'en' ? 'Mute music' : 'Couper la musique') : (lang === 'it' ? 'Attiva musica' : lang === 'en' ? 'Enable music' : 'Activer la musique')}
-                className={`p-1.5 h-8 w-8 rounded-full flex items-center justify-center transition-all shrink-0 ${
-                  isAudioPlaying 
-                    ? 'bg-or text-nero font-bold shadow-md' 
-                    : 'text-muted hover:text-ivoire'
-                }`}
-                title={isAudioPlaying ? `${lang === 'it' ? 'Musica attiva' : lang === 'en' ? 'Music active' : 'Musique active'} : ${activeTrack.title}` : (lang === 'it' ? 'Attiva musica' : lang === 'en' ? 'Enable music' : 'Activer la musique')}
-              >
-                {isAudioPlaying ? (
-                  <div className="flex items-center gap-0.5 h-2.5">
-                    <span className="w-[2px] bg-nero rounded-full animate-eq-1" />
-                    <span className="w-[2px] bg-nero rounded-full animate-eq-2" />
-                    <span className="w-[2px] bg-nero rounded-full animate-eq-3" />
-                  </div>
-                ) : (
-                  <VolumeX className="w-3.5 h-3.5" />
-                )}
-              </button>
-
-              {/* Bouton Suivant pour changer de morceau directement sur Mobile */}
-              {isAudioPlaying && onNextTrack && (
-                <button
-                  onClick={onNextTrack}
-                  aria-label={lang === 'it' ? 'Brano successivo' : lang === 'en' ? 'Next track' : 'Morceau suivant'}
-                  title={`${lang === 'it' ? 'Cambia brano' : lang === 'en' ? 'Change track' : 'Changer de morceau'} (${currentTrackIndex + 1}/${audioTracks.length}) : ${activeTrack.title}`}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-or hover:text-ivoire hover:bg-white/10 transition-colors"
-                >
-                  <SkipForward size={11} />
-                </button>
-              )}
-            </div>
-
-            {/* Bouton RESERVE sur Mobile/Tablette */}
+            {/* Bouton RESERVE sur Mobile/Tablette — Magnifiquement mis en valeur */}
             <button
               onClick={() => onOpenBooking()}
               aria-label={t('nav.reserve')}
-              className="px-2.5 sm:px-4 py-1.5 sm:py-2 bg-or text-nero font-bold text-[10px] sm:text-xs uppercase tracking-wider border border-or shadow-md shrink-0 flex items-center gap-1 sm:gap-1.5"
+              className="px-3 sm:px-4 py-2 bg-or hover:bg-or-light text-nero font-bold text-xs uppercase tracking-[0.14em] border border-or shadow-lg shadow-or/20 hover:shadow-or/40 transition-all flex items-center gap-1.5 shrink-0"
             >
-              <Calendar size={12} className="shrink-0" />
+              <Calendar size={13} className="shrink-0" />
               <span>{t('nav.reserve')}</span>
             </button>
 
             {/* Menu Hamburger Accessible sur Mobile & Tablette */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 sm:p-2 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded bg-surface border border-white/15 text-ivoire hover:text-or hover:border-or/50 transition-all focus:outline-none shrink-0"
+              className="p-2 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-none bg-surface border border-white/15 text-ivoire hover:text-or hover:border-or/50 transition-all focus:outline-none shrink-0"
               aria-label={mobileMenuOpen ? (lang === 'it' ? 'Chiudi menu di navigazione' : lang === 'en' ? 'Close navigation menu' : 'Fermer le menu de navigation') : (lang === 'it' ? 'Apri menu di navigazione' : lang === 'en' ? 'Open navigation menu' : 'Ouvrir le menu de navigation')}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu-overlay"
