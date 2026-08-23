@@ -132,6 +132,9 @@ export default function App() {
                   <Route path="/reservations" element={<ReservationsPage onOpenBooking={handleOpenBooking} />} />
                   <Route path="/contact" element={<ContactPage onShowToast={showToast} />} />
                   <Route path="/careers" element={<CareersPage />} />
+                  <Route path="/carrieres" element={<CareersPage />} />
+                  <Route path="/rejoindre" element={<CareersPage />} />
+                  <Route path="/jobs" element={<CareersPage />} />
                   <Route path="/legal" element={<LegalPage />} />
                   <Route path="/privacy" element={<LegalPage />} />
                   <Route path="/confidentialite" element={<LegalPage />} />
