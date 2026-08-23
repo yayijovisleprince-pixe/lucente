@@ -126,6 +126,7 @@ export default function App() {
                   <Route path="/menu" element={<MenuPage onSelectMenuForBooking={handleSelectMenuForBooking} />} />
                   <Route path="/private-dining" element={<PrivateDiningPage onOpenBooking={handleOpenBooking} />} />
                   <Route path="/gallery" element={<GalleryPage />} />
+                  <Route path="/galerie" element={<GalleryPage />} />
                   <Route path="/journal" element={<JournalPage />} />
                   <Route path="/journal/:slug" element={<ArticlePage />} />
                   <Route path="/reservations" element={<ReservationsPage onOpenBooking={handleOpenBooking} />} />

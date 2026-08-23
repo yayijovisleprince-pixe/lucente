@@ -49,7 +49,7 @@ export default function GalleryPage() {
   };
 
   // Full-bleed spread item (Architectural space highlight)
-  const spreadBreak1 = galleryItems.find((item) => item.id === 'gal-05') || galleryItems[4];
+  const spreadBreak1 = localizedItems.find((item) => item.id === 'gal-05') || localizedItems[4];
 
   return (
     <div className="pt-28 pb-32 bg-nero text-ivoire min-h-screen">
@@ -124,8 +124,8 @@ export default function GalleryPage() {
             {galleryCategories.map((cat) => {
               const isSelected = selectedCategory === cat.id;
               const count = cat.id === 'ALL' 
-                ? galleryItems.length 
-                : galleryItems.filter((i) => i.category === cat.id).length;
+                ? localizedItems.length 
+                : localizedItems.filter((i) => i.category === cat.id).length;
 
               const label = cat.id === 'ALL'
                 ? (lang === 'it' ? 'Tutte le Collezioni' : lang === 'en' ? 'All Collections' : 'Toutes les Collections')
@@ -213,16 +213,15 @@ export default function GalleryPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           
           {filteredItems.map((item, index) => {
+            const cardSpan = selectedCategory === 'ALL' ? (item.span || 'col-span-1') : 'col-span-1';
             return (
               <article
                 key={item.id}
                 onClick={() => handleOpenByIndex(index)}
-                className={`group relative bg-surface border border-white/5 overflow-hidden cursor-pointer transition-all duration-500 hover:border-or/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.8)] flex flex-col justify-between ${
-                  item.span || 'col-span-1'
-                }`}
+                className={`group relative bg-surface border border-white/5 overflow-hidden cursor-pointer transition-all duration-500 hover:border-or/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.8)] flex flex-col justify-between ${cardSpan}`}
               >
                 {/* Visual Frame */}
-                <div className="relative w-full overflow-hidden bg-nero/50 aspect-video md:aspect-auto md:min-h-[320px] flex-1">
+                <div className="relative w-full overflow-hidden bg-nero/50 aspect-video md:aspect-[16/10] lg:aspect-auto min-h-[260px] sm:min-h-[300px] md:min-h-[340px] lg:min-h-[380px] flex-1">
                   <img
                     loading={index < 4 ? "eager" : "lazy"}
                     src={item.src}

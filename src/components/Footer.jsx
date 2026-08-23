@@ -172,7 +172,6 @@ export default function Footer({ onOpenBooking }) {
               href="https://jovisleprinceyayi.vercel.app"
               target="_blank"
               rel="noopener noreferrer"
-              data-cursor="PORTFOLIO"
               className="text-or hover:text-ivoire transition-colors underline-offset-4 hover:underline font-semibold inline-flex items-center gap-1"
             >
               {lang === 'it' ? 'Fatto da JoDev' : lang === 'en' ? 'Crafted by JoDev' : 'Fait par JoDev'}

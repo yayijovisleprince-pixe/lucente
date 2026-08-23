@@ -108,6 +108,7 @@ export default function Navigation({
             <div className="flex items-center gap-0.5 bg-surface border border-white/10 rounded-full p-0.5 shrink-0">
               <button
                 onClick={() => setLang('fr')}
+                data-cursor="FR"
                 aria-label="Français"
                 className={`px-2 py-1 text-[10px] font-mono uppercase tracking-wider rounded-full transition-all ${
                   lang === 'fr' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
@@ -117,6 +118,7 @@ export default function Navigation({
               </button>
               <button
                 onClick={() => setLang('it')}
+                data-cursor="IT"
                 aria-label="Italiano"
                 className={`px-2 py-1 text-[10px] font-mono uppercase tracking-wider rounded-full transition-all ${
                   lang === 'it' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
@@ -126,6 +128,7 @@ export default function Navigation({
               </button>
               <button
                 onClick={() => setLang('en')}
+                data-cursor="EN"
                 aria-label="English"
                 className={`px-2 py-1 text-[10px] font-mono uppercase tracking-wider rounded-full transition-all ${
                   lang === 'en' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
@@ -139,7 +142,7 @@ export default function Navigation({
             <div className="flex items-center bg-surface border border-or-subtle rounded-full p-1 gap-1 shrink-0">
               <button
                 onClick={onToggleAudio}
-                data-cursor="SOUND"
+                data-cursor={isAudioPlaying ? (lang === 'it' ? 'MUTE' : lang === 'en' ? 'MUTE' : 'COUPE') : (lang === 'it' ? 'AUDIO' : lang === 'en' ? 'SOUND' : 'SON')}
                 aria-label={isAudioPlaying ? (lang === 'it' ? 'Disattiva musica' : lang === 'en' ? 'Mute music' : 'Couper la musique') : (lang === 'it' ? 'Attiva musica' : lang === 'en' ? 'Enable music' : 'Activer la musique')}
                 className={`h-7 px-2.5 flex items-center justify-center gap-1.5 rounded-full transition-all text-[10px] font-mono uppercase tracking-wider ${
                   isAudioPlaying
@@ -178,7 +181,7 @@ export default function Navigation({
             {/* CTA RESERVE — Premium gold button */}
             <button
               onClick={() => onOpenBooking()}
-              data-cursor="RESERVE"
+              data-cursor={lang === 'it' ? 'PRENOTA' : lang === 'en' ? 'RESERVE' : 'RÉSERVER'}
               aria-label={t('nav.reserve')}
               className="shrink-0 px-4 xl:px-5 py-2 bg-or hover:bg-or-light text-nero hover:text-nero font-semibold text-[11px] xl:text-xs uppercase tracking-[0.16em] xl:tracking-[0.18em] transition-all duration-300 shadow-md shadow-or/20 hover:shadow-or/40 border border-or flex items-center gap-1.5 xl:gap-2 whitespace-nowrap"
             >
@@ -239,7 +242,7 @@ export default function Navigation({
             {/* Menu Hamburger Accessible sur Mobile & Tablette */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-1.5 sm:p-2 w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded bg-surface border border-white/15 text-ivoire hover:text-or hover:border-or/50 transition-all focus:outline-none shrink-0"
+              className="p-1.5 sm:p-2 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded bg-surface border border-white/15 text-ivoire hover:text-or hover:border-or/50 transition-all focus:outline-none shrink-0"
               aria-label={mobileMenuOpen ? (lang === 'it' ? 'Chiudi menu di navigazione' : lang === 'en' ? 'Close navigation menu' : 'Fermer le menu de navigation') : (lang === 'it' ? 'Apri menu di navigazione' : lang === 'en' ? 'Open navigation menu' : 'Ouvrir le menu de navigation')}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu-overlay"
@@ -298,46 +301,61 @@ export default function Navigation({
           </div>
 
           {/* Right Column: Menu Navigation Links & Controls */}
-          <div className="flex-1 lg:col-span-7 flex flex-col justify-between p-6 sm:p-14 lg:p-20 pt-20 sm:pt-32 pb-12 overflow-y-auto">
+          <div className="flex-1 lg:col-span-7 flex flex-col justify-between p-6 sm:p-14 lg:p-20 pt-20 sm:pt-28 pb-12 overflow-y-auto">
             
             <div className="space-y-6 sm:space-y-8">
-              <div className="flex items-center justify-between">
-                <p className="typo-eyebrow text-or">{t('nav.navigation')}</p>
-                <div className="flex items-center gap-2">
-                  {/* Language Switcher in mobile overlay */}
-                  <div className="flex items-center gap-0.5 bg-surface border border-white/10 rounded-full p-0.5">
-                    <button
-                      onClick={() => setLang('fr')}
-                      aria-label="Français"
-                      className={`px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider rounded-full transition-all ${
-                        lang === 'fr' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
-                      }`}
-                    >
-                      FR
-                    </button>
-                    <button
-                      onClick={() => setLang('it')}
-                      aria-label="Italiano"
-                      className={`px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider rounded-full transition-all ${
-                        lang === 'it' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
-                      }`}
-                    >
-                      IT
-                    </button>
-                    <button
-                      onClick={() => setLang('en')}
-                      aria-label="English"
-                      className={`px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider rounded-full transition-all ${
-                        lang === 'en' ? 'bg-or text-nero font-bold' : 'text-muted hover:text-ivoire'
-                      }`}
-                    >
-                      EN
-                    </button>
-                  </div>
-                  <span className="text-[10px] font-mono text-muted uppercase tracking-wider">
+              
+              {/* Dedicated Luxury Status Bar: Milan Clock + Language Selector */}
+              <div className="p-3 bg-surface/90 border border-white/10 flex items-center justify-between gap-3 shadow-lg">
+                {/* Live Milan Clock with Glowing Gold Ping */}
+                <div className="flex items-center gap-2 text-xs text-muted">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-or opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-or"></span>
+                  </span>
+                  <span className="text-ivoire font-medium font-mono text-[11px] tracking-wider">
                     Milano · {milanTime || '20:00'}
                   </span>
                 </div>
+
+                {/* Prominent Language Switcher */}
+                <div className="flex items-center gap-1 bg-nero border border-white/10 rounded-full p-1 shadow-inner">
+                  <button
+                    onClick={() => setLang('fr')}
+                    aria-label="Français"
+                    className={`px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider rounded-full transition-all ${
+                      lang === 'fr' ? 'bg-or text-nero shadow-sm' : 'text-muted hover:text-ivoire'
+                    }`}
+                  >
+                    FR
+                  </button>
+                  <button
+                    onClick={() => setLang('it')}
+                    aria-label="Italiano"
+                    className={`px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider rounded-full transition-all ${
+                      lang === 'it' ? 'bg-or text-nero shadow-sm' : 'text-muted hover:text-ivoire'
+                    }`}
+                  >
+                    IT
+                  </button>
+                  <button
+                    onClick={() => setLang('en')}
+                    aria-label="English"
+                    className={`px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider rounded-full transition-all ${
+                      lang === 'en' ? 'bg-or text-nero shadow-sm' : 'text-muted hover:text-ivoire'
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
+              </div>
+
+              {/* Navigation Header Title */}
+              <div className="pb-2 border-b border-white/5 flex items-center justify-between">
+                <p className="typo-eyebrow text-or text-xs">{t('nav.navigation')}</p>
+                <span className="text-[10px] font-mono text-muted tracking-widest uppercase">
+                  Anthologie Milano
+                </span>
               </div>
               
               {/* Primary Links with Staggered Hover Effect */}

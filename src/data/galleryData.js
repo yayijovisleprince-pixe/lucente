@@ -59,8 +59,8 @@ export const rawGalleryItems = [
       en: "Signature dish Filetto al Tartufo plated in chiaroscuro light",
       fr: "Plat signature Filetto al Tartufo dressé au clair-obscur"
     },
-    aspectRatio: "4/3",
-    span: "col-span-1 md:col-span-2 row-span-2",
+    aspectRatio: "16/10",
+    span: "col-span-1 md:col-span-2 lg:col-span-2",
     caption: {
       it: "Impiattamento in Chiaroscuro — Manzo Chianina affumicato e lamelle di tartufo bianco.",
       en: "Chiaroscuro plating — Smoked Chianina beef and white truffle shavings.",
@@ -95,7 +95,7 @@ export const rawGalleryItems = [
       fr: "Crevettes rouges de Mazara del Vallo avec caviar et stracciatella"
     },
     aspectRatio: "1/1",
-    span: "col-span-1",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
     caption: {
       it: "Gambero Rosso crudo, stracciatella affumicata con legno d'olivo e perle di caviale.",
       en: "Raw Mazara red prawn, olive-wood smoked stracciatella, and caviar pearls.",
@@ -129,8 +129,8 @@ export const rawGalleryItems = [
       en: "Imperial raviolo filled with langoustine and Oscietra caviar",
       fr: "Raviolo d'exception garni de langoustine et caviar Oscietra Royal"
     },
-    aspectRatio: "16/9",
-    span: "col-span-1 md:col-span-2",
+    aspectRatio: "1/1",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
     caption: {
       it: "Raviolo gigante unico, ripieno di scampo crudo e brodo d'oro allo zafferano.",
       en: "Single imperial raviolo, raw langoustine filling, and golden saffron broth.",
@@ -164,8 +164,8 @@ export const rawGalleryItems = [
       en: "Live-fire cooking inside LUCENTE kitchens",
       fr: "Cuisson vivante au feu de bois dans les cuisines de LUCENTE"
     },
-    aspectRatio: "4/3",
-    span: "col-span-1 md:col-span-2",
+    aspectRatio: "16/10",
+    span: "col-span-1 md:col-span-2 lg:col-span-2",
     caption: {
       it: "La brace di quercia e tralci toscani nel cuore del servizio serale.",
       en: "Oak and Tuscan vine embers at the peak of evening service.",
@@ -199,8 +199,8 @@ export const rawGalleryItems = [
       en: "Interior architecture of LUCENTE's main dining hall",
       fr: "Architecture intérieure épurée de la salle principale du restaurant LUCENTE"
     },
-    aspectRatio: "16/9",
-    span: "col-span-1 md:col-span-3",
+    aspectRatio: "21/9",
+    span: "col-span-1 md:col-span-2 lg:col-span-3",
     caption: {
       it: "La sala principale: pietra lavica dell'Etna, lino scuro e illuminazione sartoriale.",
       en: "The main dining room: Mount Etna lava stone, dark linen, and bespoke lighting.",
@@ -235,7 +235,7 @@ export const rawGalleryItems = [
       fr: "Truffes blanches sauvages Tuber Magnatum Pico récoltées dans le Piémont"
     },
     aspectRatio: "4/3",
-    span: "col-span-1",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
     caption: {
       it: "Tuber Magnatum Pico d'Alba, selezionati a mano alle prime luci dell'alba.",
       en: "Alba Tuber Magnatum Pico, hand-selected at dawn.",
@@ -269,8 +269,8 @@ export const rawGalleryItems = [
       en: "Hands of Chef Vincenzo Moretti perfecting the plating",
       fr: "Mains du Chef Vincenzo Moretti finalisant le dressage à la pince"
     },
-    aspectRatio: "1/1",
-    span: "col-span-1",
+    aspectRatio: "4/3",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
     caption: {
       it: "Rifinitura millimetrica di un antipasto da parte dello Chef Vincenzo Moretti.",
       en: "Millimeter-precise finishing of an antipasto by Chef Vincenzo Moretti.",
@@ -304,8 +304,8 @@ export const rawGalleryItems = [
       en: "Portrait of Executive Chef Vincenzo Moretti",
       fr: "Portrait du Chef Exécutif Vincenzo Moretti en veste noire"
     },
-    aspectRatio: "3/4",
-    span: "col-span-1 md:col-span-1 row-span-2",
+    aspectRatio: "4/3",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
     caption: {
       it: "Lo Chef Esecutivo e Fondatore di LUCENTE.",
       en: "Executive Chef and Founder of LUCENTE.",
@@ -339,8 +339,8 @@ export const rawGalleryItems = [
       en: "Vaulted wine cellar with 1,400 rare wine references",
       fr: "Cave voûtée abritant les 1 400 références du restaurant LUCENTE"
     },
-    aspectRatio: "16/9",
-    span: "col-span-1 md:col-span-2",
+    aspectRatio: "16/10",
+    span: "col-span-1 md:col-span-2 lg:col-span-2",
     caption: {
       it: "La cantina a volta: 1.400 referenze di grandi cru e bottiglie in anfora.",
       en: "Vaulted wine cellar: 1,400 references of grand crus and amphora wines.",
@@ -375,7 +375,7 @@ export const rawGalleryItems = [
       fr: "Pistils de safran toscan et eau de tomate clarifiée"
     },
     aspectRatio: "1/1",
-    span: "col-span-1",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
     caption: {
       it: "Infusione a freddo di zafferano di San Gimignano DOP ed essenza di pomodoro.",
       en: "Cold infusion of San Gimignano PDO saffron and tomato essence.",
@@ -410,7 +410,7 @@ export const rawGalleryItems = [
       fr: "Gianluca Ferri carafant un vieux millésime à la bougie"
     },
     aspectRatio: "4/3",
-    span: "col-span-1 md:col-span-2",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
     caption: {
       it: "Decantazione alla candela da parte del Sommelier Gianluca Ferri.",
       en: "Candlelight decanting by Head Sommelier Gianluca Ferri.",
@@ -444,8 +444,8 @@ export const rawGalleryItems = [
       en: "Signature dessert with Criollo chocolate, gianduja, and alpine hay gelato",
       fr: "Dessert signature au chocolat Criollo, gianduja et lait de foin"
     },
-    aspectRatio: "1/1",
-    span: "col-span-1",
+    aspectRatio: "4/3",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
     caption: {
       it: "Cioccolato 75%, gianduja tostato e gelato al fieno d'alpeggio.",
       en: "75% plantation dark chocolate, roasted gianduja, and alpine hay gelato.",
@@ -479,8 +479,8 @@ export const rawGalleryItems = [
       en: "Dinner table set with crystal goblets in gentle candlelight",
       fr: "Table dressée avec calices de cristal et lueur tamisée"
     },
-    aspectRatio: "16/9",
-    span: "col-span-1 md:col-span-2",
+    aspectRatio: "4/3",
+    span: "col-span-1 md:col-span-1 lg:col-span-1",
     caption: {
       it: "La tavola pronta per il primo servizio delle 19:30.",
       en: "The table prepared for the opening 19:30 service.",

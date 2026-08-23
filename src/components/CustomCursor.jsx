@@ -41,45 +41,67 @@ export default function CustomCursor() {
       inner.style.opacity = '1';
     };
 
-    // Detect hover on interactive elements
+    // Detect hover on interactive elements:
+    // 1. [data-cursor] (Header items) -> 64px gold badge with label
+    // 2. Buttons & Links (Accessibility mode) -> 26px sleek dark cursor with gold border & glow
+    // 3. Plain background -> 32px idle semi-transparent gold ring
     const handleHoverIn = (e) => {
-      const el = e.target.closest('[data-cursor], a, button, input, select, textarea');
-      if (!el) return;
-      isHovering.current = true;
-      const cursorLabel = el.getAttribute('data-cursor');
+      const dataCursorEl = e.target.closest('[data-cursor]');
+      const interactiveEl = e.target.closest('a, button, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])');
 
-      // Expand to opaque gold sphere
-      outer.style.width = '64px';
-      outer.style.height = '64px';
-      outer.style.borderColor = '#FAF8F5';
-      outer.style.backgroundColor = 'rgba(184, 155, 94, 0.92)';
-      outer.style.boxShadow = '0 0 25px rgba(184, 155, 94, 0.55)';
+      if (dataCursorEl) {
+        isHovering.current = true;
+        const cursorLabel = dataCursorEl.getAttribute('data-cursor');
 
-      // Show label inside sphere
-      if (label) {
-        label.textContent = cursorLabel || '';
-        label.style.opacity = cursorLabel ? '1' : '0';
+        // State 1: Expand to 64px gold sphere with label
+        outer.style.width = '64px';
+        outer.style.height = '64px';
+        outer.style.borderColor = '#FAF8F5';
+        outer.style.backgroundColor = 'rgba(184, 155, 94, 0.95)';
+        outer.style.boxShadow = '0 0 25px rgba(184, 155, 94, 0.55)';
+
+        if (label) {
+          label.textContent = cursorLabel || '';
+          label.style.opacity = cursorLabel ? '1' : '0';
+        }
+        inner.style.opacity = '0';
+      } else if (interactiveEl) {
+        isHovering.current = true;
+
+        // State 2: Sleek Dark / Accessible Mode (Buttons & Links like "VOIR LES MENUS DÉGUSTATION →")
+        outer.style.width = '26px';
+        outer.style.height = '26px';
+        outer.style.borderColor = '#B89B5E';
+        outer.style.backgroundColor = 'rgba(16, 16, 14, 0.92)';
+        outer.style.boxShadow = '0 0 16px rgba(184, 155, 94, 0.45)';
+
+        if (label) {
+          label.textContent = '';
+          label.style.opacity = '0';
+        }
+        inner.style.opacity = '1';
+        inner.style.backgroundColor = '#B89B5E';
       }
-      // Hide inner dot while hovering
-      inner.style.opacity = '0';
     };
 
     const handleHoverOut = (e) => {
-      const el = e.target.closest('[data-cursor], a, button, input, select, textarea');
-      if (!el) return;
+      const nextEl = e.relatedTarget;
+      if (nextEl && nextEl.closest && (nextEl.closest('[data-cursor]') || nextEl.closest('a, button, input, select, textarea, [role="button"]'))) {
+        return; // Handled smoothly by incoming hover event
+      }
+
       isHovering.current = false;
 
-      // Reset to idle semi-opaque gold sphere
+      // State 3: Reset to idle semi-opaque gold sphere
       outer.style.width = '32px';
       outer.style.height = '32px';
       outer.style.borderColor = 'rgba(184, 155, 94, 0.75)';
       outer.style.backgroundColor = 'rgba(184, 155, 94, 0.45)';
       outer.style.boxShadow = '0 0 15px rgba(184, 155, 94, 0.25)';
 
-      // Hide label
       if (label) label.style.opacity = '0';
-      // Restore inner dot
       inner.style.opacity = '1';
+      inner.style.backgroundColor = '#FAF8F5';
     };
 
     document.addEventListener('mouseover', handleHoverIn);
