@@ -92,7 +92,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
         {/* Header */}
         <section className="max-w-4xl mx-auto text-center space-y-4">
           <p className="typo-eyebrow">{t('privateDining.eyebrow')}</p>
-          <h1 className="typo-h1 text-4xl sm:text-6xl md:text-7xl font-serif tracking-tight">
+          <h1 className="typo-h1">
             {t('privateDining.heroTitle1')} {t('privateDining.heroTitle2')}
           </h1>
           <div className="w-16 h-[1px] bg-or mx-auto mt-2" />
@@ -107,9 +107,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
           {spacesList.map((space, index) => (
             <div 
               key={space.id}
-              className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center bg-surface border border-white/10 p-5 sm:p-10 lg:p-12 shadow-2xl ${
-                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-              }`}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center bg-surface border border-white/10 p-5 sm:p-8 lg:p-12 shadow-2xl"
             >
               <div className={`lg:col-span-6 relative overflow-hidden ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <img
@@ -168,7 +166,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
         </section>
 
         {/* Privatisation Inquiry Form */}
-        <section id="contact-privatisation" className="max-w-4xl mx-auto bg-surface border border-white/10 p-8 sm:p-14 shadow-2xl space-y-8">
+        <section id="contact-privatisation" className="max-w-4xl mx-auto bg-surface border border-white/10 p-6 sm:p-10 lg:p-14 shadow-2xl space-y-8">
           <div className="text-center space-y-3">
             <span className="typo-eyebrow text-or">
               {lang === 'it' ? 'Concierge Privato' : lang === 'en' ? 'Private Concierge' : 'Conciergerie Privée'}
@@ -309,7 +307,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
                 />
               </div>
 
-              <div className="p-4 bg-nero rounded border border-white/5 flex items-center gap-3 text-xs text-muted">
+              <div className="p-4 bg-nero rounded border border-white/5 flex flex-wrap items-start sm:items-center gap-3 text-xs text-muted">
                 <Shield className="w-5 h-5 text-or shrink-0" />
                 <span>
                   {lang === 'it'
