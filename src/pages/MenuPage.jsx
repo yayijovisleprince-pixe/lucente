@@ -188,10 +188,12 @@ export default function MenuPage({ onSelectMenuForBooking }) {
         {viewMode === 'tasting' && (
           <div className="space-y-8 sm:space-y-12">
             
-            {/* Menu Cards Selector */}
+            {/* Menu Cards Selector with Direct 1-Click Action */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {localizedTastingMenus.map((menu) => {
                 const isSelected = menu.id === activeTastingId;
+                const coursesCount = menu.courses?.length || 0;
+
                 return (
                   <div
                     key={menu.id}
@@ -199,105 +201,134 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                       setActiveTastingId(menu.id);
                       scrollToTastingDetails();
                     }}
-                    className={`p-5 sm:p-6 border cursor-pointer transition-all duration-300 bg-surface flex flex-col justify-between group ${
+                    className={`p-5 sm:p-6 border cursor-pointer transition-all duration-300 bg-surface flex flex-col justify-between group relative ${
                       isSelected 
-                        ? 'border-or ring-1 ring-or shadow-[0_10px_30px_rgba(184,155,94,0.15)] scale-[1.01]' 
-                        : 'border-white/10 hover:border-or/40 opacity-75 hover:opacity-100'
+                        ? 'border-or ring-1 ring-or shadow-[0_12px_35px_rgba(184,155,94,0.2)] bg-surface-elevated scale-[1.01]' 
+                        : 'border-white/10 hover:border-or/40 opacity-80 hover:opacity-100'
                     }`}
                   >
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] uppercase font-mono tracking-widest text-or">{menu.tag}</span>
-                        {isSelected && (
-                          <span className="text-[9px] font-mono uppercase tracking-widest bg-or text-nero px-2 py-0.5 font-bold">
-                            {lang === 'it' ? 'Attivo' : lang === 'en' ? 'Selected' : 'Sélectionné'}
-                          </span>
-                        )}
+                        <span className="text-[10px] uppercase font-mono tracking-widest text-or font-semibold">{menu.tag}</span>
+                        <span className="text-[10px] font-mono text-muted/80 bg-nero px-2 py-0.5 border border-white/5">
+                          {coursesCount} {lang === 'it' ? 'Atti' : lang === 'en' ? 'Acts' : 'Actes'}
+                        </span>
                       </div>
-                      <h2 className="font-serif text-2xl text-ivoire group-hover:text-or transition-colors">{menu.name}</h2>
-                      <p className="text-xs text-muted font-sans line-clamp-2">{menu.description}</p>
+
+                      <div>
+                        <h2 className="font-serif text-2xl text-ivoire group-hover:text-or transition-colors">{menu.name}</h2>
+                        <span className="text-xs font-serif italic text-or/80 block mt-0.5">{menu.italianName}</span>
+                      </div>
+
+                      <p className="text-xs text-muted font-sans line-clamp-2 leading-relaxed">{menu.description}</p>
                     </div>
-                    <div className="pt-4 border-t border-white/5 flex items-baseline justify-between mt-4">
-                      <span className="font-serif text-2xl text-or">{menu.price}</span>
-                      <span className="text-[11px] text-muted font-mono">{menu.winePairingPrice}</span>
+
+                    <div className="pt-4 border-t border-white/5 space-y-3 mt-5">
+                      <div className="flex items-baseline justify-between">
+                        <span className="font-serif text-2xl text-or font-medium">{menu.price}</span>
+                        <span className="text-[11px] text-muted font-mono">{menu.winePairingPrice}</span>
+                      </div>
+
+                      {/* Direct 1-Click Action Button */}
+                      <div className="flex items-center gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveTastingId(menu.id);
+                            scrollToTastingDetails();
+                          }}
+                          className={`flex-1 py-2.5 px-3 text-[11px] uppercase font-mono tracking-wider text-center transition-all flex items-center justify-center gap-1.5 ${
+                            isSelected
+                              ? 'bg-or text-nero font-bold shadow-md'
+                              : 'bg-nero/80 text-or border border-or/30 hover:bg-or hover:text-nero'
+                          }`}
+                        >
+                          <span>{lang === 'it' ? 'Vedi Piatti' : lang === 'en' ? 'View Dishes' : 'Voir les Plats'}</span>
+                          <ChevronDown size={13} />
+                        </button>
+                        
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onSelectMenuForBooking(menu.name);
+                          }}
+                          title={lang === 'it' ? 'Prenota questo menu' : lang === 'en' ? 'Book this menu' : 'Réserver ce menu'}
+                          className="py-2.5 px-3 bg-surface border border-white/10 hover:border-or text-ivoire hover:text-or text-[11px] uppercase font-mono transition-all shrink-0"
+                        >
+                          {lang === 'it' ? 'Prenota' : lang === 'en' ? 'Book' : 'Réserver'}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </div>
 
-            {/* SCROLL-DOWN NOTIFICATION BANNER (Indicateur intuitif pour défiler en bas) */}
-            <div 
-              onClick={scrollToTastingDetails}
-              className="cursor-pointer group bg-gradient-to-r from-surface via-surface-elevated to-surface border border-or/30 hover:border-or p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 transition-all duration-300 shadow-xl"
-            >
-              <div className="flex items-center gap-3 text-center sm:text-left">
-                <div className="p-2.5 bg-or/10 border border-or/30 text-or rounded-none shrink-0 group-hover:scale-110 transition-transform">
-                  <Sparkles size={16} />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 justify-center sm:justify-start flex-wrap">
-                    <span className="text-[11px] sm:text-xs uppercase font-mono tracking-widest text-or font-semibold">
-                      {lang === 'it' ? 'Menu Selezionato:' : lang === 'en' ? 'Selected Menu:' : 'Menu Sélectionné :'}
-                    </span>
-                    <span className="font-serif text-base sm:text-lg text-ivoire font-normal">{activeTasting.name}</span>
-                  </div>
-                  <p className="text-xs text-muted font-sans pt-0.5">
-                    {lang === 'it'
-                      ? 'Scorri in basso per scoprire la sequenza degli atti, i piatti e gli abbinamenti vino.'
-                      : lang === 'en'
-                      ? 'Scroll down to discover the sequence of acts, dishes, and wine pairings.'
-                      : 'Faites défiler vers le bas pour découvrir la partition des actes, les créations et les accords.'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 text-xs uppercase font-mono tracking-widest text-or bg-nero/80 px-4 py-2 border border-or/30 group-hover:border-or group-hover:bg-or group-hover:text-nero transition-all shrink-0">
-                <span>{lang === 'it' ? 'Esplora gli Atti' : lang === 'en' ? 'Explore Acts' : 'Découvrir les Actes'}</span>
-                <ChevronDown size={14} className="animate-bounce" />
-              </div>
-            </div>
-
-            {/* Active Menu Details Section */}
+            {/* Active Menu Details Section (Directly displayed & scrolled into view on click) */}
             <div 
               ref={tastingDetailsRef}
               id="tasting-details"
-              className="scroll-mt-28 bg-surface-elevated border border-or/30 p-5 sm:p-10 lg:p-12 space-y-8 sm:space-y-10 shadow-2xl"
+              className="scroll-mt-28 bg-surface-elevated border border-or/40 p-5 sm:p-10 lg:p-12 space-y-8 sm:space-y-10 shadow-2xl animate-fadeIn"
             >
               <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-6 gap-4">
-                <div>
-                  <span className="text-xs uppercase font-mono text-or tracking-widest">{activeTasting.italianName}</span>
-                  <h3 className="font-serif text-3xl sm:text-4xl text-ivoire">{activeTasting.name}</h3>
-                  <p className="text-xs sm:text-sm text-muted max-w-xl pt-2">{activeTasting.description}</p>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs uppercase font-mono text-or tracking-widest">{activeTasting.italianName}</span>
+                    <span className="text-xs text-muted/60 font-mono">·</span>
+                    <span className="text-xs font-mono text-ivoire/80 bg-nero px-2 py-0.5 border border-white/10">
+                      {activeTasting.courses?.length || 0} {lang === 'it' ? 'atti gastronomici' : lang === 'en' ? 'gastronomic acts' : 'actes gastronomiques'}
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-3xl sm:text-4xl text-ivoire font-normal">{activeTasting.name}</h3>
+                  <p className="text-xs sm:text-sm text-muted max-w-xl pt-1 leading-relaxed">{activeTasting.description}</p>
                 </div>
-                <button
-                  onClick={() => onSelectMenuForBooking(activeTasting.name)}
-                  className="w-full sm:w-auto px-8 py-3.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shrink-0 text-center shadow-lg"
-                >
-                  {t('menu.bookThisMenu')}
-                </button>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+                  <button
+                    onClick={() => onSelectMenuForBooking(activeTasting.name)}
+                    className="px-8 py-3.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all text-center shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <span>{t('menu.bookThisMenu')} ({activeTasting.price})</span>
+                    <ArrowRight size={13} />
+                  </button>
+                </div>
               </div>
 
+              {/* Courses List */}
               <div className="divide-y divide-white/5 space-y-6">
                 {activeTasting.courses?.map((c, i) => (
-                  <div key={i} className="pt-6 first:pt-0 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div key={i} className="pt-6 first:pt-0 flex flex-col md:flex-row md:items-center justify-between gap-4 group">
                     <div className="space-y-1 max-w-2xl">
                       <div className="flex items-center gap-3">
-                        <span className="text-xs font-mono text-or">
+                        <span className="text-xs font-mono text-or font-semibold">
                           {lang === 'it' ? `Atto ${c.act}` : lang === 'en' ? `Act ${c.act}` : `Acte ${c.act}`}
                         </span>
-                        <h4 className="font-serif text-lg sm:text-xl text-ivoire">{c.name}</h4>
+                        <h4 className="font-serif text-lg sm:text-xl text-ivoire group-hover:text-or transition-colors">{c.name}</h4>
                       </div>
                       <p className="text-xs text-muted leading-relaxed font-sans">{c.ingredients}</p>
                     </div>
                     {c.pairing && (
-                      <div className="flex items-center gap-2 text-xs text-or/90 bg-nero/50 px-3 py-1.5 border border-white/5 shrink-0 self-start md:self-center">
-                        <Wine size={13} />
-                        <span>{c.pairing}</span>
+                      <div className="flex items-center gap-2 text-xs text-or/90 bg-nero/70 px-3 py-1.5 border border-white/5 shrink-0 self-start md:self-center">
+                        <Wine size={13} className="text-or" />
+                        <span className="font-mono text-[11px]">{c.pairing}</span>
                       </div>
                     )}
                   </div>
                 ))}
+              </div>
+
+              {/* Bottom CTA for active menu */}
+              <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-nero/50 p-4 sm:p-6 border">
+                <div className="text-center sm:text-left space-y-1">
+                  <span className="text-xs uppercase font-mono text-or tracking-widest">
+                    {lang === 'it' ? 'Esperienza Consigliata' : lang === 'en' ? 'Signature Experience' : 'Expérience d’Exception'}
+                  </span>
+                  <p className="font-serif text-lg text-ivoire">
+                    {activeTasting.name} — <span className="text-or">{activeTasting.price}</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
