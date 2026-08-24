@@ -378,12 +378,12 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                           )}
                         </div>
 
-                        {/* Pre-order Action Controls */}
-                        <div className="pt-2 flex items-center justify-between">
-                          <span className="text-[10px] text-muted/70 uppercase font-mono">
+                        {/* Pre-order Action Controls (Large, Touch-friendly & Accessible) */}
+                        <div className="pt-3 flex items-center justify-between gap-3 flex-wrap">
+                          <span className="text-[11px] text-muted font-mono">
                             {qty > 0 ? (
-                              <span className="text-or font-semibold">
-                                {qty} {lang === 'it' ? 'nel preordine' : lang === 'en' ? 'in pre-order' : 'en précommande'}
+                              <span className="text-or font-semibold bg-nero px-2.5 py-1 border border-or/30">
+                                {qty} {lang === 'it' ? 'nel carrello' : lang === 'en' ? 'in pre-order' : 'sélectionné(s)'}
                               </span>
                             ) : (
                               <span>{lang === 'it' ? 'Servito al momento' : lang === 'en' ? 'Made to order' : 'Dressé minute'}</span>
@@ -393,27 +393,31 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                           {qty === 0 ? (
                             <button
                               onClick={() => handleAddToPreOrder(item, sec.category)}
-                              className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-elevated hover:bg-or hover:text-nero text-or border border-or/40 transition-all text-xs uppercase font-mono tracking-wider"
+                              className="flex items-center gap-2 px-4 py-2.5 bg-surface-elevated hover:bg-or hover:text-[#10100E] text-or border border-or/50 transition-all text-xs uppercase font-mono tracking-wider font-semibold shadow-sm active:scale-95"
                             >
-                              <Plus size={12} />
+                              <Plus size={15} />
                               <span>{lang === 'it' ? 'Preordina' : lang === 'en' ? 'Pre-order' : 'Précommander'}</span>
                             </button>
                           ) : (
-                            <div className="flex items-center gap-1.5 bg-nero border border-or/50 px-2 py-1">
+                            <div className="flex items-center gap-1.5 bg-surface-elevated border border-or/60 p-1 shadow-md">
                               <button
                                 onClick={() => handleUpdateQuantity(item.name, -1)}
-                                className="p-1 text-muted hover:text-or transition-colors"
-                                title="Diminuer"
+                                className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-nero text-ivoire hover:bg-or hover:text-[#10100E] border border-white/10 active:scale-95 transition-all text-sm font-bold shrink-0"
+                                title={lang === 'it' ? 'Diminuisci quantità' : lang === 'en' ? 'Decrease quantity' : 'Diminuer la quantité'}
+                                aria-label="Diminuer"
                               >
-                                <Minus size={12} />
+                                <Minus size={16} />
                               </button>
-                              <span className="font-mono text-xs text-ivoire font-bold px-2">{qty}</span>
+                              <span className="font-mono text-sm sm:text-base text-ivoire font-bold px-3 min-w-[32px] text-center">
+                                {qty}
+                              </span>
                               <button
                                 onClick={() => handleUpdateQuantity(item.name, 1)}
-                                className="p-1 text-muted hover:text-or transition-colors"
-                                title="Augmenter"
+                                className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-or text-[#10100E] hover:bg-ivoire active:scale-95 transition-all text-sm font-bold shadow-sm shrink-0"
+                                title={lang === 'it' ? 'Aumenta quantità' : lang === 'en' ? 'Increase quantity' : 'Augmenter la quantité'}
+                                aria-label="Augmenter"
                               >
-                                <Plus size={12} />
+                                <Plus size={16} />
                               </button>
                             </div>
                           )}
@@ -431,30 +435,33 @@ export default function MenuPage({ onSelectMenuForBooking }) {
       </div>
 
       {/* =========================================================================
-          STICKY PRE-ORDER FLOATING ACTION BAR (When items are in pre-order)
+          STICKY PRE-ORDER FLOATING ACTION BAR 
+          Positioned ABOVE MobileBottomBar (bottom-20 / bottom-24 on mobile, z-50)
          ========================================================================= */}
       {viewMode === 'carte' && totalPreOrderCount > 0 && (
-        <div className="fixed bottom-4 sm:bottom-6 left-4 right-4 sm:left-auto sm:right-6 z-40 max-w-lg sm:w-auto animate-fadeIn">
-          <div className="bg-nero/95 border border-or p-4 shadow-2xl flex items-center justify-between gap-4 backdrop-blur-md">
-            <div className="space-y-0.5">
+        <div className="fixed bottom-20 sm:bottom-24 lg:bottom-8 left-3 right-3 sm:left-auto sm:right-6 z-50 max-w-lg sm:w-auto animate-fadeIn">
+          <div className="bg-[#141412] border-2 border-or p-3.5 sm:p-4 shadow-[0_12px_40px_rgba(0,0,0,0.9)] flex items-center justify-between gap-4 backdrop-blur-xl">
+            <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <ShoppingBag size={15} className="text-or" />
+                <div className="p-1.5 bg-or text-[#10100E] font-bold text-xs">
+                  <ShoppingBag size={15} />
+                </div>
                 <span className="text-xs uppercase font-mono font-bold text-ivoire">
-                  {totalPreOrderCount} {lang === 'it' ? 'Piatti Selezionati' : lang === 'en' ? 'Dishes Selected' : 'Plats Sélectionnés'}
+                  {totalPreOrderCount} {lang === 'it' ? 'Piatti Selezionati' : lang === 'en' ? 'Dishes Selected' : 'Plat(s) Sélectionné(s)'}
                 </span>
               </div>
-              <p className="text-xs text-or font-serif font-bold">
-                {lang === 'it' ? 'Totale stimato: ' : lang === 'en' ? 'Estimated Total: ' : 'Total estimé : '}
-                <span className="text-sm font-sans font-semibold text-ivoire">{totalPreOrderPrice} €</span>
+              <p className="text-xs text-or font-mono">
+                {lang === 'it' ? 'Totale: ' : lang === 'en' ? 'Total: ' : 'Total : '}
+                <span className="text-sm font-sans font-bold text-ivoire">{totalPreOrderPrice} €</span>
               </p>
             </div>
 
             <button
               onClick={() => setIsPreOrderModalOpen(true)}
-              className="px-5 py-2.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shrink-0 flex items-center gap-1.5 shadow-lg"
+              className="px-5 sm:px-7 py-3 bg-or text-[#10100E] font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shrink-0 flex items-center gap-2 shadow-xl active:scale-95"
             >
-              <span>{lang === 'it' ? 'Valida' : lang === 'en' ? 'Validate' : 'Valider'}</span>
-              <ArrowRight size={13} />
+              <span>{lang === 'it' ? 'Valida Ordine' : lang === 'en' ? 'Validate Order' : 'Valider la commande'}</span>
+              <ArrowRight size={14} />
             </button>
           </div>
         </div>
@@ -475,36 +482,58 @@ export default function MenuPage({ onSelectMenuForBooking }) {
             <button
               onClick={() => setIsPreOrderModalOpen(false)}
               className="absolute top-4 right-4 p-2 text-muted hover:text-ivoire transition-colors"
+              aria-label="Fermer"
             >
               <X size={20} />
             </button>
 
             {preOrderSubmitted ? (
-              <div className="py-8 text-center space-y-4">
-                <CheckCircle2 size={48} className="text-or mx-auto" />
-                <h3 className="font-serif text-2xl text-ivoire">
-                  {lang === 'it' ? 'Preordine Registrato con Successo' : lang === 'en' ? 'Pre-order Confirmed' : 'Précommande Enregistrée avec Succès'}
-                </h3>
-                <p className="text-xs text-muted max-w-md mx-auto leading-relaxed">
+              <div className="py-6 text-center space-y-5">
+                <CheckCircle2 size={52} className="text-or mx-auto" />
+                <div className="space-y-1">
+                  <span className="text-xs uppercase font-mono text-or tracking-widest">
+                    {lang === 'it' ? 'Conferma Ricevuta' : lang === 'en' ? 'Confirmation Received' : 'Confirmation Reçue'}
+                  </span>
+                  <h3 className="font-serif text-2xl sm:text-3xl text-ivoire">
+                    {lang === 'it' ? 'Preordine Registrato con Successo' : lang === 'en' ? 'Pre-order Confirmed' : 'Précommande Enregistrée avec Succès'}
+                  </h3>
+                </div>
+                
+                <p className="text-xs sm:text-sm text-muted max-w-md mx-auto leading-relaxed">
                   {lang === 'it'
                     ? 'La cucina e il Maître d’Hôtel prepareranno la vostra sequenza personalizzata per la data richiesta.'
                     : lang === 'en'
                     ? 'Our kitchen and Maître d’ will prepare your bespoke dining sequence for the requested reservation.'
                     : 'Notre brigade et le Maître d’Hôtel dresseront votre partition personnalisée pour la date demandée.'}
                 </p>
-                <div className="p-3 bg-nero border border-white/5 max-w-xs mx-auto text-xs font-mono text-or">
+
+                <div className="p-3 bg-nero border border-or/30 max-w-xs mx-auto text-xs font-mono text-or font-bold">
                   RÉF : LUC-PRE-{Math.floor(100000 + Math.random() * 900000)}
                 </div>
-                <button
-                  onClick={() => {
-                    setIsPreOrderModalOpen(false);
-                    setPreOrderSubmitted(false);
-                    setPreOrder({});
-                  }}
-                  className="px-6 py-2.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all mt-4"
-                >
-                  {lang === 'it' ? 'Chiudi' : lang === 'en' ? 'Close' : 'Fermer'}
-                </button>
+
+                {/* Clear Post-validation actions */}
+                <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    onClick={() => {
+                      setIsPreOrderModalOpen(false);
+                      setPreOrderSubmitted(false);
+                    }}
+                    className="w-full sm:w-auto px-6 py-3 bg-surface-elevated border border-or text-or hover:bg-or hover:text-[#10100E] font-bold text-xs uppercase tracking-widest transition-all"
+                  >
+                    {lang === 'it' ? '+ Aggiungi altri piatti' : lang === 'en' ? '+ Add more dishes' : '+ Ajouter d’autres plats'}
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setIsPreOrderModalOpen(false);
+                      setPreOrderSubmitted(false);
+                      setPreOrder({});
+                    }}
+                    className="w-full sm:w-auto px-7 py-3 bg-or text-[#10100E] font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-lg"
+                  >
+                    {lang === 'it' ? 'Termina e Chiudi' : lang === 'en' ? 'Finish & Close' : 'Terminer & Fermer'}
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="space-y-6">
@@ -517,36 +546,53 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                   </h3>
                 </div>
 
-                {/* Items List */}
-                <div className="max-h-56 overflow-y-auto space-y-3 pr-2 divide-y divide-white/5">
+                {/* Items List with Large Accessible Steppers */}
+                <div className="max-h-60 overflow-y-auto space-y-3 pr-2 divide-y divide-white/5">
                   {preOrderList.map((item, idx) => (
-                    <div key={idx} className="pt-2 first:pt-0 flex items-center justify-between gap-3 text-xs">
-                      <div className="min-w-0">
+                    <div key={idx} className="pt-3 first:pt-0 flex items-center justify-between gap-3 text-xs">
+                      <div className="min-w-0 flex-1">
                         <p className="font-serif text-sm text-ivoire truncate">{item.name}</p>
-                        <span className="text-[10px] text-muted font-mono">{item.category}</span>
+                        <span className="text-[10px] text-muted font-mono">{item.category} · {item.price} € / unité</span>
                       </div>
                       <div className="flex items-center gap-3 shrink-0">
-                        <span className="font-mono text-or font-semibold">{item.price * item.quantity} €</span>
-                        <div className="flex items-center gap-1 bg-nero border border-white/10 px-1.5 py-0.5">
-                          <button onClick={() => handleUpdateQuantity(item.name, -1)} className="p-0.5 text-muted hover:text-or">
-                            <Minus size={10} />
+                        <span className="font-mono text-or font-bold text-sm">{item.price * item.quantity} €</span>
+                        
+                        {/* Accessible Stepper */}
+                        <div className="flex items-center gap-1 bg-surface-elevated border border-or/40 p-1">
+                          <button 
+                            onClick={() => handleUpdateQuantity(item.name, -1)} 
+                            className="w-8 h-8 flex items-center justify-center bg-nero text-ivoire hover:bg-or hover:text-[#10100E] border border-white/10 active:scale-95 transition-all text-xs font-bold"
+                            aria-label="Diminuer"
+                          >
+                            <Minus size={14} />
                           </button>
-                          <span className="font-mono text-[11px] px-1 text-ivoire">{item.quantity}</span>
-                          <button onClick={() => handleUpdateQuantity(item.name, 1)} className="p-0.5 text-muted hover:text-or">
-                            <Plus size={10} />
+                          <span className="font-mono text-sm px-2 text-ivoire font-bold min-w-[26px] text-center">
+                            {item.quantity}
+                          </span>
+                          <button 
+                            onClick={() => handleUpdateQuantity(item.name, 1)} 
+                            className="w-8 h-8 flex items-center justify-center bg-or text-[#10100E] hover:bg-ivoire active:scale-95 transition-all text-xs font-bold"
+                            aria-label="Augmenter"
+                          >
+                            <Plus size={14} />
                           </button>
                         </div>
-                        <button onClick={() => handleRemoveFromPreOrder(item.name)} className="text-muted/60 hover:text-terracotta">
-                          <X size={13} />
+
+                        <button 
+                          onClick={() => handleRemoveFromPreOrder(item.name)} 
+                          className="p-1.5 text-muted hover:text-terracotta transition-colors"
+                          title="Supprimer"
+                        >
+                          <X size={16} />
                         </button>
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="p-3 bg-nero flex items-center justify-between border border-white/10 text-xs">
-                  <span className="text-muted font-mono uppercase">{lang === 'it' ? 'Totale' : lang === 'en' ? 'Total' : 'Total Estimé'}</span>
-                  <span className="font-serif text-lg text-or font-bold">{totalPreOrderPrice} €</span>
+                <div className="p-3.5 bg-nero flex items-center justify-between border border-or/30 text-xs">
+                  <span className="text-muted font-mono uppercase font-semibold">{lang === 'it' ? 'Totale' : lang === 'en' ? 'Total' : 'Total Estimé'}</span>
+                  <span className="font-serif text-xl text-or font-bold">{totalPreOrderPrice} €</span>
                 </div>
 
                 {/* Details Form */}
