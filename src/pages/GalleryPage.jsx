@@ -1,18 +1,44 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  Maximize2, Eye, Camera, ArrowUpRight, Sparkles, Filter, 
-  BookOpen, ChevronRight, SlidersHorizontal, Image as ImageIcon
+  Maximize2, ArrowUpRight, Sparkles,
+  BookOpen, SlidersHorizontal, UtensilsCrossed, ChefHat, Building2, Users, Leaf, Grid3X3
 } from 'lucide-react';
 import { galleryCategories, getGalleryItems, getEditorialQuotes } from '../data/galleryData';
 import GalleryLightbox from '../components/GalleryLightbox';
 import SEOHead from '../components/SEOHead';
 import { useLanguage } from '../contexts/LanguageContext';
 
+// Icon map per category
+const CATEGORY_ICONS = {
+  ALL:              Grid3X3,
+  'LA TABLE':       UtensilsCrossed,
+  'LA CUISINE':     ChefHat,
+  "L'ESPACE":       Building2,
+  'LES ARTISANS':   Users,
+  'LES INGRÉDIENTS': Leaf,
+};
+
 export default function GalleryPage() {
+  const tabsRef = useRef(null);
+  const indicatorRef = useRef(null);
+  const activeTabRef = useRef(null);
   const { lang, t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  // Animate the sliding gold indicator under the active tab
+  useEffect(() => {
+    const tabsEl = tabsRef.current;
+    const indicatorEl = indicatorRef.current;
+    const activeEl = activeTabRef.current;
+    if (!tabsEl || !indicatorEl || !activeEl) return;
+    const { offsetLeft, offsetWidth } = activeEl;
+    indicatorEl.style.transform = `translateX(${offsetLeft}px)`;
+    indicatorEl.style.width = `${offsetWidth}px`;
+    // Scroll active tab into center view on mobile
+    activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [selectedCategory]);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
   const localizedItems = useMemo(() => getGalleryItems(lang), [lang]);
@@ -112,96 +138,118 @@ export default function GalleryPage() {
 
 
       {/* =========================================================================
-          2. EDITORIAL CATEGORY SELECTOR (THE 5 MANDATORY CATEGORIES)
+          2. EDITORIAL CATEGORY SELECTOR — Sliding Tab Design
          ========================================================================= */}
-      <nav 
+      <nav
         aria-label={lang === 'it' ? 'Categorie Editoriali' : lang === 'en' ? 'Editorial Categories' : 'Catégories Éditoriales'}
         className="max-w-7xl mx-auto px-6 md:px-12 mb-12"
       >
-        <div className="flex items-center justify-between gap-4 border-b border-white/5 pb-4 overflow-x-auto scrollbar-none">
-          
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        {/* Tabs row */}
+        <div className="relative">
+          {/* Fade-out hint on mobile right edge to signal scrollability */}
+          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-nero to-transparent pointer-events-none z-10 md:hidden" />
+
+          <div
+            ref={tabsRef}
+            className="flex items-stretch gap-0 overflow-x-auto scrollbar-none border-b border-white/8"
+            style={{ scrollbarWidth: 'none' }}
+          >
             {galleryCategories.map((cat) => {
               const isSelected = selectedCategory === cat.id;
-              const count = cat.id === 'ALL' 
-                ? localizedItems.length 
+              const count = cat.id === 'ALL'
+                ? localizedItems.length
                 : localizedItems.filter((i) => i.category === cat.id).length;
 
               const label = cat.id === 'ALL'
-                ? (lang === 'it' ? 'Tutte le Collezioni' : lang === 'en' ? 'All Collections' : 'Toutes les Collections')
+                ? (lang === 'it' ? 'Tutte' : lang === 'en' ? 'All' : 'Tout')
                 : cat.id === 'LA TABLE'
-                ? (lang === 'it' ? 'LA TAVOLA' : lang === 'en' ? 'THE TABLE' : 'LA TABLE')
+                ? (lang === 'it' ? 'La Tavola' : lang === 'en' ? 'The Table' : 'La Table')
                 : cat.id === 'LA CUISINE'
-                ? (lang === 'it' ? 'LA CUCINA' : lang === 'en' ? 'THE KITCHEN' : 'LA CUISINE')
+                ? (lang === 'it' ? 'La Cucina' : lang === 'en' ? 'The Kitchen' : 'La Cuisine')
                 : cat.id === "L'ESPACE"
-                ? (lang === 'it' ? "L'SPAZIO" : lang === 'en' ? 'THE SPACE' : "L'ESPACE")
+                ? (lang === 'it' ? "L'Spazio" : lang === 'en' ? 'The Space' : "L'Espace")
                 : cat.id === 'LES ARTISANS'
-                ? (lang === 'it' ? 'GLI ARTIGIANI' : lang === 'en' ? 'THE ARTISANS' : 'LES ARTISANS')
-                : (lang === 'it' ? 'GLI INGREDIENTI' : lang === 'en' ? 'THE INGREDIENTS' : 'LES INGRÉDIENTS');
+                ? (lang === 'it' ? 'Gli Artigiani' : lang === 'en' ? 'The Artisans' : 'Les Artisans')
+                : (lang === 'it' ? 'Gli Ingredienti' : lang === 'en' ? 'The Ingredients' : 'Les Ingrédients');
+
+              const Icon = CATEGORY_ICONS[cat.id] || Grid3X3;
 
               return (
                 <button
                   key={cat.id}
+                  ref={isSelected ? activeTabRef : null}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`relative px-4 py-2.5 rounded-none text-xs uppercase tracking-[0.18em] transition-all duration-300 font-medium flex items-center gap-2 ${
-                    isSelected
-                      ? 'bg-or text-nero font-semibold shadow-lg scale-105'
-                      : 'bg-surface text-muted hover:text-ivoire hover:bg-surface-elevated border border-white/5'
-                  }`}
+                  aria-selected={isSelected}
+                  role="tab"
+                  className={`
+                    relative flex flex-col items-center gap-1.5 px-5 sm:px-7 pt-4 pb-5
+                    text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-mono
+                    whitespace-nowrap shrink-0 transition-all duration-300 group
+                    focus-visible:outline-none
+                    ${
+                      isSelected
+                        ? 'text-or'
+                        : 'text-muted hover:text-ivoire/80'
+                    }
+                  `}
                 >
-                  <span>{label}</span>
-                  <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-none ${
-                    isSelected ? 'bg-nero/20 text-nero' : 'bg-nero text-muted/80'
-                  }`}>
+                  {/* Icon */}
+                  <Icon
+                    size={18}
+                    className={`transition-all duration-300 ${
+                      isSelected ? 'text-or scale-110' : 'text-muted/60 group-hover:text-ivoire/60 group-hover:scale-105'
+                    }`}
+                  />
+                  {/* Label */}
+                  <span className={`transition-colors duration-300 ${isSelected ? 'text-ivoire font-semibold' : ''}` }>
+                    {label}
+                  </span>
+                  {/* Count badge */}
+                  <span className={`
+                    px-1.5 py-0.5 rounded-sm font-mono text-[9px] transition-all duration-300
+                    ${
+                      isSelected
+                        ? 'bg-or/15 text-or border border-or/30'
+                        : 'bg-white/5 text-muted/60 border border-white/5'
+                    }
+                  `}>
                     {count}
                   </span>
                 </button>
               );
             })}
-          </div>
 
-          {/* Minimal View Counter */}
-          <div className="hidden xl:flex items-center gap-2 text-xs text-muted/60 font-mono">
-            <SlidersHorizontal size={13} className="text-or" />
-            <span>
-              {lang === 'it' ? 'Filtro Attivo: ' : lang === 'en' ? 'Active Filter: ' : 'Filtre Actif : '}
-              {selectedCategory === 'ALL'
-                ? (lang === 'it' ? 'Antologia' : lang === 'en' ? 'Anthology' : 'Anthologie')
-                : selectedCategory === 'LA TABLE'
-                ? (lang === 'it' ? 'La Tavola' : lang === 'en' ? 'The Table' : 'La Table')
-                : selectedCategory === 'LA CUISINE'
-                ? (lang === 'it' ? 'La Cucina' : lang === 'en' ? 'The Kitchen' : 'La Cuisine')
-                : selectedCategory === "L'ESPACE"
-                ? (lang === 'it' ? "L'Spazio" : lang === 'en' ? 'The Space' : "L'Espace")
-                : selectedCategory === 'LES ARTISANS'
-                ? (lang === 'it' ? 'Gli Artigiani' : lang === 'en' ? 'The Artisans' : 'Les Artisans')
-                : (lang === 'it' ? 'Gli Ingredienti' : lang === 'en' ? 'The Ingredients' : 'Les Ingrédients')}
-            </span>
+            {/* Sliding gold underline indicator */}
+            <span
+              ref={indicatorRef}
+              aria-hidden="true"
+              className="absolute bottom-0 left-0 h-[2px] bg-or transition-all duration-300 ease-out pointer-events-none"
+              style={{ width: 0, transform: 'translateX(0)' }}
+            />
           </div>
-
         </div>
 
-        {/* Dynamic Category Editorial Tagline */}
-        <div className="pt-4 flex items-center justify-between text-xs text-muted">
-          <p className="font-serif italic text-sm text-ivoire/75">
+        {/* Active category tagline + hint */}
+        <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <p className="font-serif italic text-sm text-ivoire/70 transition-all duration-300">
             {selectedCategory === 'ALL'
-              ? (lang === 'it' ? "La collezione integrale dei frammenti visivi e dell'architettura sensoriale di LUCENTE." : lang === 'en' ? "The complete collection of visual fragments and sensory architecture of LUCENTE." : "La collection intégrale des fragments visuels et de l'architecture sensorielle de LUCENTE.")
+              ? (lang === 'it' ? "La collezione integrale dei frammenti visivi di LUCENTE." : lang === 'en' ? "The complete collection of visual fragments of LUCENTE." : "La collection intégrale des fragments visuels de LUCENTE.")
               : selectedCategory === 'LA TABLE'
-              ? (lang === 'it' ? "L'arte della tavola, gli impiattamenti d'autore, le ceramiche in gres nero e la geometria dei sapori." : lang === 'en' ? "The art of the table, artisanal plating, black stoneware ceramics, and the geometry of flavours." : "L'art de la table, les dressages d'orfèvre, la vaisselle en grès noir et la géométrie des saveurs.")
+              ? (lang === 'it' ? "L'arte della tavola, gli impiattamenti d'autore e le ceramiche in gres nero." : lang === 'en' ? "Artisanal plating, black stoneware ceramics, and the geometry of flavours." : "Dressages d'orfèvre, vaisselle en grès noir et géométrie des saveurs.")
               : selectedCategory === 'LA CUISINE'
-              ? (lang === 'it' ? "Il santuario del pass, la fiamma viva e la precisione chirurgica della brigata." : lang === 'en' ? "The pass sanctuary, live embers, and the surgical precision of the kitchen brigade." : "Le sanctuaire du pass, la flamme vive et la précision chirurgicale de la brigade.")
+              ? (lang === 'it' ? "Il pass, la fiamma viva e la precisione chirurgica della brigata." : lang === 'en' ? "The pass sanctuary, live embers, and surgical brigade precision." : "Le sanctuaire du pass, la flamme vive et la précision chirurgicale.")
               : selectedCategory === "L'ESPACE"
-              ? (lang === 'it' ? "L'architettura minerale milanese, la Sala Chiaroscuro e la cripta da 1.400 bottiglie." : lang === 'en' ? "Milanese mineral architecture, the Chiaroscuro Room, and the 1,400-bottle cellar crypt." : "L'architecture minérale milanaise, la Sala Chiaroscuro et la crypte aux 1 400 flacons.")
+              ? (lang === 'it' ? "Architettura minerale e la cripta da 1.400 bottiglie." : lang === 'en' ? "Mineral architecture and the 1,400-bottle cellar crypt." : "Architecture minérale et la crypte aux 1 400 flacons.")
               : selectedCategory === 'LES ARTISANS'
-              ? (lang === 'it' ? "I volti, le mani e gli sguardi che danno un'anima al ristorante." : lang === 'en' ? "The faces, hands, and gazes that breathe soul into the restaurant." : "Les visages, les mains et les regards qui insufflent l'âme au restaurant.")
-              : (lang === 'it' ? "La materia prima del territorio italiano nella sua verità tellurica e marina più pura." : lang === 'en' ? "The raw material of Italian terroir in its purest telluric and marine truth." : "La matière brute du terroir italien dans sa vérité tellurique et marine la plus pure.")}
+              ? (lang === 'it' ? "I volti e le mani che danno l'anima al ristorante." : lang === 'en' ? "The faces and hands that breathe soul into the restaurant." : "Les visages et les mains qui insufflent l'âme au restaurant.")
+              : (lang === 'it' ? "La materia prima del territorio italiano nella sua purezza." : lang === 'en' ? "Raw material of Italian terroir in its purest truth." : "La matière brute du terroir italien dans sa vérité la plus pure.")}
           </p>
-          <span className="font-mono text-[11px] text-or hidden md:inline">
+          <span className="font-mono text-[10px] text-or/70 shrink-0">
             {lang === 'it'
-              ? "Clicca su uno scatto per l'immersione a schermo intero (Tastiera / Swipe)"
+              ? 'Clicca per aprire a schermo intero'
               : lang === 'en'
-              ? 'Click any photograph for full-screen immersion (Keyboard / Swipe)'
-              : "Cliquez sur un cliché pour l'immersion plein écran (Clavier / Swipe)"}
+              ? 'Click to open fullscreen'
+              : 'Cliquez pour plein écran'}
           </span>
         </div>
       </nav>
