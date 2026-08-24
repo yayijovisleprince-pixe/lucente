@@ -183,154 +183,150 @@ export default function MenuPage({ onSelectMenuForBooking }) {
         </div>
 
         {/* =========================================================================
-            TASTING MENUS VIEW
+            TASTING MENUS VIEW — ACCORDION DIRECT DÉPLIABLE EN PLACE
            ========================================================================= */}
         {viewMode === 'tasting' && (
-          <div className="space-y-8 sm:space-y-12">
-            
-            {/* Menu Cards Selector with Direct 1-Click Action */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {localizedTastingMenus.map((menu) => {
-                const isSelected = menu.id === activeTastingId;
-                const coursesCount = menu.courses?.length || 0;
+          <div className="space-y-6 max-w-5xl mx-auto">
+            {localizedTastingMenus.map((menu) => {
+              const isExpanded = activeTastingId === menu.id;
+              const coursesCount = menu.courses?.length || 0;
 
-                return (
-                  <div
-                    key={menu.id}
-                    onClick={() => {
-                      setActiveTastingId(menu.id);
-                      scrollToTastingDetails();
-                    }}
-                    className={`p-5 sm:p-6 border cursor-pointer transition-all duration-300 bg-surface flex flex-col justify-between group relative ${
-                      isSelected 
-                        ? 'border-or ring-1 ring-or shadow-[0_12px_35px_rgba(184,155,94,0.2)] bg-surface-elevated scale-[1.01]' 
-                        : 'border-white/10 hover:border-or/40 opacity-80 hover:opacity-100'
-                    }`}
-                  >
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] uppercase font-mono tracking-widest text-or font-semibold">{menu.tag}</span>
-                        <span className="text-[10px] font-mono text-muted/80 bg-nero px-2 py-0.5 border border-white/5">
-                          {coursesCount} {lang === 'it' ? 'Atti' : lang === 'en' ? 'Acts' : 'Actes'}
+              return (
+                <div
+                  key={menu.id}
+                  className={`border transition-all duration-300 bg-surface shadow-xl overflow-hidden ${
+                    isExpanded 
+                      ? 'border-or ring-1 ring-or/40 bg-surface-elevated' 
+                      : 'border-white/10 hover:border-or/30'
+                  }`}
+                >
+                  {/* Card Header (Non-clickable container, only buttons are clickable) */}
+                  <div className="p-5 sm:p-7 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="space-y-2 flex-1">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <span className="text-[10px] uppercase font-mono tracking-widest text-or font-semibold px-2 py-0.5 bg-nero border border-or/20">
+                          {menu.tag}
+                        </span>
+                        <span className="text-[11px] font-mono text-muted">
+                          {coursesCount} {lang === 'it' ? 'atti gastronomici' : lang === 'en' ? 'gastronomic acts' : 'actes gastronomiques'}
                         </span>
                       </div>
 
                       <div>
-                        <h2 className="font-serif text-2xl text-ivoire group-hover:text-or transition-colors">{menu.name}</h2>
+                        <h2 className="font-serif text-2xl sm:text-3xl text-ivoire">{menu.name}</h2>
                         <span className="text-xs font-serif italic text-or/80 block mt-0.5">{menu.italianName}</span>
                       </div>
 
-                      <p className="text-xs text-muted font-sans line-clamp-2 leading-relaxed">{menu.description}</p>
+                      <p className="text-xs sm:text-sm text-muted font-sans max-w-2xl leading-relaxed">
+                        {menu.description}
+                      </p>
                     </div>
 
-                    <div className="pt-4 border-t border-white/5 space-y-3 mt-5">
-                      <div className="flex items-baseline justify-between">
-                        <span className="font-serif text-2xl text-or font-medium">{menu.price}</span>
-                        <span className="text-[11px] text-muted font-mono">{menu.winePairingPrice}</span>
+                    {/* Price & Action Buttons */}
+                    <div className="flex flex-col sm:flex-row md:flex-col items-start md:items-end justify-between gap-4 shrink-0 border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
+                      <div className="text-left md:text-right">
+                        <span className="font-serif text-2xl sm:text-3xl text-or font-medium block">{menu.price}</span>
+                        <span className="text-xs text-muted font-mono">{menu.winePairingPrice}</span>
                       </div>
 
-                      {/* Direct 1-Click Action Button */}
-                      <div className="flex items-center gap-2 pt-1">
+                      <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                        {/* THE ONLY BUTTON THAT EXPANDS THE DISHES */}
                         <button
                           type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setActiveTastingId(menu.id);
-                            scrollToTastingDetails();
-                          }}
-                          className={`flex-1 py-2.5 px-3 text-[11px] uppercase font-mono tracking-wider text-center transition-all flex items-center justify-center gap-1.5 ${
-                            isSelected
-                              ? 'bg-or text-nero font-bold shadow-md'
-                              : 'bg-nero/80 text-or border border-or/30 hover:bg-or hover:text-nero'
+                          onClick={() => setActiveTastingId(isExpanded ? '' : menu.id)}
+                          className={`flex-1 sm:flex-none px-4 py-2.5 text-xs uppercase font-mono tracking-wider transition-all flex items-center justify-center gap-2 border ${
+                            isExpanded
+                              ? 'bg-or text-nero font-bold border-or shadow-md'
+                              : 'bg-nero text-or border-or/40 hover:bg-or hover:text-nero'
                           }`}
                         >
-                          <span>{lang === 'it' ? 'Vedi Piatti' : lang === 'en' ? 'View Dishes' : 'Voir les Plats'}</span>
-                          <ChevronDown size={13} />
+                          <span>
+                            {isExpanded
+                              ? (lang === 'it' ? 'Nascondi Piatti' : lang === 'en' ? 'Hide Dishes' : 'Masquer les Plats')
+                              : (lang === 'it' ? 'Vedi Piatti' : lang === 'en' ? 'View Dishes' : 'Voir les Plats')}
+                          </span>
+                          <ChevronDown 
+                            size={14} 
+                            className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} 
+                          />
                         </button>
-                        
+
+                        {/* Direct Booking Button */}
                         <button
                           type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            onSelectMenuForBooking(menu.name);
-                          }}
-                          title={lang === 'it' ? 'Prenota questo menu' : lang === 'en' ? 'Book this menu' : 'Réserver ce menu'}
-                          className="py-2.5 px-3 bg-surface border border-white/10 hover:border-or text-ivoire hover:text-or text-[11px] uppercase font-mono transition-all shrink-0"
+                          onClick={() => onSelectMenuForBooking(menu.name)}
+                          className="flex-1 sm:flex-none px-5 py-2.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-md text-center shrink-0"
                         >
                           {lang === 'it' ? 'Prenota' : lang === 'en' ? 'Book' : 'Réserver'}
                         </button>
                       </div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
 
-            {/* Active Menu Details Section (Directly displayed & scrolled into view on click) */}
-            <div 
-              ref={tastingDetailsRef}
-              id="tasting-details"
-              className="scroll-mt-28 bg-surface-elevated border border-or/40 p-5 sm:p-10 lg:p-12 space-y-8 sm:space-y-10 shadow-2xl animate-fadeIn"
-            >
-              <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-white/10 pb-6 gap-4">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs uppercase font-mono text-or tracking-widest">{activeTasting.italianName}</span>
-                    <span className="text-xs text-muted/60 font-mono">·</span>
-                    <span className="text-xs font-mono text-ivoire/80 bg-nero px-2 py-0.5 border border-white/10">
-                      {activeTasting.courses?.length || 0} {lang === 'it' ? 'atti gastronomici' : lang === 'en' ? 'gastronomic acts' : 'actes gastronomiques'}
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-3xl sm:text-4xl text-ivoire font-normal">{activeTasting.name}</h3>
-                  <p className="text-xs sm:text-sm text-muted max-w-xl pt-1 leading-relaxed">{activeTasting.description}</p>
-                </div>
-
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
-                  <button
-                    onClick={() => onSelectMenuForBooking(activeTasting.name)}
-                    className="px-8 py-3.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all text-center shadow-lg flex items-center justify-center gap-2"
-                  >
-                    <span>{t('menu.bookThisMenu')} ({activeTasting.price})</span>
-                    <ArrowRight size={13} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Courses List */}
-              <div className="divide-y divide-white/5 space-y-6">
-                {activeTasting.courses?.map((c, i) => (
-                  <div key={i} className="pt-6 first:pt-0 flex flex-col md:flex-row md:items-center justify-between gap-4 group">
-                    <div className="space-y-1 max-w-2xl">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs font-mono text-or font-semibold">
-                          {lang === 'it' ? `Atto ${c.act}` : lang === 'en' ? `Act ${c.act}` : `Acte ${c.act}`}
+                  {/* INLINE EXPANDED DISHES (Unfolds right under this menu card) */}
+                  {isExpanded && (
+                    <div className="border-t border-or/20 bg-nero/70 p-5 sm:p-8 md:p-10 space-y-6 animate-fadeIn">
+                      <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                        <span className="text-xs uppercase font-mono tracking-widest text-or font-semibold">
+                          {lang === 'it' ? `Sequenza degli ${coursesCount} Atti` : lang === 'en' ? `Sequence of ${coursesCount} Acts` : `Partition des ${coursesCount} Actes`}
                         </span>
-                        <h4 className="font-serif text-lg sm:text-xl text-ivoire group-hover:text-or transition-colors">{c.name}</h4>
+                        <span className="text-[11px] text-muted font-mono hidden sm:inline">
+                          {menu.name} · {menu.price}
+                        </span>
                       </div>
-                      <p className="text-xs text-muted leading-relaxed font-sans">{c.ingredients}</p>
-                    </div>
-                    {c.pairing && (
-                      <div className="flex items-center gap-2 text-xs text-or/90 bg-nero/70 px-3 py-1.5 border border-white/5 shrink-0 self-start md:self-center">
-                        <Wine size={13} className="text-or" />
-                        <span className="font-mono text-[11px]">{c.pairing}</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
 
-              {/* Bottom CTA for active menu */}
-              <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-nero/50 p-4 sm:p-6 border">
-                <div className="text-center sm:text-left space-y-1">
-                  <span className="text-xs uppercase font-mono text-or tracking-widest">
-                    {lang === 'it' ? 'Esperienza Consigliata' : lang === 'en' ? 'Signature Experience' : 'Expérience d’Exception'}
-                  </span>
-                  <p className="font-serif text-lg text-ivoire">
-                    {activeTasting.name} — <span className="text-or">{activeTasting.price}</span>
-                  </p>
+                      <div className="divide-y divide-white/5 space-y-5">
+                        {menu.courses?.map((c, i) => (
+                          <div key={i} className="pt-5 first:pt-0 flex flex-col md:flex-row md:items-center justify-between gap-3 group">
+                            <div className="space-y-1 max-w-2xl">
+                              <div className="flex items-center gap-3">
+                                <span className="text-xs font-mono text-or font-semibold shrink-0">
+                                  {lang === 'it' ? `Atto ${c.act}` : lang === 'en' ? `Act ${c.act}` : `Acte ${c.act}`}
+                                </span>
+                                <h4 className="font-serif text-lg text-ivoire group-hover:text-or transition-colors">
+                                  {c.name}
+                                </h4>
+                              </div>
+                              <p className="text-xs text-muted leading-relaxed font-sans pl-0 sm:pl-8">
+                                {c.ingredients}
+                              </p>
+                            </div>
+
+                            {c.pairing && (
+                              <div className="flex items-center gap-2 text-xs text-or/90 bg-surface px-3 py-1.5 border border-white/5 shrink-0 self-start md:self-center">
+                                <Wine size={13} className="text-or shrink-0" />
+                                <span className="font-mono text-[11px]">{c.pairing}</span>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* In-place footer booking trigger */}
+                      <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface p-4 sm:p-5 border border-white/5">
+                        <div className="text-center sm:text-left">
+                          <span className="text-[10px] uppercase font-mono text-or tracking-widest block">
+                            {lang === 'it' ? 'Menu Completo' : lang === 'en' ? 'Complete Menu' : 'Menu Complet'}
+                          </span>
+                          <span className="font-serif text-lg text-ivoire">
+                            {menu.name} — <span className="text-or font-semibold">{menu.price}</span>
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => onSelectMenuForBooking(menu.name)}
+                          className="w-full sm:w-auto px-7 py-3 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-lg flex items-center justify-center gap-2"
+                        >
+                          <span>{t('menu.bookThisMenu')}</span>
+                          <ArrowRight size={13} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                 </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         )}
 
