@@ -90,20 +90,20 @@ export default function GalleryPage() {
       {/* =========================================================================
           1. EDITORIAL HEADER & MAGAZINE MASTHEAD
          ========================================================================= */}
-      <header className="max-w-7xl mx-auto px-6 md:px-12 mb-16 text-center md:text-left">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-10">
+      <header className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 mb-10 sm:mb-16 text-center md:text-left">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8 sm:pb-10">
           
           <div className="space-y-3 max-w-3xl">
-            <div className="flex items-center justify-center md:justify-start gap-3">
+            <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap">
               <span className="px-3 py-1 bg-or/10 border border-or/30 text-or text-[10px] uppercase tracking-[0.3em] font-mono">
                 Volume IV · Milano 2026
               </span>
-              <span className="text-xs uppercase font-mono tracking-widest text-muted hidden sm:inline">
+              <span className="text-xs uppercase font-mono tracking-widest text-muted">
                 {lang === 'it' ? 'Antologia Fotografica' : lang === 'en' ? 'Photographic Anthology' : 'Anthologie Photographique'}
               </span>
             </div>
 
-            <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal text-ivoire tracking-tight leading-[1.05]">
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-7xl font-normal text-ivoire tracking-tight leading-[1.1]">
               {lang === 'it' ? (
                 <>Galleria <span className="italic text-or font-light">Editoriale</span></>
               ) : lang === 'en' ? (
@@ -113,7 +113,7 @@ export default function GalleryPage() {
               )}
             </h1>
 
-            <p className="font-serif text-lg sm:text-xl text-ivoire/80 italic max-w-2xl">
+            <p className="font-serif text-base sm:text-lg lg:text-xl text-ivoire/80 italic max-w-2xl">
               {lang === 'it'
                 ? "« Nell'oscurità della sala, la materia grezza e il gesto sapiente scolpiscono la luce. »"
                 : lang === 'en'
@@ -138,21 +138,72 @@ export default function GalleryPage() {
 
 
       {/* =========================================================================
-          2. EDITORIAL CATEGORY SELECTOR — Sliding Tab Design
+          2. EDITORIAL CATEGORY SELECTOR (DUAL: RESPONSIVE MOBILE CHIPS + DESKTOP TABS)
          ========================================================================= */}
       <nav
         aria-label={lang === 'it' ? 'Categorie Editoriali' : lang === 'en' ? 'Editorial Categories' : 'Catégories Éditoriales'}
-        className="max-w-7xl mx-auto px-6 md:px-12 mb-12"
+        className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 mb-10 sm:mb-14"
       >
-        {/* Tabs row */}
-        <div className="relative">
-          {/* Fade-out hint on mobile right edge to signal scrollability */}
-          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-nero to-transparent pointer-events-none z-10 md:hidden" />
+        {/* MOBILE VIEW (< md): 2-Column Responsive Chips Grid (100% accessible, 0 clipping) */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:hidden gap-2 pb-2">
+          {galleryCategories.map((cat) => {
+            const isSelected = selectedCategory === cat.id;
+            const count = cat.id === 'ALL'
+              ? localizedItems.length
+              : localizedItems.filter((i) => i.category === cat.id).length;
 
+            const label = cat.id === 'ALL'
+              ? (lang === 'it' ? 'Tutte' : lang === 'en' ? 'All' : 'Toutes')
+              : cat.id === 'LA TABLE'
+              ? (lang === 'it' ? 'La Tavola' : lang === 'en' ? 'The Table' : 'La Table')
+              : cat.id === 'LA CUISINE'
+              ? (lang === 'it' ? 'La Cucina' : lang === 'en' ? 'The Kitchen' : 'La Cuisine')
+              : cat.id === "L'ESPACE"
+              ? (lang === 'it' ? "L'Spazio" : lang === 'en' ? 'The Space' : "L'Espace")
+              : cat.id === 'LES ARTISANS'
+              ? (lang === 'it' ? 'Gli Artigiani' : lang === 'en' ? 'Artisans' : 'Artisans')
+              : (lang === 'it' ? 'Ingredienti' : lang === 'en' ? 'Ingredients' : 'Ingrédients');
+
+            const Icon = CATEGORY_ICONS[cat.id] || Grid3X3;
+
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                aria-pressed={isSelected}
+                className={`
+                  flex items-center justify-between p-3 rounded-none border transition-all duration-300
+                  ${
+                    isSelected
+                      ? 'bg-or/15 border-or text-ivoire shadow-lg ring-1 ring-or/40'
+                      : 'bg-surface/80 border-white/10 text-muted hover:border-white/20 hover:text-ivoire'
+                  }
+                `}
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <Icon size={16} className={`shrink-0 ${isSelected ? 'text-or' : 'text-muted/60'}`} />
+                  <span className="font-mono text-[11px] uppercase tracking-wider truncate font-medium">
+                    {label}
+                  </span>
+                </div>
+                <span
+                  className={`
+                    ml-1.5 px-1.5 py-0.5 text-[9px] font-mono shrink-0 rounded-none
+                    ${isSelected ? 'bg-or text-nero font-bold' : 'bg-nero/60 text-muted/70 border border-white/5'}
+                  `}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* DESKTOP VIEW (>= md): Full Luxury Horizontal Tab Bar with Sliding Gold Indicator */}
+        <div className="hidden md:block relative border-b border-white/10">
           <div
             ref={tabsRef}
-            className="flex items-stretch gap-0 overflow-x-auto scrollbar-none border-b border-white/8"
-            style={{ scrollbarWidth: 'none' }}
+            className="flex items-stretch justify-between gap-0"
           >
             {galleryCategories.map((cat) => {
               const isSelected = selectedCategory === cat.id;
@@ -161,7 +212,7 @@ export default function GalleryPage() {
                 : localizedItems.filter((i) => i.category === cat.id).length;
 
               const label = cat.id === 'ALL'
-                ? (lang === 'it' ? 'Tutte' : lang === 'en' ? 'All' : 'Tout')
+                ? (lang === 'it' ? 'Tutte le Collezioni' : lang === 'en' ? 'All Collections' : 'Toutes les Collections')
                 : cat.id === 'LA TABLE'
                 ? (lang === 'it' ? 'La Tavola' : lang === 'en' ? 'The Table' : 'La Table')
                 : cat.id === 'LA CUISINE'
@@ -182,35 +233,30 @@ export default function GalleryPage() {
                   aria-selected={isSelected}
                   role="tab"
                   className={`
-                    relative flex flex-col items-center gap-1.5 px-5 sm:px-7 pt-4 pb-5
-                    text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-mono
-                    whitespace-nowrap shrink-0 transition-all duration-300 group
-                    focus-visible:outline-none
+                    relative flex-1 flex flex-col items-center gap-2 pt-4 pb-5 px-3
+                    text-[11px] uppercase tracking-[0.2em] font-mono transition-all duration-300 group
                     ${
                       isSelected
                         ? 'text-or'
-                        : 'text-muted hover:text-ivoire/80'
+                        : 'text-muted hover:text-ivoire'
                     }
                   `}
                 >
-                  {/* Icon */}
                   <Icon
                     size={18}
                     className={`transition-all duration-300 ${
-                      isSelected ? 'text-or scale-110' : 'text-muted/60 group-hover:text-ivoire/60 group-hover:scale-105'
+                      isSelected ? 'text-or scale-110' : 'text-muted/60 group-hover:text-ivoire/80 group-hover:scale-105'
                     }`}
                   />
-                  {/* Label */}
-                  <span className={`transition-colors duration-300 ${isSelected ? 'text-ivoire font-semibold' : ''}` }>
+                  <span className={`transition-colors duration-300 text-center ${isSelected ? 'text-ivoire font-semibold' : ''}`}>
                     {label}
                   </span>
-                  {/* Count badge */}
                   <span className={`
-                    px-1.5 py-0.5 rounded-sm font-mono text-[9px] transition-all duration-300
+                    px-2 py-0.5 font-mono text-[10px] transition-all duration-300
                     ${
                       isSelected
-                        ? 'bg-or/15 text-or border border-or/30'
-                        : 'bg-white/5 text-muted/60 border border-white/5'
+                        ? 'bg-or/20 text-or border border-or/40 font-bold'
+                        : 'bg-white/5 text-muted/60 border border-white/5 group-hover:border-white/10'
                     }
                   `}>
                     {count}
@@ -229,11 +275,11 @@ export default function GalleryPage() {
           </div>
         </div>
 
-        {/* Active category tagline + hint */}
+        {/* Active category tagline + immersion hint */}
         <div className="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-          <p className="font-serif italic text-sm text-ivoire/70 transition-all duration-300">
+          <p className="font-serif italic text-sm text-ivoire/75 leading-relaxed">
             {selectedCategory === 'ALL'
-              ? (lang === 'it' ? "La collezione integrale dei frammenti visivi di LUCENTE." : lang === 'en' ? "The complete collection of visual fragments of LUCENTE." : "La collection intégrale des fragments visuels de LUCENTE.")
+              ? (lang === 'it' ? "La collezione integrale dei frammenti visivi di LUCENTE." : lang === 'en' ? "The complete collection of visual fragments of LUCENTE." : "La collection intégrale des fragments visuels et de l'atmosphère de LUCENTE.")
               : selectedCategory === 'LA TABLE'
               ? (lang === 'it' ? "L'arte della tavola, gli impiattamenti d'autore e le ceramiche in gres nero." : lang === 'en' ? "Artisanal plating, black stoneware ceramics, and the geometry of flavours." : "Dressages d'orfèvre, vaisselle en grès noir et géométrie des saveurs.")
               : selectedCategory === 'LA CUISINE'
@@ -244,12 +290,12 @@ export default function GalleryPage() {
               ? (lang === 'it' ? "I volti e le mani che danno l'anima al ristorante." : lang === 'en' ? "The faces and hands that breathe soul into the restaurant." : "Les visages et les mains qui insufflent l'âme au restaurant.")
               : (lang === 'it' ? "La materia prima del territorio italiano nella sua purezza." : lang === 'en' ? "Raw material of Italian terroir in its purest truth." : "La matière brute du terroir italien dans sa vérité la plus pure.")}
           </p>
-          <span className="font-mono text-[10px] text-or/70 shrink-0">
+          <span className="font-mono text-[10px] text-or/80 shrink-0">
             {lang === 'it'
-              ? 'Clicca per aprire a schermo intero'
+              ? '✦ Clicca per visualizzare a schermo intero'
               : lang === 'en'
-              ? 'Click to open fullscreen'
-              : 'Cliquez pour plein écran'}
+              ? '✦ Click any photo for full-screen view'
+              : '✦ Cliquez pour afficher en plein écran'}
           </span>
         </div>
       </nav>
@@ -257,7 +303,7 @@ export default function GalleryPage() {
       {/* =========================================================================
           3. MAGAZINE MASONRY EDITORIAL GRID
          ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 mb-24">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 mb-20 sm:mb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           
           {filteredItems.map((item, index) => {
@@ -269,7 +315,7 @@ export default function GalleryPage() {
                 className={`group relative bg-surface border border-white/5 overflow-hidden cursor-pointer transition-all duration-500 hover:border-or/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.8)] flex flex-col justify-between ${cardSpan}`}
               >
                 {/* Visual Frame */}
-                <div className="relative w-full overflow-hidden bg-nero/50 aspect-video md:aspect-[16/10] lg:aspect-auto min-h-[260px] sm:min-h-[300px] md:min-h-[340px] lg:min-h-[380px] flex-1">
+                <div className="relative w-full overflow-hidden bg-nero/50 aspect-video md:aspect-[16/10] lg:aspect-auto min-h-[240px] sm:min-h-[300px] md:min-h-[340px] lg:min-h-[380px] flex-1">
                   <img
                     loading={index < 4 ? "eager" : "lazy"}
                     src={item.src}
@@ -311,7 +357,7 @@ export default function GalleryPage() {
                 </div>
 
                 {/* Editorial Metadata Footer Card */}
-                <div className="p-5 sm:p-6 bg-surface-elevated border-t border-white/5 space-y-2">
+                <div className="p-4 sm:p-6 bg-surface-elevated border-t border-white/5 space-y-2">
                   
                   <div className="flex items-baseline justify-between gap-2">
                     <h2 className="font-serif text-xl sm:text-2xl text-ivoire group-hover:text-or transition-colors">
@@ -347,9 +393,9 @@ export default function GalleryPage() {
           4. FULL-BLEED MONUMENTAL ARCHITECTURAL SPREAD (IMAGE PLEINE LARGEUR)
          ========================================================================= */}
       {selectedCategory === 'ALL' && spreadBreak1 && (
-        <section className="relative w-full mb-28 overflow-hidden border-y border-or/20 bg-surface">
+        <section className="relative w-full mb-20 sm:mb-28 overflow-hidden border-y border-or/20 bg-surface">
           
-          <div className="relative min-h-[600px] lg:min-h-[720px] flex items-center justify-start">
+          <div className="relative min-h-[480px] sm:min-h-[580px] lg:min-h-[700px] flex items-center justify-start">
             
             {/* Background Full-Width Hero Photograph */}
             <div className="absolute inset-0">
@@ -364,10 +410,10 @@ export default function GalleryPage() {
             </div>
 
             {/* Editorial Overlay Magazine Content */}
-            <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-20">
-              <div className="max-w-2xl space-y-6 bg-nero/80 p-8 sm:p-12 border border-white/10 backdrop-blur-md shadow-2xl">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-20 w-full">
+              <div className="max-w-2xl space-y-5 sm:space-y-6 bg-nero/85 p-5 sm:p-8 md:p-12 border border-white/10 backdrop-blur-md shadow-2xl">
                 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-wrap">
                   <span className="px-3 py-1 bg-or text-nero text-[10px] uppercase font-mono font-bold tracking-widest">
                     {lang === 'it' ? 'Doppia Pagina Editoriale' : lang === 'en' ? 'Editorial Double Spread' : 'Double Page Éditoriale'}
                   </span>
@@ -376,21 +422,21 @@ export default function GalleryPage() {
                   </span>
                 </div>
 
-                <h2 className="font-serif text-3xl sm:text-5xl text-ivoire font-normal leading-tight">
+                <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl text-ivoire font-normal leading-tight">
                   {spreadBreak1.title}
                 </h2>
 
-                <p className="font-serif text-base sm:text-lg text-ivoire/90 italic leading-relaxed border-l-2 border-or pl-4">
+                <p className="font-serif text-sm sm:text-base md:text-lg text-ivoire/90 italic leading-relaxed border-l-2 border-or pl-4">
                   « {spreadBreak1.editorialStory} »
                 </p>
 
-                <div className="flex items-center gap-4 pt-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
                   <button 
                     onClick={(e) => {
                       e.stopPropagation();
                       handleOpenById(spreadBreak1.id);
                     }}
-                    className="flex items-center gap-2 px-6 py-3 bg-or text-nero font-semibold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-xl"
+                    className="flex items-center justify-center gap-2 px-6 py-3.5 bg-or text-nero font-semibold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-xl w-full sm:w-auto"
                   >
                     <Maximize2 size={14} />
                     <span>
@@ -420,17 +466,17 @@ export default function GalleryPage() {
           5. EDITORIAL DIPTYCH SECTION ("Le Geste & La Matière")
          ========================================================================= */}
       {selectedCategory === 'ALL' && (
-        <section className="max-w-7xl mx-auto px-6 md:px-12 mb-24">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 mb-20 sm:mb-24">
           
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 space-y-3">
             <p className="typo-eyebrow">
               {lang === 'it' ? 'Dittico Narrativo' : lang === 'en' ? 'Narrative Diptych' : 'Diptyque Narratif'}
             </p>
-            <h2 className="font-serif text-3xl sm:text-4xl text-ivoire">
+            <h2 className="font-serif text-2xl sm:text-4xl text-ivoire">
               {lang === 'it' ? 'Il Gesto & La Materia' : lang === 'en' ? 'The Craft & Raw Material' : 'Le Geste & La Matière'}
             </h2>
             <div className="w-12 h-[1px] bg-or mx-auto" />
-            <p className="text-xs sm:text-sm text-muted font-serif italic">
+            <p className="text-xs sm:text-sm text-muted font-serif italic px-2">
               {lang === 'it'
                 ? "Il confronto visivo tra l'ingrediente puro della terra e la maestria del dressage stellato."
                 : lang === 'en'
@@ -439,14 +485,14 @@ export default function GalleryPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             
             {/* Left Diptych: Raw Ingredient */}
             <div 
               className="relative rounded-none overflow-hidden border border-white/10 group cursor-pointer bg-surface"
               onClick={() => handleOpenById('gal-04')}
             >
-              <div className="h-80 sm:h-[440px] overflow-hidden">
+              <div className="h-64 sm:h-80 md:h-[420px] overflow-hidden">
                 <img
                   loading="lazy"
                   src="/images/olive-oil-stone.webp"
@@ -460,8 +506,8 @@ export default function GalleryPage() {
                   I. {lang === 'it' ? 'La Materia Grezza' : lang === 'en' ? 'Raw Material' : 'La Matière Brute'}
                 </span>
               </div>
-              <div className="absolute bottom-6 left-6 right-6 space-y-1">
-                <h3 className="font-serif text-xl text-ivoire">L'Oro di Coratina</h3>
+              <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 space-y-1">
+                <h3 className="font-serif text-lg sm:text-xl text-ivoire">L'Oro di Coratina</h3>
                 <p className="text-xs text-muted">
                   {lang === 'it' ? 'Spremitura a freddo e raccolta manuale in Puglia.' : lang === 'en' ? 'Cold-pressed and hand-harvested in Puglia.' : 'Pressage à froid et récolte manuelle sous le soleil des Pouilles.'}
                 </p>
@@ -473,7 +519,7 @@ export default function GalleryPage() {
               className="relative rounded-none overflow-hidden border border-white/10 group cursor-pointer bg-surface"
               onClick={() => handleOpenById('gal-07')}
             >
-              <div className="h-80 sm:h-[440px] overflow-hidden">
+              <div className="h-64 sm:h-80 md:h-[420px] overflow-hidden">
                 <img
                   loading="lazy"
                   src="/images/chef-craft.webp"
@@ -487,8 +533,8 @@ export default function GalleryPage() {
                   II. {lang === 'it' ? "Il Gesto d'Autore" : lang === 'en' ? 'Masterful Precision' : "Le Geste d'Orfèvre"}
                 </span>
               </div>
-              <div className="absolute bottom-6 left-6 right-6 space-y-1">
-                <h3 className="font-serif text-xl text-ivoire">
+              <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 space-y-1">
+                <h3 className="font-serif text-lg sm:text-xl text-ivoire">
                   {lang === 'it' ? "La Pinzetta d'Argento" : lang === 'en' ? 'Silver Tweezers' : "La Pince d'Argent"}
                 </h3>
                 <p className="text-xs text-muted">
@@ -505,12 +551,12 @@ export default function GalleryPage() {
       {/* =========================================================================
           6. EDITORIAL QUOTES MANIFESTO BREAK
          ========================================================================= */}
-      <section className="max-w-5xl mx-auto px-6 md:px-12 mb-20">
-        <div className="p-8 sm:p-12 border border-or/20 bg-surface-elevated text-center space-y-4 relative">
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 bg-nero text-or font-serif text-xs uppercase tracking-widest border border-or/30">
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 md:px-12 mb-16 sm:mb-20">
+        <div className="p-6 sm:p-10 md:p-12 border border-or/20 bg-surface-elevated text-center space-y-4 relative">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 bg-nero text-or font-serif text-xs uppercase tracking-widest border border-or/30 whitespace-nowrap">
             {lang === 'it' ? 'Pensiero Visivo' : lang === 'en' ? 'Visual Thought' : 'Pensée Visuelle'}
           </div>
-          <p className="font-serif text-xl sm:text-2xl text-ivoire/90 italic leading-relaxed">
+          <p className="font-serif text-lg sm:text-xl md:text-2xl text-ivoire/90 italic leading-relaxed">
             « {localizedQuotes[0].quote} »
           </p>
           <div className="pt-2">
@@ -527,10 +573,10 @@ export default function GalleryPage() {
       {/* =========================================================================
           7. TABLE RESERVATION INVITATION
          ========================================================================= */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="border border-white/10 bg-surface p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+        <div className="border border-white/10 bg-surface p-6 sm:p-10 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
-            <h3 className="font-serif text-2xl text-ivoire">
+            <h3 className="font-serif text-xl sm:text-2xl text-ivoire">
               {lang === 'it' ? "Vivere l'Esperienza dal Vivo" : lang === 'en' ? 'Live the Experience' : "Vivre l'Expérience en Direct"}
             </h3>
             <p className="text-xs text-muted max-w-xl">
@@ -541,16 +587,16 @@ export default function GalleryPage() {
                 : 'Chaque soir à Milan, les créations prennent vie sous les yeux de vingt-huit convives privilégiés.'}
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full md:w-auto">
             <Link
               to="/reservations"
-              className="px-6 py-3 bg-or text-nero font-semibold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-lg"
+              className="w-full sm:w-auto text-center px-6 py-3.5 bg-or text-nero font-semibold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-lg"
             >
               {lang === 'it' ? 'Prenota un Tavolo' : lang === 'en' ? 'Reserve a Table' : 'Réserver une Table'}
             </Link>
             <Link
               to="/menu"
-              className="px-6 py-3 bg-surface-elevated text-ivoire border border-white/10 font-semibold text-xs uppercase tracking-widest hover:border-or/40 hover:text-or transition-all"
+              className="w-full sm:w-auto text-center px-6 py-3.5 bg-surface-elevated text-ivoire border border-white/10 font-semibold text-xs uppercase tracking-widest hover:border-or/40 hover:text-or transition-all"
             >
               {lang === 'it' ? 'I Menu' : lang === 'en' ? 'The Menus' : 'Les Menus'}
             </Link>
