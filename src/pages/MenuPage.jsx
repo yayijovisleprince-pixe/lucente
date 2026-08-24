@@ -236,18 +236,18 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                           onClick={() => setActiveTastingId(isExpanded ? '' : menu.id)}
                           className={`flex-1 sm:flex-none px-4 py-2.5 text-xs uppercase font-mono tracking-wider transition-all flex items-center justify-center gap-2 border ${
                             isExpanded
-                              ? 'bg-or text-nero font-bold border-or shadow-md'
-                              : 'bg-nero text-or border-or/40 hover:bg-or hover:text-nero'
+                              ? 'bg-or text-[#10100E] font-bold border-or shadow-md hover:bg-[#F2EBDD]'
+                              : 'bg-surface-elevated text-ivoire border-or/50 hover:border-or hover:bg-or/15 hover:text-or'
                           }`}
                         >
-                          <span>
+                          <span className={isExpanded ? 'text-[#10100E] font-bold' : 'text-ivoire'}>
                             {isExpanded
                               ? (lang === 'it' ? 'Nascondi Piatti' : lang === 'en' ? 'Hide Dishes' : 'Masquer les Plats')
                               : (lang === 'it' ? 'Vedi Piatti' : lang === 'en' ? 'View Dishes' : 'Voir les Plats')}
                           </span>
                           <ChevronDown 
                             size={14} 
-                            className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} 
+                            className={`transition-transform duration-300 ${isExpanded ? 'rotate-180 text-[#10100E]' : 'text-or'}`} 
                           />
                         </button>
 
@@ -255,7 +255,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                         <button
                           type="button"
                           onClick={() => onSelectMenuForBooking(menu.name)}
-                          className="flex-1 sm:flex-none px-5 py-2.5 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-md text-center shrink-0"
+                          className="flex-1 sm:flex-none px-5 py-2.5 bg-or text-[#10100E] font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-md text-center shrink-0"
                         >
                           {lang === 'it' ? 'Prenota' : lang === 'en' ? 'Book' : 'Réserver'}
                         </button>
