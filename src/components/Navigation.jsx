@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { VolumeX, Calendar, SkipForward, Menu, X, Globe } from 'lucide-react';
+import { VolumeX, Calendar, SkipForward, Menu, X, Globe, ShoppingBag } from 'lucide-react';
 import { audioTracks } from './AudioPlayer';
 import { restaurantInfo } from '../data/restaurantData';
 import { useLanguage } from '../contexts/LanguageContext';
+import { getOrderCount } from '../utils/orderHistory';
 
 export default function Navigation({ 
   onOpenBooking, 
+  onOpenOrders,
   isAudioPlaying, 
   onToggleAudio,
   currentTrackIndex = 0,
@@ -16,10 +18,18 @@ export default function Navigation({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredImage, setHoveredImage] = useState('/images/hero-dish.webp');
   const [milanTime, setMilanTime] = useState('');
+  const [orderCount, setOrderCount] = useState(0);
   const location = useLocation();
   const { lang, setLang, t } = useLanguage();
 
   const activeTrack = audioTracks[currentTrackIndex] || audioTracks[0];
+
+  useEffect(() => {
+    setOrderCount(getOrderCount());
+    const handleUpdate = () => setOrderCount(getOrderCount());
+    window.addEventListener('lucente:orders-updated', handleUpdate);
+    return () => window.removeEventListener('lucente:orders-updated', handleUpdate);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,7 +78,7 @@ export default function Navigation({
           
           {/* Logo LUCENTE — Épuré, sobre et compact */}
           <Link to="/" data-cursor="LUCENTE" className="flex items-center group text-left shrink-0 py-1">
-            <span className="font-serif-luxury text-lg sm:text-2xl tracking-[0.16em] sm:tracking-[0.24em] text-ivoire uppercase font-light transition-colors group-hover:text-or">
+            <span className="font-serif-luxury text-base sm:text-lg lg:text-xl tracking-[0.22em] text-ivoire uppercase font-light transition-colors group-hover:text-or">
               LUCENTE
             </span>
           </Link>
@@ -178,6 +188,23 @@ export default function Navigation({
               )}
             </div>
 
+            {/* Orders History Quick Access Desktop */}
+            <button
+              onClick={onOpenOrders}
+              data-cursor={lang === 'it' ? 'ORDINI' : lang === 'en' ? 'ORDERS' : 'COMMANDES'}
+              aria-label={lang === 'it' ? 'I Miei Ordini' : lang === 'en' ? 'My Orders' : 'Mes Commandes'}
+              className="relative flex items-center gap-1.5 px-3 py-2 bg-surface hover:bg-surface-elevated border border-white/15 hover:border-or/60 text-ivoire hover:text-or text-[11px] xl:text-xs font-mono uppercase tracking-wider transition-all"
+              title={lang === 'it' ? 'I Miei Ordini' : lang === 'en' ? 'My Orders' : 'Mes Commandes'}
+            >
+              <ShoppingBag size={13} className="text-or" />
+              <span className="hidden xl:inline">{lang === 'it' ? 'Ordini' : lang === 'en' ? 'Orders' : 'Commandes'}</span>
+              {orderCount > 0 && (
+                <span className="w-4 h-4 rounded-full bg-or text-nero font-bold text-[9px] flex items-center justify-center -mr-1">
+                  {orderCount}
+                </span>
+              )}
+            </button>
+
             {/* CTA RESERVE — Premium gold button */}
             <button
               onClick={() => onOpenBooking()}
@@ -191,16 +218,32 @@ export default function Navigation({
           </div>
 
           {/* Mobile & Tablet Controls (Visible sur Écrans < 1024px) */}
-          <div className="flex lg:hidden items-center gap-2 sm:gap-3">
+          <div className="flex lg:hidden items-center gap-1.5 sm:gap-2.5">
             
+            {/* Quick Orders Button on Mobile Header */}
+            <button
+              onClick={onOpenOrders}
+              aria-label={lang === 'it' ? 'I Miei Ordini' : lang === 'en' ? 'My Orders' : 'Mes Commandes'}
+              title={lang === 'it' ? 'I Miei Ordini' : lang === 'en' ? 'My Orders' : 'Mes Commandes'}
+              className="relative p-2 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-surface border border-white/15 text-ivoire hover:text-or hover:border-or/50 transition-all shrink-0"
+            >
+              <ShoppingBag size={14} className="text-or" />
+              {orderCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-or text-nero font-bold text-[9px] flex items-center justify-center shadow-md">
+                  {orderCount}
+                </span>
+              )}
+            </button>
+
             {/* Bouton RESERVE sur Mobile/Tablette — Magnifiquement mis en valeur */}
             <button
               onClick={() => onOpenBooking()}
               aria-label={t('nav.reserve')}
-              className="px-3 sm:px-4 py-2 bg-or hover:bg-or-light text-nero font-bold text-xs uppercase tracking-[0.14em] border border-or shadow-lg shadow-or/20 hover:shadow-or/40 transition-all flex items-center gap-1.5 shrink-0"
+              className="px-2.5 sm:px-4 py-2 bg-or hover:bg-or-light text-nero font-bold text-xs uppercase tracking-[0.12em] sm:tracking-[0.14em] border border-or shadow-lg shadow-or/20 hover:shadow-or/40 transition-all flex items-center gap-1.5 shrink-0"
             >
               <Calendar size={13} className="shrink-0" />
-              <span>{t('nav.reserve')}</span>
+              <span className="hidden xs:inline">{t('nav.reserve')}</span>
+              <span className="xs:hidden">{lang === 'it' ? 'Prenota' : lang === 'en' ? 'Book' : 'Réserver'}</span>
             </button>
 
             {/* Menu Hamburger Accessible sur Mobile & Tablette */}
@@ -345,6 +388,29 @@ export default function Navigation({
                     </span>
                   </Link>
                 ))}
+
+                {/* Quick Access to Orders & Reservations */}
+                <div className="pt-2">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      if (onOpenOrders) onOpenOrders();
+                    }}
+                    className="w-full flex items-center justify-between p-3.5 bg-surface-elevated border border-or/40 hover:border-or text-ivoire hover:text-or transition-all text-xs font-mono uppercase tracking-wider"
+                  >
+                    <span className="flex items-center gap-2">
+                      <ShoppingBag size={15} className="text-or" />
+                      <span>{lang === 'it' ? 'I Miei Ordini & Prenotazioni' : lang === 'en' ? 'My Orders & Reservations' : 'Mes Commandes & Réservations'}</span>
+                    </span>
+                    {orderCount > 0 ? (
+                      <span className="px-2 py-0.5 bg-or text-nero font-bold text-[10px]">
+                        {orderCount} {lang === 'it' ? 'attivo' : lang === 'en' ? 'active' : 'actif'}
+                      </span>
+                    ) : (
+                      <span className="text-muted text-[10px] lowercase font-sans">0 enregistrée</span>
+                    )}
+                  </button>
+                </div>
               </nav>
 
               {/* Dedicated Mobile & Desktop Audio Player Widget in Unfolded Menu */}

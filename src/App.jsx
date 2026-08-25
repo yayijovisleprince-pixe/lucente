@@ -12,6 +12,7 @@ import Toast from './components/Toast';
 import AudioPlayer, { audioTracks } from './components/AudioPlayer';
 import Footer from './components/Footer';
 import ReservationModal from './components/ReservationModal';
+import OrderHistoryModal from './components/OrderHistoryModal';
 import ScrollToTop from './components/ScrollToTop';
 
 // Direct imports for all pages
@@ -31,6 +32,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isOrdersOpen, setIsOrdersOpen] = useState(false);
   const [selectedInitialMenu, setSelectedInitialMenu] = useState('');
   const [selectedInitialSpace, setSelectedInitialSpace] = useState('');
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -41,6 +43,10 @@ export default function App() {
     setSelectedInitialSpace(spaceName);
     setSelectedInitialMenu('');
     setIsBookingOpen(true);
+  };
+
+  const handleOpenOrders = () => {
+    setIsOrdersOpen(true);
   };
 
   const handleSelectMenuForBooking = (menuName) => {
@@ -110,6 +116,7 @@ export default function App() {
             {/* Minimalist Top Navigation */}
             <Navigation
               onOpenBooking={() => handleOpenBooking()}
+              onOpenOrders={handleOpenOrders}
               isAudioPlaying={isAudioPlaying}
               onToggleAudio={toggleAudio}
               currentTrackIndex={currentTrackIndex}
@@ -123,7 +130,7 @@ export default function App() {
                   <Route path="/" element={<HomePage onOpenBooking={handleOpenBooking} onSelectMenuForBooking={handleSelectMenuForBooking} />} />
                   <Route path="/story" element={<StoryPage onOpenBooking={handleOpenBooking} />} />
                   <Route path="/cuisine" element={<CuisinePage onOpenBooking={handleOpenBooking} onSelectMenuForBooking={handleSelectMenuForBooking} />} />
-                  <Route path="/menu" element={<MenuPage onSelectMenuForBooking={handleSelectMenuForBooking} />} />
+                  <Route path="/menu" element={<MenuPage onSelectMenuForBooking={handleSelectMenuForBooking} onOpenOrders={handleOpenOrders} />} />
                   <Route path="/private-dining" element={<PrivateDiningPage onOpenBooking={handleOpenBooking} />} />
                   <Route path="/gallery" element={<GalleryPage />} />
                   <Route path="/galerie" element={<GalleryPage />} />
@@ -158,6 +165,12 @@ export default function App() {
               onClose={() => setIsBookingOpen(false)}
               initialMenu={selectedInitialMenu}
               initialSpace={selectedInitialSpace}
+            />
+
+            {/* Order & Pre-order History Modal */}
+            <OrderHistoryModal
+              isOpen={isOrdersOpen}
+              onClose={() => setIsOrdersOpen(false)}
             />
 
             {/* Luxury Toast Notification */}

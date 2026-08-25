@@ -3,12 +3,13 @@ import { getTastingMenus, getALaCarteSections } from '../data/restaurantData';
 import { 
   Wine, ArrowRight, Download, Eye, Sparkles, Check, Info, 
   ShieldAlert, Utensils, ShoppingBag, Plus, Minus, X, 
-  ChevronDown, Calendar, Users, Clock, Send, CheckCircle2, Shield
+  ChevronDown, Calendar, Users, Clock, Send, CheckCircle2, Shield, Copy
 } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { useLanguage } from '../contexts/LanguageContext';
+import { saveOrder } from '../utils/orderHistory';
 
-export default function MenuPage({ onSelectMenuForBooking }) {
+export default function MenuPage({ onSelectMenuForBooking, onOpenOrders }) {
   const [viewMode, setViewMode] = useState('tasting');
   const { lang, t } = useLanguage();
 
@@ -26,6 +27,8 @@ export default function MenuPage({ onSelectMenuForBooking }) {
   const [preOrder, setPreOrder] = useState({});
   const [isPreOrderModalOpen, setIsPreOrderModalOpen] = useState(false);
   const [preOrderSubmitted, setPreOrderSubmitted] = useState(false);
+  const [savedOrderRef, setSavedOrderRef] = useState('');
+  const [copiedRef, setCopiedRef] = useState(false);
   const [preOrderForm, setPreOrderForm] = useState({
     name: '',
     email: '',
@@ -88,6 +91,21 @@ export default function MenuPage({ onSelectMenuForBooking }) {
 
   const handleSubmitPreOrder = (e) => {
     e.preventDefault();
+    const saved = saveOrder({
+      name: preOrderForm.name,
+      email: preOrderForm.email,
+      phone: preOrderForm.phone,
+      date: preOrderForm.date,
+      time: preOrderForm.time,
+      guests: preOrderForm.guests,
+      notes: preOrderForm.notes,
+      items: preOrderList,
+      totalPrice: totalPreOrderPrice,
+      type: 'preorder'
+    });
+    if (saved) {
+      setSavedOrderRef(saved.reference);
+    }
     setPreOrderSubmitted(true);
   };
 
@@ -543,8 +561,23 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                     : 'Notre brigade et le Maître d’Hôtel dresseront votre partition personnalisée pour la date demandée.'}
                 </p>
 
-                <div className="p-3 bg-nero border border-or/30 max-w-xs mx-auto text-xs font-mono text-or font-bold">
-                  RÉF : LUC-PRE-{Math.floor(100000 + Math.random() * 900000)}
+                <div className="flex items-center justify-center gap-2 max-w-sm mx-auto">
+                  <div className="p-3 bg-nero border border-or/40 text-xs font-mono text-or font-bold flex-1 text-center">
+                    RÉF : {savedOrderRef || 'LUC-CONFIRMED'}
+                  </div>
+                  {savedOrderRef && (
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(savedOrderRef);
+                        setCopiedRef(true);
+                        setTimeout(() => setCopiedRef(false), 2000);
+                      }}
+                      className="p-3 bg-surface border border-white/10 hover:border-or text-muted hover:text-ivoire transition-colors flex items-center gap-1 text-xs font-mono"
+                      title="Copier la référence"
+                    >
+                      {copiedRef ? <Check size={14} className="text-green-400" /> : <Copy size={14} />}
+                    </button>
+                  )}
                 </div>
 
                 {/* Clear Post-validation actions */}
@@ -553,10 +586,12 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                     onClick={() => {
                       setIsPreOrderModalOpen(false);
                       setPreOrderSubmitted(false);
+                      if (onOpenOrders) onOpenOrders();
                     }}
-                    className="w-full sm:w-auto px-6 py-3 bg-surface-elevated border border-or text-or hover:bg-or hover:text-[#10100E] font-bold text-xs uppercase tracking-widest transition-all"
+                    className="w-full sm:w-auto px-6 py-3 bg-surface-elevated border border-or text-or hover:bg-or hover:text-[#10100E] font-bold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-1.5"
                   >
-                    {lang === 'it' ? '+ Aggiungi altri piatti' : lang === 'en' ? '+ Add more dishes' : '+ Ajouter d’autres plats'}
+                    <ShoppingBag size={13} />
+                    <span>{lang === 'it' ? 'Vedi nei Miei Ordini' : lang === 'en' ? 'View in My Orders' : 'Voir dans Mes Commandes'}</span>
                   </button>
 
                   <button
