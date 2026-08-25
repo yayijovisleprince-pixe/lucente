@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { getTastingMenus, getALaCarteSections } from '../data/restaurantData';
 import { 
   Wine, ArrowRight, Download, Eye, Sparkles, Check, Info, 
