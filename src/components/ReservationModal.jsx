@@ -41,9 +41,9 @@ export default function ReservationModal({
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-booking-title"
-      className="fixed inset-0 z-50 overflow-y-auto bg-nero/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn"
+      className="fixed inset-0 z-50 overflow-y-auto bg-nero/95 backdrop-blur-md flex items-start justify-center p-3 sm:p-6 pt-16 sm:pt-20 pb-28 sm:pb-16 animate-fadeIn"
     >
-      <div className="relative w-full max-w-4xl bg-surface border border-or-subtle rounded-lg shadow-2xl overflow-hidden my-8">
+      <div className="relative w-full max-w-4xl bg-surface border border-or-subtle rounded-lg shadow-2xl overflow-hidden my-auto sm:my-8">
         {/* Modal Close Button */}
         <button
           onClick={onClose}

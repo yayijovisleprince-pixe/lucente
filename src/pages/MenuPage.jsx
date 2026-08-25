@@ -91,6 +91,18 @@ export default function MenuPage({ onSelectMenuForBooking }) {
     setPreOrderSubmitted(true);
   };
 
+  // Lock background scroll when pre-order modal is open
+  useEffect(() => {
+    if (isPreOrderModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isPreOrderModalOpen]);
+
   const scrollToTastingDetails = () => {
     if (tastingDetailsRef.current) {
       tastingDetailsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -473,14 +485,14 @@ export default function MenuPage({ onSelectMenuForBooking }) {
         <div 
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 overflow-y-auto bg-nero/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
+          className="fixed inset-0 z-50 overflow-y-auto bg-nero/95 backdrop-blur-md flex items-start justify-center p-3 sm:p-6 pt-16 sm:pt-20 pb-28 sm:pb-16 animate-fadeIn"
         >
-          <div className="relative w-full max-w-2xl bg-surface border border-or/40 shadow-2xl p-4 sm:p-8 md:p-10 my-6">
+          <div className="relative w-full max-w-2xl bg-surface border border-or/40 shadow-2xl p-5 sm:p-8 md:p-10 my-auto sm:my-8">
             
             {/* Close Button */}
             <button
               onClick={() => setIsPreOrderModalOpen(false)}
-              className="absolute top-4 right-4 p-2 text-muted hover:text-ivoire transition-colors"
+              className="absolute top-4 right-4 p-2 text-muted hover:text-ivoire transition-colors z-10"
               aria-label="Fermer"
             >
               <X size={20} />
