@@ -361,51 +361,146 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
           </div>
         </section>
 
-        {/* Selected Ingredients */}
-        <section className="space-y-8">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="typo-eyebrow text-or">
-              {lang === 'it' ? 'Materie Prime' : lang === 'en' ? 'Raw Materials' : 'Matières Premières'}
+        {/* =========================================================================
+            RAW MATERIALS SECTION (In-Place Expandable Ingredients Architecture)
+           ========================================================================= */}
+        <section className="space-y-8 sm:space-y-10">
+          
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-xs uppercase font-mono tracking-widest text-or font-semibold block">
+              {lang === 'it' ? 'Materie Prime d’Eccezione' : lang === 'en' ? 'Exceptional Raw Materials' : 'Matières Premières d’Exception'}
             </span>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl text-ivoire">
-              {lang === 'it' ? 'Cinque prodotti. Ognuno insostituibile.' : lang === 'en' ? 'Five products. Each irreplaceable.' : 'Cinq produits. Chacun irremplaçable.'}
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-ivoire leading-tight">
+              {lang === 'it' ? 'Cinque prodotti.' : lang === 'en' ? 'Five products.' : 'Cinq produits.'}<br />
+              <span className="italic text-or">{lang === 'it' ? 'Ognuno insostituibile.' : lang === 'en' ? 'Each irreplaceable.' : 'Chacun irremplaçable.'}</span>
             </h2>
-            <p className="text-sm text-muted">
-              {lang === 'it' ? 'Non sono ingredienti di prestigio, ma prodotti che nulla può sostituire.' : lang === 'en' ? 'Not prestige ingredients, but products nothing else can replace.' : "Ce ne sont pas des ingrédients de prestige. Ce sont des produits que rien d'autre ne peut remplacer."}
+            <p className="text-xs sm:text-sm text-muted max-w-xl mx-auto font-serif italic pt-1">
+              {lang === 'it'
+                ? "Non sono ingredienti di prestigio, ma prodotti che nulla può sostituire."
+                : lang === 'en'
+                ? "Not prestige ingredients, but products that nothing else can replace."
+                : "Ce ne sont pas des ingrédients de prestige. Ce sont des produits que rien d'autre ne peut remplacer."}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-            {ingredients.map((ing, idx) => (
-              <button
-                key={ing.id}
-                onClick={() => setActiveIngredientIndex(idx)}
-                className={`p-4 text-left border transition-all ${
-                  idx === activeIngredientIndex
-                    ? 'bg-surface border-or text-ivoire'
-                    : 'bg-surface/50 border-white/5 text-muted hover:text-ivoire hover:border-white/20'
-                }`}
-              >
-                <p className="text-[10px] uppercase font-mono text-or">{ing.region.split(',')[0].split('·')[0].trim()}</p>
-                <p className="font-serif text-sm truncate">{ing.name}</p>
-              </button>
-            ))}
-          </div>
+          {/* 5 In-Place Expandable Ingredients Stack */}
+          <div className="space-y-6 max-w-5xl mx-auto">
+            {ingredients.map((ing, idx) => {
+              const isExpanded = activeIngredientIndex === idx;
 
-          <div className="bg-surface-elevated border border-white/10 p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-2xl">
-            <div className="lg:col-span-6 h-72 sm:h-96 overflow-hidden">
-              <img
-                src={activeIngredient.image}
-                alt={activeIngredient.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="lg:col-span-6 space-y-4">
-              <span className="text-xs uppercase font-mono text-or tracking-widest">{activeIngredient.region} · {activeIngredient.season}</span>
-              <h3 className="font-serif text-3xl text-ivoire">{activeIngredient.name}</h3>
-              <p className="text-xs text-muted italic font-serif">« {activeIngredient.italianName} »</p>
-              <p className="text-sm text-muted leading-relaxed font-sans">{activeIngredient.philosophy}</p>
-            </div>
+              return (
+                <div
+                  key={ing.id}
+                  className={`border transition-all duration-300 bg-surface shadow-xl overflow-hidden ${
+                    isExpanded 
+                      ? 'border-or ring-1 ring-or/40 bg-surface-elevated' 
+                      : 'border-white/10 hover:border-or/30'
+                  }`}
+                >
+                  {/* Ingredient Header Row */}
+                  <div className="p-5 sm:p-7 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="space-y-2 flex-1">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <span className="font-mono text-xs font-bold text-or px-2.5 py-0.5 bg-nero border border-or/20">
+                          {ing.region.split(',')[0].split('·')[0].trim()}
+                        </span>
+                        <span className="text-xs font-mono text-muted">
+                          {ing.season}
+                        </span>
+                      </div>
+
+                      <div>
+                        <h3 className="font-serif text-2xl sm:text-3xl text-ivoire">
+                          {ing.name}
+                        </h3>
+                        <span className="text-xs font-serif italic text-or/80 block mt-0.5">
+                          « {ing.italianName} »
+                        </span>
+                      </div>
+
+                      <p className="text-xs sm:text-sm text-muted font-sans line-clamp-1 leading-relaxed">
+                        {ing.region}
+                      </p>
+                    </div>
+
+                    {/* Action Button to Unfold Photo & Story Directly Underneath */}
+                    <div className="flex items-center gap-3 shrink-0 border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
+                      <button
+                        type="button"
+                        onClick={() => setActiveIngredientIndex(isExpanded ? -1 : idx)}
+                        className={`px-5 py-2.5 text-xs uppercase font-mono tracking-wider transition-all flex items-center justify-center gap-2 border shadow-sm ${
+                          isExpanded
+                            ? 'bg-or text-[#10100E] font-bold border-or hover:bg-[#F2EBDD]'
+                            : 'bg-surface-elevated text-ivoire border-or/50 hover:border-or hover:bg-or/15 hover:text-or'
+                        }`}
+                      >
+                        <span>
+                          {isExpanded
+                            ? (lang === 'it' ? 'Nascondi Foto e Storia' : lang === 'en' ? 'Hide Photo & Story' : 'Masquer la Photo & l’Histoire')
+                            : (lang === 'it' ? 'Vedi Foto e Storia' : lang === 'en' ? 'View Photo & Story' : 'Voir la Photo & l’Histoire')}
+                        </span>
+                        <ChevronDown 
+                          size={14} 
+                          className={`transition-transform duration-300 ${isExpanded ? 'rotate-180 text-[#10100E]' : 'text-or'}`} 
+                        />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* INLINE PHOTO & PHILOSOPHY (Unfolds directly right under this ingredient) */}
+                  {isExpanded && (
+                    <div className="border-t border-or/20 bg-nero/70 p-6 sm:p-8 md:p-10 space-y-8 animate-fadeIn">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        
+                        {/* High-Resolution Ingredient Photo */}
+                        <div className="lg:col-span-6 h-64 sm:h-80 md:h-96 overflow-hidden border border-or/30 shadow-2xl relative group">
+                          <img
+                            src={ing.image}
+                            alt={ing.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-nero/80 via-transparent to-transparent pointer-events-none" />
+                          <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono bg-nero/90 px-3 py-1.5 border border-white/10 text-ivoire">
+                            <span className="text-or truncate">{ing.name}</span>
+                            <span className="text-muted/80 shrink-0 ml-2">LUCENTE</span>
+                          </div>
+                        </div>
+
+                        {/* Terroir & Chef Vincenzo Moretti's Philosophy */}
+                        <div className="lg:col-span-6 space-y-4">
+                          <div className="space-y-1">
+                            <span className="text-[10px] uppercase font-mono text-or tracking-widest block font-semibold">
+                              {lang === 'it' ? 'Origine & Stagionalità' : lang === 'en' ? 'Origin & Seasonality' : 'Origine & Saisonnalité'}
+                            </span>
+                            <p className="text-xs font-mono text-ivoire bg-surface p-2.5 border border-white/10 inline-block">
+                              📍 {ing.region} · ⏳ {ing.season}
+                            </p>
+                          </div>
+
+                          <div className="space-y-2">
+                            <span className="text-[10px] uppercase font-mono text-or tracking-widest block font-semibold">
+                              {lang === 'it' ? 'La Filosofia nel Piatto' : lang === 'en' ? 'Philosophy on the Plate' : 'La Philosophie dans l’Assiette'}
+                            </span>
+                            <p className="text-sm sm:text-base text-ivoire/90 leading-relaxed font-sans">
+                              {ing.philosophy}
+                            </p>
+                          </div>
+
+                          <div className="pt-2 border-t border-white/10 flex items-center gap-3">
+                            <span className="text-xs font-mono text-or">✦ Produit d'orfèvre</span>
+                            <span className="text-xs text-muted/60 font-mono">·</span>
+                            <span className="text-xs font-mono text-muted">Circuit court direct producteur</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  )}
+
+                </div>
+              );
+            })}
           </div>
         </section>
 
