@@ -350,7 +350,7 @@ export default function PrivateDiningPage({ onOpenBooking }) {
                   <input
                     type="tel"
                     required
-                    placeholder="+33 6 00 00 00 00"
+                    placeholder="+39 ... / +33 ..."
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full px-3.5 py-3 sm:py-2.5 text-sm input-luxury bg-surface-elevated text-ivoire focus:bg-surface"

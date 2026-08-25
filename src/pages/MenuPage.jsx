@@ -662,7 +662,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                         value={preOrderForm.name}
                         onChange={(e) => setPreOrderForm({ ...preOrderForm, name: e.target.value })}
                         className="w-full px-3 py-2 text-xs input-luxury bg-surface-elevated text-ivoire"
-                        placeholder="Ex: Jean Dupont"
+                        placeholder={lang === 'it' ? 'Nome e cognome' : lang === 'en' ? 'Your full name' : 'Votre nom complet'}
                       />
                     </div>
                     <div>
@@ -673,7 +673,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                         value={preOrderForm.email}
                         onChange={(e) => setPreOrderForm({ ...preOrderForm, email: e.target.value })}
                         className="w-full px-3 py-2 text-xs input-luxury bg-surface-elevated text-ivoire"
-                        placeholder="jean@email.com"
+                        placeholder={lang === 'fr' ? 'votre@email.com' : 'you@email.com'}
                       />
                     </div>
                   </div>
@@ -689,7 +689,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                         value={preOrderForm.phone}
                         onChange={(e) => setPreOrderForm({ ...preOrderForm, phone: e.target.value })}
                         className="w-full px-3 py-2 text-xs input-luxury bg-surface-elevated text-ivoire"
-                        placeholder="+33 6 00 00 00 00"
+                        placeholder="+39 / +33 ..."
                       />
                     </div>
                     <div>
@@ -713,7 +713,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                         value={preOrderForm.guests}
                         onChange={(e) => setPreOrderForm({ ...preOrderForm, guests: e.target.value })}
                         className="w-full px-3 py-2 text-xs input-luxury bg-surface-elevated text-ivoire"
-                        placeholder="2 convives"
+                        placeholder={lang === 'it' ? 'es. 2 ospiti' : lang === 'en' ? 'e.g. 2 guests' : 'Ex : 2 convives'}
                       />
                     </div>
                   </div>
@@ -727,7 +727,7 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                       value={preOrderForm.notes}
                       onChange={(e) => setPreOrderForm({ ...preOrderForm, notes: e.target.value })}
                       className="w-full px-3 py-2 text-xs input-luxury bg-surface-elevated text-ivoire"
-                      placeholder="Ex: Sans gluten, table près de la baie..."
+                      placeholder={lang === 'it' ? 'Dettagli, allergie, preferenze di tavolo...' : lang === 'en' ? 'Special requests, allergies, table preferences...' : 'Régimes, allergies, souhaits de table...'}
                     />
                   </div>
 
