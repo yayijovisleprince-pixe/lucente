@@ -439,29 +439,28 @@ export default function MenuPage({ onSelectMenuForBooking }) {
           Positioned ABOVE MobileBottomBar (bottom-20 / bottom-24 on mobile, z-50)
          ========================================================================= */}
       {viewMode === 'carte' && totalPreOrderCount > 0 && (
-        <div className="fixed bottom-20 sm:bottom-24 lg:bottom-8 left-3 right-3 sm:left-auto sm:right-6 z-50 max-w-lg sm:w-auto animate-fadeIn">
-          <div className="bg-[#141412] border-2 border-or p-3.5 sm:p-4 shadow-[0_12px_40px_rgba(0,0,0,0.9)] flex items-center justify-between gap-4 backdrop-blur-xl">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <div className="p-1.5 bg-or text-[#10100E] font-bold text-xs">
-                  <ShoppingBag size={15} />
-                </div>
-                <span className="text-xs uppercase font-mono font-bold text-ivoire">
-                  {totalPreOrderCount} {lang === 'it' ? 'Piatti Selezionati' : lang === 'en' ? 'Dishes Selected' : 'Plat(s) Sélectionné(s)'}
+        <div className="fixed bottom-20 sm:bottom-24 lg:bottom-8 left-2 right-2 sm:left-auto sm:right-6 z-50 max-w-lg sm:w-auto animate-fadeIn">
+          <div className="bg-[#141412]/98 border-2 border-or p-3 sm:p-4 shadow-[0_12px_40px_rgba(0,0,0,0.9)] flex items-center justify-between gap-2.5 sm:gap-5 backdrop-blur-xl">
+            <div className="min-w-0 flex-1 space-y-0.5">
+              <div className="flex items-center gap-1.5 truncate">
+                <ShoppingBag size={14} className="text-or shrink-0" />
+                <span className="text-[11px] sm:text-xs uppercase font-mono font-bold text-ivoire truncate">
+                  {totalPreOrderCount} {lang === 'it' ? 'piatti' : lang === 'en' ? 'dishes' : 'plat(s)'}
                 </span>
               </div>
-              <p className="text-xs text-or font-mono">
-                {lang === 'it' ? 'Totale: ' : lang === 'en' ? 'Total: ' : 'Total : '}
+              <p className="text-xs text-or font-mono truncate">
+                <span className="text-muted/80 hidden sm:inline">{lang === 'it' ? 'Totale: ' : lang === 'en' ? 'Total: ' : 'Total : '}</span>
                 <span className="text-sm font-sans font-bold text-ivoire">{totalPreOrderPrice} €</span>
               </p>
             </div>
 
             <button
               onClick={() => setIsPreOrderModalOpen(true)}
-              className="px-5 sm:px-7 py-3 bg-or text-[#10100E] font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shrink-0 flex items-center gap-2 shadow-xl active:scale-95"
+              className="px-4 sm:px-6 py-2.5 sm:py-3 bg-or text-[#10100E] font-bold text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-widest hover:bg-ivoire transition-all shrink-0 flex items-center gap-1.5 sm:gap-2 shadow-xl active:scale-95 whitespace-nowrap"
             >
-              <span>{lang === 'it' ? 'Valida Ordine' : lang === 'en' ? 'Validate Order' : 'Valider la commande'}</span>
-              <ArrowRight size={14} />
+              <span className="sm:hidden">{lang === 'it' ? 'Valida' : lang === 'en' ? 'Validate' : 'Valider'}</span>
+              <span className="hidden sm:inline">{lang === 'it' ? 'Valida Ordine' : lang === 'en' ? 'Validate Order' : 'Valider la commande'}</span>
+              <ArrowRight size={13} className="shrink-0" />
             </button>
           </div>
         </div>
@@ -474,9 +473,9 @@ export default function MenuPage({ onSelectMenuForBooking }) {
         <div 
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 overflow-y-auto bg-nero/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn"
+          className="fixed inset-0 z-50 overflow-y-auto bg-nero/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
         >
-          <div className="relative w-full max-w-2xl bg-surface border border-or/40 shadow-2xl p-6 sm:p-10 my-8">
+          <div className="relative w-full max-w-2xl bg-surface border border-or/40 shadow-2xl p-4 sm:p-8 md:p-10 my-6">
             
             {/* Close Button */}
             <button
