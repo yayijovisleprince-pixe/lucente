@@ -11,6 +11,34 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
   const [activePairingType, setActivePairingType] = useState('harmony');
   const { lang, t } = useLanguage();
 
+  const handleToggleSeason = (seasonKey) => {
+    if (activeSeason === seasonKey) {
+      setActiveSeason('');
+    } else {
+      setActiveSeason(seasonKey);
+      setTimeout(() => {
+        const element = document.getElementById(`season-${seasonKey}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 60);
+    }
+  };
+
+  const handleToggleIngredient = (idx, id) => {
+    if (activeIngredientIndex === idx) {
+      setActiveIngredientIndex(-1);
+    } else {
+      setActiveIngredientIndex(idx);
+      setTimeout(() => {
+        const element = document.getElementById(`ingredient-${id}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 60);
+    }
+  };
+
   const seasonsData = {
     spring: {
       name: t('cuisine.spring.name'),
@@ -217,7 +245,8 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
               return (
                 <div
                   key={s.key}
-                  className={`border transition-all duration-300 bg-surface shadow-xl overflow-hidden ${
+                  id={`season-${s.key}`}
+                  className={`scroll-mt-28 sm:scroll-mt-32 border transition-all duration-300 bg-surface shadow-xl overflow-hidden ${
                     isExpanded 
                       ? 'border-or ring-1 ring-or/40 bg-surface-elevated' 
                       : 'border-white/10 hover:border-or/30'
@@ -250,7 +279,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
                     <div className="flex items-center gap-3 shrink-0 border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
                       <button
                         type="button"
-                        onClick={() => setActiveSeason(isExpanded ? '' : s.key)}
+                        onClick={() => handleToggleSeason(s.key)}
                         className={`px-5 py-2.5 text-xs uppercase font-mono tracking-wider transition-all flex items-center justify-center gap-2 border shadow-sm ${
                           isExpanded
                             ? 'bg-or text-[#10100E] font-bold border-or hover:bg-[#F2EBDD]'
@@ -392,7 +421,8 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
               return (
                 <div
                   key={ing.id}
-                  className={`border transition-all duration-300 bg-surface shadow-xl overflow-hidden ${
+                  id={`ingredient-${ing.id}`}
+                  className={`scroll-mt-28 sm:scroll-mt-32 border transition-all duration-300 bg-surface shadow-xl overflow-hidden ${
                     isExpanded 
                       ? 'border-or ring-1 ring-or/40 bg-surface-elevated' 
                       : 'border-white/10 hover:border-or/30'
@@ -428,7 +458,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
                     <div className="flex items-center gap-3 shrink-0 border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
                       <button
                         type="button"
-                        onClick={() => setActiveIngredientIndex(isExpanded ? -1 : idx)}
+                        onClick={() => handleToggleIngredient(idx, ing.id)}
                         className={`px-5 py-2.5 text-xs uppercase font-mono tracking-wider transition-all flex items-center justify-center gap-2 border shadow-sm ${
                           isExpanded
                             ? 'bg-or text-[#10100E] font-bold border-or hover:bg-[#F2EBDD]'
@@ -451,7 +481,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
                   {/* INLINE PHOTO & PHILOSOPHY (Unfolds directly right under this ingredient) */}
                   {isExpanded && (
                     <div className="border-t border-or/20 bg-nero/70 p-6 sm:p-8 md:p-10 space-y-8 animate-fadeIn">
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                         
                         {/* High-Resolution Ingredient Photo */}
                         <div className="lg:col-span-6 h-64 sm:h-80 md:h-96 overflow-hidden border border-or/30 shadow-2xl relative group">
