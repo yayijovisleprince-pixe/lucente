@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Utensils, Flame, Droplet, Wine, ArrowRight, Sun, Leaf, Snowflake, Compass, Feather } from 'lucide-react';
+import { Sparkles, Utensils, Flame, Droplet, Wine, ArrowRight, Sun, Leaf, Snowflake, Compass, Feather, ChevronDown } from 'lucide-react';
 import { restaurantInfo } from '../data/restaurantData';
 import SEOHead from '../components/SEOHead';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -151,11 +151,9 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
         </div>
 
         {/* =========================================================================
-            SEASONALITY SECTION (Spacious & Breathable 4 Seasons Architecture)
+            SEASONALITY SECTION (In-Place Expandable 4 Seasons Architecture)
            ========================================================================= */}
-        <section className="space-y-10 sm:space-y-12">
-          
-          {/* Section Header */}
+        <section className="space-y-8 sm:space-y-10">
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <span className="text-xs uppercase font-mono tracking-widest text-or font-semibold block">
               {t('cuisine.seasonsEyebrow')} · {lang === 'it' ? '4 Micro-Stagioni' : lang === 'en' ? '4 Micro-Seasons' : '4 Micro-Saisons'}
@@ -173,8 +171,8 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
             </p>
           </div>
 
-          {/* 4 Spacious Seasonal Selector Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {/* 4 In-Place Expandable Seasons Stack */}
+          <div className="space-y-6 max-w-5xl mx-auto">
             {[
               { 
                 key: 'spring', 
@@ -182,7 +180,8 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
                 roman: 'I', 
                 label: lang === 'it' ? 'Primavera' : lang === 'en' ? 'Spring' : 'Printemps',
                 period: lang === 'it' ? 'Marzo — Maggio' : lang === 'en' ? 'March — May' : 'Mars — Mai',
-                theme: lang === 'it' ? 'Erbe selvatiche & Adriatico' : lang === 'en' ? 'Wild herbs & Adriatic' : 'Herbes sauvages & Adriatique'
+                theme: lang === 'it' ? 'Erbe selvatiche & Adriatico' : lang === 'en' ? 'Wild herbs & Adriatic' : 'Herbes sauvages & Adriatique',
+                data: seasonsData.spring
               },
               { 
                 key: 'summer', 
@@ -190,7 +189,8 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
                 roman: 'II', 
                 label: lang === 'it' ? 'Estate' : lang === 'en' ? 'Summer' : 'Été',
                 period: lang === 'it' ? 'Giugno — Agosto' : lang === 'en' ? 'June — August' : 'Juin — Août',
-                theme: lang === 'it' ? 'Sole, sale & Gambero Rosso' : lang === 'en' ? 'Sun, salt & Red Prawn' : 'Soleil, sel & Gambero Rosso'
+                theme: lang === 'it' ? 'Sole, sale & Gambero Rosso' : lang === 'en' ? 'Sun, salt & Red Prawn' : 'Soleil, sel & Gambero Rosso',
+                data: seasonsData.summer
               },
               { 
                 key: 'autumn', 
@@ -198,7 +198,8 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
                 roman: 'III', 
                 label: lang === 'it' ? 'Autunno' : lang === 'en' ? 'Autumn' : 'Automne',
                 period: lang === 'it' ? 'Settembre — Novembre' : lang === 'en' ? 'September — November' : 'Septembre — Novembre',
-                theme: lang === 'it' ? 'Tartufo Bianco & Nebbie' : lang === 'en' ? 'White Truffle & Fog' : 'Truffe Blanche & Brumes'
+                theme: lang === 'it' ? 'Tartufo Bianco & Nebbie' : lang === 'en' ? 'White Truffle & Fog' : 'Truffe Blanche & Brumes',
+                data: seasonsData.autumn
               },
               { 
                 key: 'winter', 
@@ -206,157 +207,157 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
                 roman: 'IV', 
                 label: lang === 'it' ? 'Inverno' : lang === 'en' ? 'Winter' : 'Hiver',
                 period: lang === 'it' ? 'Dicembre — Febbraio' : lang === 'en' ? 'December — February' : 'Décembre — Février',
-                theme: lang === 'it' ? 'Braise, caccia & Barolo' : lang === 'en' ? 'Embers, game & Barolo' : 'Braises, gibier & Barolo'
+                theme: lang === 'it' ? 'Braise, caccia & Barolo' : lang === 'en' ? 'Embers, game & Barolo' : 'Braises, gibier & Barolo',
+                data: seasonsData.winter
               },
             ].map((s) => {
-              const isSelected = activeSeason === s.key;
+              const isExpanded = activeSeason === s.key;
               const IconComp = s.icon;
 
               return (
-                <button
+                <div
                   key={s.key}
-                  onClick={() => setActiveSeason(s.key)}
-                  className={`p-5 sm:p-6 text-left border transition-all duration-300 relative group flex flex-col justify-between h-full ${
-                    isSelected
-                      ? 'bg-surface-elevated border-or ring-1 ring-or/40 shadow-[0_10px_30px_rgba(184,155,94,0.15)] scale-[1.01]'
-                      : 'bg-surface border-white/10 hover:border-or/40 opacity-75 hover:opacity-100'
+                  className={`border transition-all duration-300 bg-surface shadow-xl overflow-hidden ${
+                    isExpanded 
+                      ? 'border-or ring-1 ring-or/40 bg-surface-elevated' 
+                      : 'border-white/10 hover:border-or/30'
                   }`}
                 >
-                  <div className="space-y-3 w-full">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-or px-2 py-0.5 bg-nero border border-or/20">
-                        ACTE {s.roman}
-                      </span>
-                      <IconComp 
-                        size={18} 
-                        className={`transition-colors ${isSelected ? 'text-or' : 'text-muted group-hover:text-or'}`} 
-                      />
-                    </div>
-
-                    <div>
-                      <h3 className="font-serif text-xl sm:text-2xl text-ivoire group-hover:text-or transition-colors">
-                        {s.label}
-                      </h3>
-                      <span className="text-[11px] font-mono text-or/90 block mt-0.5">
-                        {s.period}
-                      </span>
-                    </div>
-
-                    <p className="text-xs text-muted font-sans leading-relaxed pt-1">
-                      {s.theme}
-                    </p>
-                  </div>
-
-                  <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between w-full">
-                    <span className="text-[10px] uppercase font-mono tracking-widest text-muted group-hover:text-ivoire transition-colors">
-                      {isSelected 
-                        ? (lang === 'it' ? '● Selezionata' : lang === 'en' ? '● Active' : '● Actuelle') 
-                        : (lang === 'it' ? 'Esplora →' : lang === 'en' ? 'Explore →' : 'Découvrir →')}
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Active Season Grand Showcase Canvas */}
-          <div className="bg-surface-elevated border border-or/30 p-6 sm:p-10 md:p-12 space-y-8 sm:space-y-10 shadow-2xl animate-fadeIn">
-            
-            {/* Header of Active Season */}
-            <div className="space-y-3 border-b border-white/10 pb-6">
-              <div className="flex items-center gap-3 flex-wrap">
-                <span className="text-xs uppercase font-mono text-or tracking-widest font-semibold px-2.5 py-1 bg-nero border border-or/30">
-                  {currentSeason.name.split('·')[0].trim()}
-                </span>
-                <span className="text-xs text-muted font-mono">
-                  {activeSeason === 'spring' && (lang === 'it' ? 'Marzo — Maggio' : lang === 'en' ? 'March — May' : 'Mars — Mai')}
-                  {activeSeason === 'summer' && (lang === 'it' ? 'Giugno — Agosto' : lang === 'en' ? 'June — August' : 'Juin — Août')}
-                  {activeSeason === 'autumn' && (lang === 'it' ? 'Settembre — Novembre' : lang === 'en' ? 'September — November' : 'Septembre — Novembre')}
-                  {activeSeason === 'winter' && (lang === 'it' ? 'Dicembre — Febbraio' : lang === 'en' ? 'December — February' : 'Décembre — Février')}
-                </span>
-              </div>
-
-              <h3 className="font-serif text-3xl sm:text-4xl text-ivoire font-light">
-                {currentSeason.name}
-              </h3>
-              
-              <p className="text-sm sm:text-base font-serif italic text-or/90 max-w-2xl leading-relaxed">
-                « {currentSeason.subtitle} »
-              </p>
-
-              <p className="text-xs sm:text-sm text-muted leading-relaxed font-sans max-w-3xl pt-2">
-                {currentSeason.description}
-              </p>
-            </div>
-
-            {/* 3 Spacious Signature Creation Cards */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs uppercase font-mono text-or tracking-widest font-semibold flex items-center gap-2">
-                  <Sparkles size={14} />
-                  <span>{lang === 'it' ? 'Creazioni Signature di Stagione' : lang === 'en' ? 'Seasonal Signature Creations' : 'Créations Signature de Saison'}</span>
-                </span>
-                <span className="text-[11px] font-mono text-muted hidden sm:inline">
-                  3 {lang === 'it' ? 'piatti d’autore' : lang === 'en' ? 'signature dishes' : 'créations d’orfèvre'}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                {currentSeason.dishes.map((dish, i) => (
-                  <div 
-                    key={i} 
-                    className="p-5 sm:p-6 bg-nero/70 border border-white/10 hover:border-or/40 transition-all duration-300 space-y-3 group flex flex-col justify-between"
-                  >
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono uppercase tracking-widest text-or font-semibold">
-                          {lang === 'it' ? `Atto 0${i + 1}` : lang === 'en' ? `Act 0${i + 1}` : `Acte 0${i + 1}`}
+                  {/* Season Header Bar */}
+                  <div className="p-5 sm:p-7 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div className="space-y-2 flex-1">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <span className="font-mono text-xs font-bold text-or px-2.5 py-0.5 bg-nero border border-or/20">
+                          ACTE {s.roman}
                         </span>
-                        <span className="text-or/60 group-hover:text-or transition-colors">✦</span>
+                        <span className="text-xs font-mono text-muted">
+                          {s.period}
+                        </span>
                       </div>
 
-                      <h4 className="font-serif text-lg text-ivoire group-hover:text-or transition-colors leading-snug">
-                        {dish}
-                      </h4>
+                      <div className="flex items-baseline gap-3 flex-wrap">
+                        <h3 className="font-serif text-2xl sm:text-3xl text-ivoire">
+                          {s.data.name}
+                        </h3>
+                      </div>
+
+                      <p className="text-xs sm:text-sm font-serif italic text-or/90">
+                        « {s.data.subtitle} »
+                      </p>
                     </div>
 
-                    <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-muted">
-                      <span>{lang === 'it' ? 'Cucina di ricerca' : lang === 'en' ? 'Haute cuisine' : 'Haute gastronomie'}</span>
-                      <span className="text-or/80">LUCENTE</span>
+                    {/* Action Button to Unfold Details Directly Underneath */}
+                    <div className="flex items-center gap-3 shrink-0 border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
+                      <button
+                        type="button"
+                        onClick={() => setActiveSeason(isExpanded ? '' : s.key)}
+                        className={`px-5 py-2.5 text-xs uppercase font-mono tracking-wider transition-all flex items-center justify-center gap-2 border shadow-sm ${
+                          isExpanded
+                            ? 'bg-or text-[#10100E] font-bold border-or hover:bg-[#F2EBDD]'
+                            : 'bg-surface-elevated text-ivoire border-or/50 hover:border-or hover:bg-or/15 hover:text-or'
+                        }`}
+                      >
+                        <IconComp size={14} className={isExpanded ? 'text-[#10100E]' : 'text-or'} />
+                        <span>
+                          {isExpanded
+                            ? (lang === 'it' ? 'Nascondi Dettagli' : lang === 'en' ? 'Hide Details' : 'Masquer les Détails')
+                            : (lang === 'it' ? 'Scopri la Stagione' : lang === 'en' ? 'Discover Season' : 'Découvrir la Saison')}
+                        </span>
+                        <ChevronDown 
+                          size={14} 
+                          className={`transition-transform duration-300 ${isExpanded ? 'rotate-180 text-[#10100E]' : 'text-or'}`} 
+                        />
+                      </button>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
 
-            {/* Bottom link to Menu */}
-            <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-nero/40 p-4 sm:p-6 border border-white/5">
-              <div className="text-center sm:text-left space-y-0.5">
-                <span className="text-xs uppercase font-mono text-or tracking-widest">
-                  {lang === 'it' ? 'Vivi l’Esperienza' : lang === 'en' ? 'Experience the Season' : 'Vivre la Saison'}
-                </span>
-                <p className="text-sm font-serif text-ivoire">
-                  {lang === 'it' ? 'Scopri i percorsi degustazione del momento' : lang === 'en' ? 'Discover the tasting menus of the moment' : 'Découvrez les partitions dégustation du moment'}
-                </p>
-              </div>
+                  {/* INLINE SEASON DETAILS & CREATIONS (Unfolds directly right under this season) */}
+                  {isExpanded && (
+                    <div className="border-t border-or/20 bg-nero/70 p-6 sm:p-8 md:p-10 space-y-8 animate-fadeIn">
+                      
+                      {/* Detailed Terroir Narrative */}
+                      <div className="space-y-2 max-w-3xl">
+                        <span className="text-[10px] uppercase font-mono text-or tracking-widest block font-semibold">
+                          {lang === 'it' ? 'La Filosofia della Terra' : lang === 'en' ? 'Philosophy of the Land' : 'La Philosophie du Terroir'}
+                        </span>
+                        <p className="text-sm sm:text-base text-ivoire/90 leading-relaxed font-sans">
+                          {s.data.description}
+                        </p>
+                      </div>
 
-              <div className="flex items-center gap-3 w-full sm:w-auto">
-                <Link
-                  to="/menu"
-                  className="w-full sm:w-auto px-6 py-3 bg-surface border border-or text-or hover:bg-or hover:text-nero text-xs uppercase font-mono tracking-wider transition-all text-center"
-                >
-                  {lang === 'it' ? 'Consulta i Menu' : lang === 'en' ? 'View Menus' : 'Consulter les Menus'}
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => onOpenBooking()}
-                  className="w-full sm:w-auto px-6 py-3 bg-or text-nero font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all text-center shadow-lg whitespace-nowrap"
-                >
-                  {lang === 'it' ? 'Prenota' : lang === 'en' ? 'Book' : 'Réserver'}
-                </button>
-              </div>
-            </div>
+                      {/* 3 Signature Dishes for this Season */}
+                      <div className="space-y-4 pt-2">
+                        <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                          <span className="text-xs uppercase font-mono text-or tracking-widest font-semibold flex items-center gap-2">
+                            <Sparkles size={14} />
+                            <span>{lang === 'it' ? 'Creazioni Signature' : lang === 'en' ? 'Signature Creations' : 'Créations Signature de la Saison'}</span>
+                          </span>
+                          <span className="text-[11px] font-mono text-muted">
+                            3 {lang === 'it' ? 'piatti d’autore' : lang === 'en' ? 'signature dishes' : 'créations d’orfèvre'}
+                          </span>
+                        </div>
 
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                          {s.data.dishes.map((dish, idx) => (
+                            <div 
+                              key={idx}
+                              className="p-5 bg-surface border border-white/10 hover:border-or/40 transition-all duration-300 space-y-3 group flex flex-col justify-between"
+                            >
+                              <div className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                  <span className="text-[10px] font-mono uppercase tracking-widest text-or font-semibold">
+                                    {lang === 'it' ? `Atto 0${idx + 1}` : lang === 'en' ? `Act 0${idx + 1}` : `Acte 0${idx + 1}`}
+                                  </span>
+                                  <span className="text-or/60 group-hover:text-or transition-colors">✦</span>
+                                </div>
+                                <h4 className="font-serif text-lg text-ivoire group-hover:text-or transition-colors leading-snug">
+                                  {dish}
+                                </h4>
+                              </div>
+
+                              <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-muted">
+                                <span>{s.label}</span>
+                                <span className="text-or/80">LUCENTE</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* In-place footer booking trigger for this season */}
+                      <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface p-4 sm:p-5 border border-white/5">
+                        <div className="text-center sm:text-left">
+                          <span className="text-[10px] uppercase font-mono text-or tracking-widest block">
+                            {lang === 'it' ? 'Percorso Stagionale' : lang === 'en' ? 'Seasonal Experience' : 'Expérience de Saison'}
+                          </span>
+                          <span className="font-serif text-base sm:text-lg text-ivoire">
+                            {s.data.name} — <span className="text-or font-semibold">{s.period}</span>
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-3 w-full sm:w-auto">
+                          <Link
+                            to="/menu"
+                            className="flex-1 sm:flex-none px-5 py-2.5 bg-nero border border-or text-or hover:bg-or hover:text-[#10100E] text-xs uppercase font-mono tracking-wider transition-all text-center"
+                          >
+                            {lang === 'it' ? 'Vedi Menu' : lang === 'en' ? 'View Menu' : 'Voir les Menus'}
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => onOpenBooking()}
+                            className="flex-1 sm:flex-none px-6 py-2.5 bg-or text-[#10100E] font-bold text-xs uppercase tracking-widest hover:bg-ivoire transition-all shadow-lg text-center whitespace-nowrap"
+                          >
+                            {lang === 'it' ? 'Prenota' : lang === 'en' ? 'Book' : 'Réserver'}
+                          </button>
+                        </div>
+                      </div>
+
+                    </div>
+                  )}
+
+                </div>
+              );
+            })}
           </div>
         </section>
 
