@@ -497,6 +497,31 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                     {lang === 'it' ? 'Preordine Registrato con Successo' : lang === 'en' ? 'Pre-order Confirmed' : 'Précommande Enregistrée avec Succès'}
                   </h3>
                 </div>
+
+                {/* Clear recap list of ordered items */}
+                <div className="bg-nero/80 border border-or/30 p-4 max-w-lg mx-auto text-left space-y-2.5 shadow-lg">
+                  <span className="text-[10px] uppercase font-mono text-or tracking-widest block border-b border-white/10 pb-1.5 font-semibold">
+                    {lang === 'it' ? 'Dettaglio Piatti Confermati :' : lang === 'en' ? 'Confirmed Dishes Detail:' : 'Détail des Plats Confirmés :'}
+                  </span>
+                  <div className="divide-y divide-white/5 max-h-40 overflow-y-auto pr-1">
+                    {preOrderList.map((item, i) => (
+                      <div key={i} className="py-2 flex items-start justify-between text-xs gap-3">
+                        <div className="space-y-0.5">
+                          <p className="font-serif text-ivoire text-sm sm:text-base leading-snug">
+                            <strong className="text-or font-mono mr-1.5">{item.quantity}x</strong> 
+                            {item.name}
+                          </p>
+                          <span className="text-[10px] text-muted font-mono">{item.category}</span>
+                        </div>
+                        <span className="font-mono text-or font-bold text-sm shrink-0">{item.price * item.quantity} €</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="border-t border-white/10 pt-2 flex justify-between font-mono text-xs items-baseline">
+                    <span className="text-muted uppercase font-semibold">{lang === 'it' ? 'Totale' : lang === 'en' ? 'Total' : 'Total Estimé'}</span>
+                    <span className="text-or font-bold font-serif text-lg">{totalPreOrderPrice} €</span>
+                  </div>
+                </div>
                 
                 <p className="text-xs sm:text-sm text-muted max-w-md mx-auto leading-relaxed">
                   {lang === 'it'
@@ -545,45 +570,63 @@ export default function MenuPage({ onSelectMenuForBooking }) {
                   </h3>
                 </div>
 
-                {/* Items List with Large Accessible Steppers */}
-                <div className="max-h-60 overflow-y-auto space-y-3 pr-2 divide-y divide-white/5">
+                {/* Items List with Clear Dish Names & Large Accessible Steppers */}
+                <div className="max-h-72 overflow-y-auto space-y-4 pr-2 divide-y divide-white/10">
                   {preOrderList.map((item, idx) => (
-                    <div key={idx} className="pt-3 first:pt-0 flex items-center justify-between gap-3 text-xs">
-                      <div className="min-w-0 flex-1">
-                        <p className="font-serif text-sm text-ivoire truncate">{item.name}</p>
-                        <span className="text-[10px] text-muted font-mono">{item.category} · {item.price} € / unité</span>
-                      </div>
-                      <div className="flex items-center gap-3 shrink-0">
-                        <span className="font-mono text-or font-bold text-sm">{item.price * item.quantity} €</span>
-                        
-                        {/* Accessible Stepper */}
-                        <div className="flex items-center gap-1 bg-surface-elevated border border-or/40 p-1">
-                          <button 
-                            onClick={() => handleUpdateQuantity(item.name, -1)} 
-                            className="w-8 h-8 flex items-center justify-center bg-nero text-ivoire hover:bg-or hover:text-[#10100E] border border-white/10 active:scale-95 transition-all text-xs font-bold"
-                            aria-label="Diminuer"
-                          >
-                            <Minus size={14} />
-                          </button>
-                          <span className="font-mono text-sm px-2 text-ivoire font-bold min-w-[26px] text-center">
-                            {item.quantity}
+                    <div key={idx} className="pt-4 first:pt-0 space-y-2.5">
+                      {/* Top row: Complete dish name without truncation + Price */}
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="space-y-1 flex-1">
+                          <h4 className="font-serif text-base sm:text-lg text-ivoire leading-snug font-normal">
+                            {item.name}
+                          </h4>
+                          <span className="inline-block text-[11px] text-or font-mono tracking-wider">
+                            {item.category} · {item.price} € / unité
                           </span>
+                        </div>
+                        <span className="font-mono text-or font-bold text-base sm:text-lg shrink-0">
+                          {item.price * item.quantity} €
+                        </span>
+                      </div>
+
+                      {/* Controls row: Stepper + Remove button */}
+                      <div className="flex items-center justify-between pt-1">
+                        <span className="text-[11px] font-mono text-muted">
+                          {lang === 'it' ? 'Quantità :' : lang === 'en' ? 'Quantity:' : 'Quantité :'}
+                        </span>
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-1 bg-surface-elevated border border-or/40 p-1">
+                            <button 
+                              type="button"
+                              onClick={() => handleUpdateQuantity(item.name, -1)} 
+                              className="w-8 h-8 flex items-center justify-center bg-nero text-ivoire hover:bg-or hover:text-[#10100E] border border-white/10 active:scale-95 transition-all text-xs font-bold"
+                              aria-label="Diminuer"
+                            >
+                              <Minus size={14} />
+                            </button>
+                            <span className="font-mono text-sm px-2.5 text-ivoire font-bold min-w-[28px] text-center">
+                              {item.quantity}
+                            </span>
+                            <button 
+                              type="button"
+                              onClick={() => handleUpdateQuantity(item.name, 1)} 
+                              className="w-8 h-8 flex items-center justify-center bg-or text-[#10100E] hover:bg-ivoire active:scale-95 transition-all text-xs font-bold"
+                              aria-label="Augmenter"
+                            >
+                              <Plus size={14} />
+                            </button>
+                          </div>
+
                           <button 
-                            onClick={() => handleUpdateQuantity(item.name, 1)} 
-                            className="w-8 h-8 flex items-center justify-center bg-or text-[#10100E] hover:bg-ivoire active:scale-95 transition-all text-xs font-bold"
-                            aria-label="Augmenter"
+                            type="button"
+                            onClick={() => handleRemoveFromPreOrder(item.name)} 
+                            className="text-[11px] text-muted/80 hover:text-terracotta flex items-center gap-1 font-mono uppercase tracking-wider transition-colors p-1"
+                            title="Supprimer ce plat"
                           >
-                            <Plus size={14} />
+                            <X size={14} />
+                            <span className="hidden sm:inline">{lang === 'it' ? 'Rimuovi' : lang === 'en' ? 'Remove' : 'Retirer'}</span>
                           </button>
                         </div>
-
-                        <button 
-                          onClick={() => handleRemoveFromPreOrder(item.name)} 
-                          className="p-1.5 text-muted hover:text-terracotta transition-colors"
-                          title="Supprimer"
-                        >
-                          <X size={16} />
-                        </button>
                       </div>
                     </div>
                   ))}
