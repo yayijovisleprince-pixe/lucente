@@ -469,13 +469,14 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
 
                         {/* Terroir & Chef Vincenzo Moretti's Philosophy */}
                         <div className="lg:col-span-6 space-y-4">
-                          <div className="space-y-1">
+                          <div className="space-y-1.5">
                             <span className="text-[10px] uppercase font-mono text-or tracking-widest block font-semibold">
                               {lang === 'it' ? 'Origine & Stagionalità' : lang === 'en' ? 'Origin & Seasonality' : 'Origine & Saisonnalité'}
                             </span>
-                            <p className="text-xs font-mono text-ivoire bg-surface p-2.5 border border-white/10 inline-block">
-                              📍 {ing.region} · ⏳ {ing.season}
-                            </p>
+                            <div className="text-xs font-mono text-ivoire bg-surface px-3 py-2 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                              <span>{ing.region}</span>
+                              <span className="text-or/90">{ing.season}</span>
+                            </div>
                           </div>
 
                           <div className="space-y-2">
@@ -488,7 +489,7 @@ export default function CuisinePage({ onOpenBooking, onSelectMenuForBooking }) {
                           </div>
 
                           <div className="pt-2 border-t border-white/10 flex items-center gap-3">
-                            <span className="text-xs font-mono text-or">✦ Produit d'orfèvre</span>
+                            <span className="text-xs font-mono text-or">LUCENTE Milano</span>
                             <span className="text-xs text-muted/60 font-mono">·</span>
                             <span className="text-xs font-mono text-muted">Circuit court direct producteur</span>
                           </div>
