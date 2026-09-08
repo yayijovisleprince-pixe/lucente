@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useState, useMemo, useRef, useEffect, useLayoutEffect } from 'react';
 import { getTastingMenus, getALaCarteSections } from '../data/restaurantData';
 import { 
   Wine, ArrowRight, Download, Eye, Sparkles, Check, Info, 
@@ -16,10 +16,42 @@ export default function MenuPage({ onSelectMenuForBooking, onOpenOrders }) {
   const localizedTastingMenus = useMemo(() => getTastingMenus(lang), [lang]);
   const localizedALaCarteSections = useMemo(() => getALaCarteSections(lang), [lang]);
 
-  const [activeTastingId, setActiveTastingId] = useState(localizedTastingMenus[0].id);
+  const [activeTastingId, setActiveTastingId] = useState('');
   const activeTasting = localizedTastingMenus.find((m) => m.id === activeTastingId) || localizedTastingMenus[0];
 
   const tastingDetailsRef = useRef(null);
+  const shouldScrollToMenuRef = useRef(null);
+
+  const handleToggleTasting = (menuId) => {
+    if (activeTastingId === menuId) {
+      setActiveTastingId('');
+      shouldScrollToMenuRef.current = null;
+    } else {
+      shouldScrollToMenuRef.current = menuId;
+      setActiveTastingId(menuId);
+    }
+  };
+
+  useLayoutEffect(() => {
+    const targetMenuId = shouldScrollToMenuRef.current;
+    if (!targetMenuId) return;
+
+    const timer = setTimeout(() => {
+      const el = document.getElementById(`tasting-menu-${targetMenuId}`);
+      if (el) {
+        const headerOffset = 85;
+        const elementPosition = el.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: 'smooth'
+        });
+      }
+    }, 40);
+
+    shouldScrollToMenuRef.current = null;
+    return () => clearTimeout(timer);
+  }, [activeTastingId]);
 
   // ==========================================
   // PRE-ORDER SYSTEM STATE (À LA CARTE)
@@ -224,7 +256,8 @@ export default function MenuPage({ onSelectMenuForBooking, onOpenOrders }) {
               return (
                 <div
                   key={menu.id}
-                  className={`border transition-all duration-300 bg-surface shadow-xl overflow-hidden ${
+                  id={`tasting-menu-${menu.id}`}
+                  className={`scroll-mt-24 sm:scroll-mt-28 border transition-all duration-300 bg-surface shadow-xl overflow-hidden ${
                     isExpanded 
                       ? 'border-or ring-1 ring-or/40 bg-surface-elevated' 
                       : 'border-white/10 hover:border-or/30'
@@ -263,7 +296,7 @@ export default function MenuPage({ onSelectMenuForBooking, onOpenOrders }) {
                         {/* THE ONLY BUTTON THAT EXPANDS THE DISHES */}
                         <button
                           type="button"
-                          onClick={() => setActiveTastingId(isExpanded ? '' : menu.id)}
+                          onClick={() => handleToggleTasting(menu.id)}
                           className={`flex-1 sm:flex-none px-4 py-2.5 text-xs uppercase font-mono tracking-wider transition-all flex items-center justify-center gap-2 border ${
                             isExpanded
                               ? 'bg-or text-[#10100E] font-bold border-or shadow-md hover:bg-[#F2EBDD]'
