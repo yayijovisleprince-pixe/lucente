@@ -2,6 +2,7 @@ const fr = {
   // Navigation
   nav: {
     menu: "MENU",
+    maison: "LA MAISON",
     cuisine: "LA CUISINE",
     privateDining: "ESPACES PRIVÉS",
     story: "NOTRE HISTOIRE",

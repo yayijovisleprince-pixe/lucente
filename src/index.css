@@ -63,8 +63,36 @@
   background-color: #D4BD88;
 }
 
+.hover\:bg-or:hover {
+  background-color: #B89B5E !important;
+}
+
 .hover\:bg-or-light:hover {
-  background-color: #D4BD88;
+  background-color: #D4BD88 !important;
+}
+
+.hover\:text-\[\#10100E\]:hover {
+  color: #10100E !important;
+}
+
+/* Dedicated luxury button for table item selection — Guarantees perfect contrast on hover */
+.btn-table-choice {
+  background-color: #1F1E1A !important;
+  color: #B89B5E !important;
+  border: 1px solid rgba(184, 155, 94, 0.45) !important;
+  transition: all 0.25s ease-in-out !important;
+}
+
+.btn-table-choice:hover {
+  background-color: #B89B5E !important;
+  color: #10100E !important;
+  border-color: #B89B5E !important;
+  box-shadow: 0 4px 14px rgba(184, 155, 94, 0.3) !important;
+}
+
+.btn-table-choice:hover * {
+  color: #10100E !important;
+  stroke: #10100E !important;
 }
 
 :root {

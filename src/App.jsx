@@ -17,6 +17,7 @@ import ScrollToTop from './components/ScrollToTop';
 
 // Direct imports for all pages
 import HomePage from './pages/HomePage';
+import MaisonPage from './pages/MaisonPage';
 import StoryPage from './pages/StoryPage';
 import CuisinePage from './pages/CuisinePage';
 import MenuPage from './pages/MenuPage';
@@ -29,6 +30,11 @@ import ContactPage from './pages/ContactPage';
 import CareersPage from './pages/CareersPage';
 import LegalPage from './pages/LegalPage';
 import NotFoundPage from './pages/NotFoundPage';
+import TableOrderPage from './pages/TableOrderPage';
+import QrScannerPage from './pages/QrScannerPage';
+import KitchenKDSPage from './pages/KitchenKDSPage';
+import QrStandsGeneratorPage from './pages/QrStandsGeneratorPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 
 export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -128,6 +134,8 @@ export default function App() {
               <PageTransition>
                 <Routes>
                   <Route path="/" element={<HomePage onOpenBooking={handleOpenBooking} onSelectMenuForBooking={handleSelectMenuForBooking} />} />
+                  <Route path="/maison" element={<MaisonPage onOpenBooking={handleOpenBooking} />} />
+                  <Route path="/la-maison" element={<MaisonPage onOpenBooking={handleOpenBooking} />} />
                   <Route path="/story" element={<StoryPage onOpenBooking={handleOpenBooking} />} />
                   <Route path="/cuisine" element={<CuisinePage onOpenBooking={handleOpenBooking} onSelectMenuForBooking={handleSelectMenuForBooking} />} />
                   <Route path="/menu" element={<MenuPage onSelectMenuForBooking={handleSelectMenuForBooking} onOpenOrders={handleOpenOrders} />} />
@@ -145,6 +153,13 @@ export default function App() {
                   <Route path="/legal" element={<LegalPage />} />
                   <Route path="/privacy" element={<LegalPage />} />
                   <Route path="/confidentialite" element={<LegalPage />} />
+                  <Route path="/table/:tableId" element={<TableOrderPage />} />
+                  <Route path="/scan" element={<QrScannerPage />} />
+                  <Route path="/kds" element={<KitchenKDSPage />} />
+                  <Route path="/kitchen" element={<KitchenKDSPage />} />
+                  <Route path="/staff/qr-generator" element={<QrStandsGeneratorPage />} />
+                  <Route path="/admin" element={<AdminDashboardPage />} />
+                  <Route path="/gerant" element={<AdminDashboardPage />} />
                   <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </PageTransition>

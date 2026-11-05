@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Calendar, Phone, QrCode } from 'lucide-react';
 import { restaurantInfo } from '../data/restaurantData';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -43,12 +44,23 @@ export default function MobileBottomBar({ onOpenBooking }) {
         <a
           href={`tel:${restaurantInfo.phone.replace(/\s+/g, '')}`}
           aria-label={lang === 'it' ? 'Chiama la conciergerie LUCENTE' : lang === 'en' ? 'Call LUCENTE concierge' : 'Appeler la conciergerie LUCENTE'}
-          className="flex items-center justify-center gap-1.5 px-4 min-h-[48px] rounded-none bg-surface-elevated border border-white/15 text-ivoire hover:border-or hover:text-or text-xs uppercase tracking-wider font-semibold transition-colors shrink-0 touch-manipulation"
+          className="flex items-center justify-center gap-1.5 px-3 min-h-[48px] rounded-none bg-surface-elevated border border-white/15 text-ivoire hover:border-or hover:text-or text-xs uppercase tracking-wider font-semibold transition-colors shrink-0 touch-manipulation"
           title={lang === 'it' ? 'Concierge' : lang === 'en' ? 'Concierge' : 'Conciergerie'}
         >
           <Phone size={14} className="text-or" />
           <span className="hidden sm:inline">Concierge</span>
         </a>
+
+        {/* Scan & Order Table Button */}
+        <Link
+          to="/scan"
+          aria-label="Scanner & Commander à table"
+          className="flex items-center justify-center gap-1.5 px-3 min-h-[48px] rounded-none bg-surface-elevated border border-or/40 text-or hover:bg-or hover:text-nero text-xs uppercase tracking-wider font-semibold transition-all shrink-0 touch-manipulation"
+          title="Commander à table"
+        >
+          <QrCode size={14} />
+          <span>À Table</span>
+        </Link>
 
         {/* Primary Reserve Button */}
         <button

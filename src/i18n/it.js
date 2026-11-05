@@ -1,7 +1,8 @@
-﻿const it = {
+const it = {
   // Navigation
   nav: {
     menu: "MENU",
+    maison: "LA MAISON",
     cuisine: "CUCINA",
     privateDining: "SALE PRIVATE",
     story: "STORIA",

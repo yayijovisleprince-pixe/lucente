@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { VolumeX, Calendar, SkipForward, Menu, X, Globe, ShoppingBag } from 'lucide-react';
+import { VolumeX, Calendar, SkipForward, Menu, X, Globe, ShoppingBag, QrCode, ChevronDown } from 'lucide-react';
 import { audioTracks } from './AudioPlayer';
 import { restaurantInfo } from '../data/restaurantData';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -16,6 +16,8 @@ export default function Navigation({
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMaisonDropdownOpen, setIsMaisonDropdownOpen] = useState(false);
+  const [mobileMaisonExpanded, setMobileMaisonExpanded] = useState(true);
   const [hoveredImage, setHoveredImage] = useState('/images/hero-dish.webp');
   const [milanTime, setMilanTime] = useState('');
   const [orderCount, setOrderCount] = useState(0);
@@ -56,14 +58,39 @@ export default function Navigation({
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const navLinks = [
-    { labelKey: 'nav.menu',          path: '/menu',          image: '/images/pasta-caviar.webp',  sub: t('menu.eyebrow') },
-    { labelKey: 'nav.cuisine',       path: '/cuisine',       image: '/images/hero-dish.webp',     sub: lang === 'it' ? 'Manifesto & Materia' : lang === 'en' ? 'Manifesto & Matter' : 'Manifeste & Matière' },
-    { labelKey: 'nav.privateDining', path: '/private-dining',image: '/images/dining-room.webp',   sub: lang === 'it' ? "Sale & Chef's Table" : lang === 'en' ? "Rooms & Chef's Table" : "Salons & Chef's Table" },
-    { labelKey: 'nav.story',         path: '/story',         image: '/images/chef-craft.webp',    sub: lang === 'it' ? "L'Origine & Lo Chef" : lang === 'en' ? "The Origin & The Chef" : "L'Origine & Le Chef" },
-    { labelKey: 'nav.gallery',       path: '/gallery',       image: '/images/table-ambiance.webp',sub: lang === 'it' ? 'Antologia Visiva' : lang === 'en' ? 'Visual Anthology' : 'Anthologie Visuelle' },
-    { labelKey: 'nav.journal',       path: '/journal',       image: '/images/dining-room.webp',   sub: lang === 'it' ? 'Cronache Culinarie' : lang === 'en' ? 'Culinary Chronicles' : 'Chroniques Culinaires' },
+  const maisonSubLinks = [
+    {
+      labelKey: 'nav.story',
+      path: '/story',
+      image: '/images/chef-craft.webp',
+      sub: lang === 'it' ? "L'Origine & Lo Chef" : lang === 'en' ? "The Origin & The Chef" : "L'Origine & Le Chef",
+      desc: lang === 'it' ? 'Vincenzo Moretti, brigata & filosofia' : lang === 'en' ? 'Vincenzo Moretti, brigade & philosophy' : 'Vincenzo Moretti, brigade & philosophie',
+    },
+    {
+      labelKey: 'nav.cuisine',
+      path: '/cuisine',
+      image: '/images/hero-dish.webp',
+      sub: lang === 'it' ? 'Manifesto & Materia' : lang === 'en' ? 'Manifesto & Matter' : 'Manifeste & Matière',
+      desc: lang === 'it' ? 'Il Chiaroscuro & 4 micro-stagioni' : lang === 'en' ? 'Chiaroscuro & 4 micro-seasons' : 'Le Chiaroscuro & 4 micro-saisons',
+    },
+    {
+      labelKey: 'nav.privateDining',
+      path: '/private-dining',
+      image: '/images/dining-room.webp',
+      sub: lang === 'it' ? "Sale & Chef's Table" : lang === 'en' ? "Rooms & Chef's Table" : "Salons & Chef's Table",
+      desc: lang === 'it' ? "Sale riservate & Chef's Table" : lang === 'en' ? "Private dining rooms & Chef's Table" : "Salons réservés & Chef's Table",
+    },
   ];
+
+  const otherNavLinks = [
+    { labelKey: 'nav.gallery', path: '/gallery', image: '/images/table-ambiance.webp', sub: lang === 'it' ? 'Antologia Visiva' : lang === 'en' ? 'Visual Anthology' : 'Anthologie Visuelle' },
+    { labelKey: 'nav.journal', path: '/journal', image: '/images/dining-room.webp', sub: lang === 'it' ? 'Cronache Culinarie' : lang === 'en' ? 'Culinary Chronicles' : 'Chroniques Culinaires' },
+  ];
+
+  const isMaisonActive =
+    location.pathname === '/maison' ||
+    location.pathname === '/la-maison' ||
+    maisonSubLinks.some((item) => item.path === location.pathname);
 
   return (
     <>
@@ -83,9 +110,103 @@ export default function Navigation({
             </span>
           </Link>
 
-          {/* Desktop Navigation Links (Visible uniquement sur Desktop >= 1024px) */}
-          <nav aria-label="Navigation principale" className="hidden lg:flex items-center space-x-3.5 xl:space-x-6">
-            {navLinks.map((link) => {
+          {/* Desktop Navigation Links — Aéré et hiérarchisé */}
+          <nav aria-label="Navigation principale" className="hidden lg:flex items-center space-x-4 xl:space-x-7">
+            
+            {/* 1. Menu */}
+            <Link
+              to="/menu"
+              className={`typo-navigation text-[11px] xl:text-xs tracking-[0.14em] xl:tracking-[0.18em] transition-all duration-300 relative py-1 ${
+                location.pathname === '/menu' ? 'text-or' : 'text-ivoire/80 hover:text-or'
+              }`}
+            >
+              {t('nav.menu')}
+              {location.pathname === '/menu' && (
+                <span className="absolute bottom-0 left-0 right-0 h-[1px] bg-or" />
+              )}
+            </Link>
+
+            {/* 2. La Maison avec Dropdown des sous-pages (Cuisine, Salons, Histoire) */}
+            <div
+              className="relative py-1 group"
+              onMouseEnter={() => setIsMaisonDropdownOpen(true)}
+              onMouseLeave={() => setIsMaisonDropdownOpen(false)}
+            >
+              <Link
+                to="/maison"
+                className={`typo-navigation text-[11px] xl:text-xs tracking-[0.14em] xl:tracking-[0.18em] transition-all duration-300 relative py-1 flex items-center gap-1 ${
+                  isMaisonActive ? 'text-or' : 'text-ivoire/80 hover:text-or'
+                }`}
+              >
+                <span>{t('nav.maison')}</span>
+                <ChevronDown
+                  size={12}
+                  className={`transition-transform duration-300 ${
+                    isMaisonDropdownOpen ? 'rotate-180 text-or' : 'text-muted group-hover:text-or'
+                  }`}
+                />
+                {isMaisonActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[1px] bg-or" />
+                )}
+              </Link>
+
+              {/* Menu Déroulant Luxe — Sans espace mort */}
+              <div
+                className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 w-72 transition-all duration-200 z-50 ${
+                  isMaisonDropdownOpen
+                    ? 'opacity-100 pointer-events-auto translate-y-0'
+                    : 'opacity-0 pointer-events-none -translate-y-1'
+                }`}
+              >
+                <div className="bg-nero/98 backdrop-blur-md border border-or/40 rounded-sm p-2 shadow-2xl shadow-black/95">
+                  <div className="px-3 py-1.5 border-b border-white/10 mb-1 flex items-center justify-between">
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-or font-semibold">
+                      {lang === 'it' ? 'La Maison Lucente' : lang === 'en' ? 'The Lucente Maison' : 'La Maison Lucente'}
+                    </span>
+                    <Link
+                      to="/maison"
+                      onClick={() => setIsMaisonDropdownOpen(false)}
+                      className="text-[9px] font-mono text-muted hover:text-or uppercase transition-colors"
+                    >
+                      {lang === 'it' ? 'Panoramica ›' : lang === 'en' ? 'Overview ›' : 'Vue globale ›'}
+                    </Link>
+                  </div>
+
+                  <div className="space-y-1">
+                    {maisonSubLinks.map((sub) => {
+                      const isSubActive = location.pathname === sub.path;
+                      return (
+                        <Link
+                          key={sub.path}
+                          to={sub.path}
+                          onClick={() => setIsMaisonDropdownOpen(false)}
+                          className={`block px-3 py-2 rounded-sm transition-all text-left ${
+                            isSubActive
+                              ? 'bg-or/15 border-l-2 border-or text-or'
+                              : 'hover:bg-white/5 border-l-2 border-transparent hover:border-or/60 text-ivoire/85 hover:text-ivoire'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className={`font-serif-luxury text-xs tracking-wider font-medium ${isSubActive ? 'text-or' : ''}`}>
+                              {t(sub.labelKey)}
+                            </span>
+                            <span className="text-[9px] font-mono text-muted">
+                              {sub.sub}
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-muted line-clamp-1 mt-0.5 font-sans">
+                            {sub.desc}
+                          </p>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Galerie & 4. Journal */}
+            {otherNavLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (
                 <Link
@@ -205,6 +326,18 @@ export default function Navigation({
               )}
             </button>
 
+            {/* Scan & Table Order Direct Desktop Link */}
+            <Link
+              to="/scan"
+              data-cursor="TABLE"
+              aria-label={lang === 'it' ? 'A Tavola (Scan QR)' : lang === 'en' ? 'At Table (Scan QR)' : 'À Table (Scan QR)'}
+              className="relative flex items-center gap-1.5 px-3 py-2 bg-surface hover:bg-surface-elevated border border-or/40 hover:border-or text-or text-[11px] xl:text-xs font-mono uppercase tracking-wider transition-all"
+              title={lang === 'it' ? 'A Tavola' : lang === 'en' ? 'Table Order' : 'À Table'}
+            >
+              <QrCode size={13} className="text-or" />
+              <span className="hidden xl:inline">{lang === 'it' ? 'A Tavola' : lang === 'en' ? 'At Table' : 'À Table'}</span>
+            </Link>
+
             {/* CTA RESERVE — Premium gold button */}
             <button
               onClick={() => onOpenBooking()}
@@ -220,6 +353,16 @@ export default function Navigation({
           {/* Mobile & Tablet Controls (Visible sur Écrans < 1024px) */}
           <div className="flex lg:hidden items-center gap-1.5 sm:gap-2.5">
             
+            {/* Scan & Table Order on Mobile Header */}
+            <Link
+              to="/scan"
+              aria-label="Scanner Table"
+              title="Scanner & Commander à Table"
+              className="relative p-2 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center bg-surface border border-or/40 text-or hover:bg-or hover:text-nero transition-all shrink-0"
+            >
+              <QrCode size={14} />
+            </Link>
+
             {/* Quick Orders Button on Mobile Header */}
             <button
               onClick={onOpenOrders}
@@ -365,9 +508,93 @@ export default function Navigation({
                 </span>
               </div>
               
-              {/* Primary Links with Staggered Hover Effect */}
-              <nav aria-label="Menu plein écran" className="flex flex-col space-y-3 sm:space-y-5">
-                {navLinks.map((link, idx) => (
+              {/* Primary Links with Staggered Hover Effect — Hiérarchisé & Aéré */}
+              <nav aria-label="Menu plein écran" className="flex flex-col space-y-3 sm:space-y-4">
+                
+                {/* 01. Menu */}
+                <Link
+                  to="/menu"
+                  onMouseEnter={() => setHoveredImage('/images/pasta-caviar.webp')}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="group flex items-baseline justify-between border-b border-white/5 pb-3 transition-all"
+                >
+                  <div className="flex items-baseline space-x-4">
+                    <span className="font-mono text-xs text-or/60 group-hover:text-or transition-colors">
+                      01.
+                    </span>
+                    <span className="font-serif-luxury text-2xl sm:text-4xl text-ivoire group-hover:text-or group-hover:translate-x-2 transition-all duration-300">
+                      {t('nav.menu')}
+                    </span>
+                  </div>
+                  <span className="hidden sm:inline-block typo-caption text-[11px] text-muted group-hover:text-ivoire transition-colors">
+                    {t('menu.eyebrow')}
+                  </span>
+                </Link>
+
+                {/* 02. La Maison (Regroupant Histoire, Cuisine et Espaces Privés) */}
+                <div className="border-b border-white/5 pb-3">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      to="/maison"
+                      onMouseEnter={() => setHoveredImage('/images/dining-room.webp')}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="group flex items-baseline space-x-4"
+                    >
+                      <span className="font-mono text-xs text-or/60 group-hover:text-or transition-colors">
+                        02.
+                      </span>
+                      <span className="font-serif-luxury text-2xl sm:text-4xl text-ivoire group-hover:text-or group-hover:translate-x-2 transition-all duration-300">
+                        {t('nav.maison')}
+                      </span>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setMobileMaisonExpanded(!mobileMaisonExpanded)}
+                      aria-label="Déplier les sous-pages de la Maison"
+                      className="p-2 text-muted hover:text-or transition-colors"
+                    >
+                      <ChevronDown
+                        size={18}
+                        className={`transition-transform duration-300 ${mobileMaisonExpanded ? 'rotate-180 text-or' : ''}`}
+                      />
+                    </button>
+                  </div>
+
+                  {/* Sous-pages de La Maison */}
+                  {mobileMaisonExpanded && (
+                    <div className="mt-3 pl-6 sm:pl-8 space-y-2 pt-2 border-l border-or/40 ml-2">
+                      {maisonSubLinks.map((sub, sIdx) => {
+                        const isSubActive = location.pathname === sub.path;
+                        return (
+                          <Link
+                            key={sub.path}
+                            to={sub.path}
+                            onMouseEnter={() => setHoveredImage(sub.image)}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-baseline justify-between py-1.5 group/sub transition-all"
+                          >
+                            <div className="flex items-baseline space-x-3">
+                              <span className="font-mono text-[10px] text-or/60 group-hover/sub:text-or">
+                                02.{sIdx + 1}
+                              </span>
+                              <span className={`font-serif-luxury text-lg sm:text-2xl transition-colors ${
+                                isSubActive ? 'text-or font-semibold' : 'text-ivoire/85 group-hover/sub:text-or'
+                              }`}>
+                                {t(sub.labelKey)}
+                              </span>
+                            </div>
+                            <span className="text-[10px] font-mono text-muted group-hover/sub:text-ivoire transition-colors">
+                              {sub.sub}
+                            </span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                {/* 03. Galerie & 04. Journal */}
+                {otherNavLinks.map((link, idx) => (
                   <Link
                     key={link.labelKey}
                     to={link.path}
@@ -377,7 +604,7 @@ export default function Navigation({
                   >
                     <div className="flex items-baseline space-x-4">
                       <span className="font-mono text-xs text-or/60 group-hover:text-or transition-colors">
-                        0{idx + 1}.
+                        0{idx + 3}.
                       </span>
                       <span className="font-serif-luxury text-2xl sm:text-4xl text-ivoire group-hover:text-or group-hover:translate-x-2 transition-all duration-300">
                         {t(link.labelKey)}
@@ -388,6 +615,23 @@ export default function Navigation({
                     </span>
                   </Link>
                 ))}
+
+                {/* Quick Access to Table Ordering via Scan */}
+                <div className="pt-2">
+                  <Link
+                    to="/scan"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full flex items-center justify-between p-3.5 bg-or/15 border border-or hover:bg-or hover:text-nero text-or transition-all text-xs font-mono uppercase tracking-wider mb-2"
+                  >
+                    <span className="flex items-center gap-2">
+                      <QrCode size={15} />
+                      <span>{lang === 'it' ? 'A Tavola — Scansiona & Ordina' : lang === 'en' ? 'At Table — Scan & Order' : 'À Table — Scanner & Commander'}</span>
+                    </span>
+                    <span className="text-[10px] uppercase font-mono tracking-widest">
+                      Live
+                    </span>
+                  </Link>
+                </div>
 
                 {/* Quick Access to Orders & Reservations */}
                 <div className="pt-2">
