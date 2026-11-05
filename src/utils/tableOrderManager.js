@@ -3,7 +3,7 @@
  * Hybrid Architecture: Real-time Firestore Sync + Local BroadcastChannel Fallback
  */
 
-import { db } from '../firebase/config';
+import { db } from '../firebase/config.js';
 import { 
   collection, 
   doc, 
