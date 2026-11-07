@@ -16,7 +16,9 @@ import {
   updateOrderStatus,
   closeTableSession,
   subscribeToServiceCalls,
-  dismissServiceCall
+  dismissServiceCall,
+  subscribeToReservations,
+  updateReservationStatus
 } from '../utils/tableOrderManager';
 import { auth, googleProvider } from '../firebase/config';
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
@@ -114,6 +116,7 @@ export default function AdminDashboardPage() {
   const [activeOrders, setActiveOrders] = useState([]);
   const [allOrdersHistory, setAllOrdersHistory] = useState([]);
   const [serviceCalls, setServiceCalls] = useState([]);
+  const [reservations, setReservations] = useState([]);
   const [copiedTableId, setCopiedTableId] = useState(null);
   const [fullscreenTable, setFullscreenTable] = useState(null);
   const [historyFilter, setHistoryFilter] = useState('all'); // 'all' | 'closed' | 'served'
@@ -204,8 +207,9 @@ export default function AdminDashboardPage() {
       setAllOrdersHistory(getAllOrdersHistory());
     });
     const unsubCalls = subscribeToServiceCalls((calls) => setServiceCalls(calls));
+    const unsubRes = subscribeToReservations((resList) => setReservations(resList));
     setAllOrdersHistory(getAllOrdersHistory());
-    return () => { unsubOrders(); unsubCalls(); };
+    return () => { unsubOrders(); unsubCalls(); unsubRes(); };
   }, []);
 
   // ── Computed Stats ────────────────────────────────────────────────────────
@@ -448,11 +452,12 @@ export default function AdminDashboardPage() {
 
           {/* ── Tabs ──────────────────────────────────────────────────── */}
           <div className="flex items-center gap-2 mt-6 overflow-x-auto pb-1 scrollbar-hide">
-            <TabBtn id="overview"  active={activeTab==='overview'}  onClick={setActiveTab} icon={LayoutDashboard} label="Vue d'ensemble" />
-            <TabBtn id="tables"    active={activeTab==='tables'}    onClick={setActiveTab} icon={QrCode}          label="Codes QR" badge={allTables.length} />
-            <TabBtn id="kds"       active={activeTab==='kds'}       onClick={setActiveTab} icon={Utensils}        label="Cuisine" badge={activeOrders.length} />
-            <TabBtn id="calls"     active={activeTab==='calls'}     onClick={setActiveTab} icon={Bell}            label="Appels" badge={serviceCalls.length} />
-            <TabBtn id="history"   active={activeTab==='history'}   onClick={setActiveTab} icon={History}         label="Historique" />
+            <TabBtn id="overview"     active={activeTab==='overview'}     onClick={setActiveTab} icon={LayoutDashboard} label="Vue d'ensemble" />
+            <TabBtn id="tables"       active={activeTab==='tables'}       onClick={setActiveTab} icon={QrCode}          label="Codes QR" badge={allTables.length} />
+            <TabBtn id="kds"          active={activeTab==='kds'}          onClick={setActiveTab} icon={Utensils}        label="Cuisine" badge={activeOrders.length} />
+            <TabBtn id="calls"        active={activeTab==='calls'}        onClick={setActiveTab} icon={Bell}            label="Appels" badge={serviceCalls.length} />
+            <TabBtn id="reservations" active={activeTab==='reservations'} onClick={setActiveTab} icon={CalendarDays}    label="Réservations" badge={reservations.length} />
+            <TabBtn id="history"      active={activeTab==='history'}      onClick={setActiveTab} icon={History}         label="Historique" />
 
             <Link
               to="/staff/qr-generator"
@@ -1029,6 +1034,117 @@ export default function AdminDashboardPage() {
                     </tfoot>
                   </table>
                 </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ════════════════════════════════════════════════════════════════
+            TAB: RÉSERVATIONS DE TABLES
+        ════════════════════════════════════════════════════════════════ */}
+        {activeTab === 'reservations' && (
+          <div className="space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h2 className="font-serif-luxury text-2xl text-ivoire font-light">Réservations Enregistrées</h2>
+                <p className="text-xs text-muted mt-0.5">{reservations.length} réservation(s) synchronisée(s) en direct avec Cloud Firestore.</p>
+              </div>
+            </div>
+
+            {reservations.length === 0 ? (
+              <div className="text-center py-20 bg-surface border border-white/10 rounded-sm">
+                <CalendarDays size={36} className="mx-auto text-or/30 mb-3" />
+                <p className="text-sm text-muted">Aucune réservation pour le moment.</p>
+                <p className="text-xs text-muted/60 mt-1">Les réservations effectuées par les convives apparaîtront ici automatiquement.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {reservations.map((res) => {
+                  const statusColors = {
+                    confirmed: 'text-or border-or/40 bg-or/10',
+                    arrived: 'text-emerald-400 border-emerald-400/40 bg-emerald-950/20',
+                    cancelled: 'text-terracotta border-terracotta/40 bg-terracotta/10'
+                  };
+                  const statusText = {
+                    confirmed: 'Confirmée',
+                    arrived: 'Convives à Table',
+                    cancelled: 'Annulée'
+                  };
+
+                  return (
+                    <div key={res.id} className="bg-surface border border-white/10 hover:border-or/50 p-5 rounded-sm flex flex-col justify-between transition-all">
+                      <div>
+                        <div className="flex justify-between items-start border-b border-white/10 pb-3 mb-3">
+                          <div>
+                            <div className="font-mono text-xs text-or font-bold">{res.reference}</div>
+                            <div className="font-serif-luxury text-lg text-ivoire mt-0.5">{res.firstName} {res.lastName}</div>
+                          </div>
+                          <span className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded border ${statusColors[res.status] || statusColors.confirmed}`}>
+                            {statusText[res.status] || res.status}
+                          </span>
+                        </div>
+
+                        <div className="space-y-1.5 text-xs text-muted mb-4 font-mono">
+                          <div className="flex justify-between">
+                            <span>Date :</span>
+                            <span className="text-ivoire font-semibold">{res.date} · {res.time}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Convives :</span>
+                            <span className="text-ivoire">{res.guests}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Espace :</span>
+                            <span className="text-ivoire">{res.seating}</span>
+                          </div>
+                          {res.phone && (
+                            <div className="flex justify-between">
+                              <span>Tél :</span>
+                              <span className="text-ivoire">{res.phone}</span>
+                            </div>
+                          )}
+                          {res.email && (
+                            <div className="flex justify-between">
+                              <span>Email :</span>
+                              <span className="text-ivoire truncate max-w-[170px]">{res.email}</span>
+                            </div>
+                          )}
+                          {res.specialOccasion && res.specialOccasion !== 'Aucune' && (
+                            <div className="p-2 bg-or/5 border border-or/20 rounded text-[11px] text-or mt-2 font-serif italic">
+                              Occasion : {res.specialOccasion}
+                            </div>
+                          )}
+                          {res.dietaryNotes && (
+                            <div className="p-2 bg-amber-950/20 border border-amber-500/20 rounded text-[11px] text-amber-200 mt-1">
+                              Allergies : {res.dietaryNotes}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="pt-3 border-t border-white/10 flex items-center gap-2">
+                        {res.status !== 'arrived' && (
+                          <button
+                            type="button"
+                            onClick={() => updateReservationStatus(res.id, 'arrived')}
+                            className="flex-1 py-1.5 px-3 bg-or hover:bg-or-light text-nero font-mono text-xs uppercase font-bold rounded transition-all"
+                          >
+                            Marquer Arrivé
+                          </button>
+                        )}
+                        {res.status !== 'cancelled' && (
+                          <button
+                            type="button"
+                            onClick={() => updateReservationStatus(res.id, 'cancelled')}
+                            className="py-1.5 px-3 text-xs font-mono text-muted hover:text-terracotta border border-white/10 hover:border-terracotta/40 rounded transition-all"
+                          >
+                            Annuler
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>

@@ -10,6 +10,8 @@ import {
 } from 'lucide-react';
 import { restaurantInfo } from '../data/restaurantData';
 import { useLanguage } from '../contexts/LanguageContext';
+import { submitReservation } from '../utils/tableOrderManager.js';
+import { saveOrder } from '../utils/orderHistory.js';
 
 export default function ReservationFlow({ 
   initialSpace = '', 
@@ -143,7 +145,7 @@ export default function ReservationFlow({
   };
 
   // Submit Details and Generate Confirmation
-  const handleProceedToConfirmation = (e) => {
+  const handleProceedToConfirmation = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
     const newErrors = {};
     if (!details.firstName.trim()) newErrors.firstName = t('common.requiredField');
@@ -159,13 +161,40 @@ export default function ReservationFlow({
     setErrors({});
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
       const randomCode = `LUC-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const resPayload = {
+        ...details,
+        date: selectedDate,
+        time: selectedTime,
+        guests: selectedGuests,
+        seating: selectedSeating,
+        reference: randomCode
+      };
+
+      await submitReservation(resPayload);
+
+      saveOrder({
+        reference: randomCode,
+        type: 'booking',
+        name: `${details.firstName} ${details.lastName}`.trim(),
+        email: details.email,
+        phone: details.phone,
+        date: selectedDate,
+        time: selectedTime,
+        guests: `${selectedGuests} convives`,
+        notes: `Espace : ${selectedSeating}${details.specialOccasion !== 'Aucune' ? ' · ' + details.specialOccasion : ''}`,
+        totalPrice: 0
+      });
+
       setBookingReference(randomCode);
       setCurrentStep(6);
-      if (onComplete) onComplete({ ...details, date: selectedDate, time: selectedTime, guests: selectedGuests, seating: selectedSeating, reference: randomCode });
-    }, 600);
+      if (onComplete) onComplete(resPayload);
+    } catch (err) {
+      console.error('Reservation submission error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Generate Google Calendar Link

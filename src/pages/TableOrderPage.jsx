@@ -38,6 +38,8 @@ export default function TableOrderPage() {
   // Active table orders tracked live
   const [activeOrders, setActiveOrders] = useState([]);
   const [isSubmittingOrder, setIsSubmittingOrder] = useState(false);
+  const [orderSuccessBanner, setOrderSuccessBanner] = useState(null);
+  const [orderError, setOrderError] = useState(null);
   const [paymentPreference, setPaymentPreference] = useState('table'); // 'table' | 'hybrid_online'
   const [guestCount, setGuestCount] = useState('2 convives');
   const [tableNotes, setTableNotes] = useState('');
@@ -96,9 +98,10 @@ export default function TableOrderPage() {
   const handleSendOrderToKitchen = async () => {
     if (cart.length === 0 || !table) return;
     setIsSubmittingOrder(true);
+    setOrderError(null);
 
     try {
-      await submitTableOrder({
+      const order = await submitTableOrder({
         tableId: table.id,
         tableName: table.name,
         areaName: table.areaName ? (table.areaName[lang] || table.areaName.fr) : 'Salle',
@@ -118,8 +121,11 @@ export default function TableOrderPage() {
 
       setCart([]);
       setIsCartOpen(false);
+      setOrderSuccessBanner(order?.reference || 'Transmise');
+      setTimeout(() => setOrderSuccessBanner(null), 9000);
     } catch (err) {
       console.error('Error submitting table order:', err);
+      setOrderError(err.message || 'Impossible de transmettre la commande en cuisine.');
     } finally {
       setIsSubmittingOrder(false);
     }
@@ -188,6 +194,47 @@ export default function TableOrderPage() {
 
       <div className="min-h-screen bg-nero text-ivoire pt-24 pb-32 px-4 sm:px-6 md:px-10 max-w-7xl mx-auto">
         
+        {/* Success Banner */}
+        {orderSuccessBanner && (
+          <div className="mb-6 p-4 bg-or/15 border border-or text-ivoire rounded-sm flex items-start justify-between gap-3 shadow-lg">
+            <div className="flex items-center gap-3">
+              <span className="text-or text-base font-serif">✦</span>
+              <div>
+                <p className="font-serif-luxury text-sm text-or font-medium">
+                  Commande {orderSuccessBanner} transmise avec succès à la brigade
+                </p>
+                <p className="text-xs text-muted mt-0.5">
+                  La brigade Moretti prépare vos mets. Suivez l'avancement en direct ci-dessous.
+                </p>
+              </div>
+            </div>
+            <button 
+              type="button" 
+              onClick={() => setOrderSuccessBanner(null)} 
+              className="text-muted hover:text-ivoire transition-colors"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        )}
+
+        {/* Error Banner */}
+        {orderError && (
+          <div className="mb-6 p-4 bg-red-950/40 border border-red-500/50 text-red-200 rounded-sm flex items-start justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <AlertCircle size={18} className="text-red-400 shrink-0" />
+              <p className="text-xs">{orderError}</p>
+            </div>
+            <button 
+              type="button" 
+              onClick={() => setOrderError(null)} 
+              className="text-red-400 hover:text-red-200"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        )}
+
         {/* Top Table Welcome Banner */}
         <div className="bg-surface border border-or-subtle/50 p-4 sm:p-6 mb-8 rounded-sm shadow-xl">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -535,10 +582,19 @@ export default function TableOrderPage() {
                   type="button"
                   disabled={isSubmittingOrder}
                   onClick={handleSendOrderToKitchen}
-                  className="flex-1 max-w-[280px] py-3.5 px-5 bg-or hover:bg-or-light text-nero font-medium typo-button text-xs uppercase tracking-widest transition-all shadow-lg shadow-or/20 flex items-center justify-center gap-2"
+                  className="flex-1 max-w-[280px] py-3.5 px-5 bg-or hover:bg-or-light disabled:opacity-60 text-nero font-medium typo-button text-xs uppercase tracking-widest transition-all shadow-lg shadow-or/20 flex items-center justify-center gap-2"
                 >
-                  <Send size={14} />
-                  <span>{isSubmittingOrder ? 'Transmission...' : 'Envoyer en Cuisine'}</span>
+                  {isSubmittingOrder ? (
+                    <>
+                      <Clock size={14} className="animate-spin" />
+                      <span>Transmission...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={14} />
+                      <span>Envoyer en Cuisine</span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, ArrowRight, CheckCircle2, Award, Sparkles, Send, ArrowLeft, Briefcase } from 'lucide-react';
+import { Mail, ArrowRight, CheckCircle2, Award, Send, ArrowLeft, Briefcase } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { restaurantInfo } from '../data/restaurantData';
 import { useLanguage } from '../contexts/LanguageContext';
+import { submitJobApplication } from '../utils/tableOrderManager.js';
 
 export default function CareersPage() {
   const { lang, t } = useLanguage();
@@ -16,8 +17,13 @@ export default function CareersPage() {
   });
   const [isSent, setIsSent] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await submitJobApplication(formData);
+    } catch (err) {
+      console.error('Job application error:', err);
+    }
     setIsSent(true);
   };
 

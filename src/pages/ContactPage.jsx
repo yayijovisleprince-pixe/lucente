@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Loader2, Sparkles } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Loader2 } from 'lucide-react';
 import { restaurantInfo } from '../data/restaurantData';
 import SEOHead from '../components/SEOHead';
 import { useLanguage } from '../contexts/LanguageContext';
+import { submitContactMessage } from '../utils/tableOrderManager.js';
 
 export default function ContactPage({ onShowToast }) {
   const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ export default function ContactPage({ onShowToast }) {
   const [errors, setErrors] = useState({});
   const { lang, t } = useLanguage();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = t('common.requiredField');
@@ -33,8 +34,8 @@ export default function ContactPage({ onShowToast }) {
     setErrors({});
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await submitContactMessage(formData);
       setIsSent(true);
       if (onShowToast) {
         onShowToast({
@@ -43,7 +44,11 @@ export default function ContactPage({ onShowToast }) {
           type: "success"
         });
       }
-    }, 700);
+    } catch (err) {
+      console.error('Contact submit error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactSchema = {

@@ -8,6 +8,7 @@ import {
   collection, 
   doc, 
   setDoc, 
+  getDocs,
   onSnapshot, 
   query, 
   where, 
@@ -17,6 +18,7 @@ import {
 
 const LOCAL_STORAGE_ORDERS_KEY = 'lucente_live_table_orders';
 const LOCAL_STORAGE_CALLS_KEY = 'lucente_live_service_calls';
+const LOCAL_STORAGE_RESERVATIONS_KEY = 'lucente_live_reservations';
 
 // Cross-tab zero-latency channel
 const channel = typeof window !== 'undefined' && 'BroadcastChannel' in window
@@ -180,6 +182,26 @@ export async function closeTableSession(tableId) {
   const localCalls = getLocalCalls();
   const updatedCalls = localCalls.filter(c => c.tableId !== cleanId);
   saveLocalCalls(updatedCalls);
+
+  // Sync closure to Firestore
+  if (db) {
+    try {
+      const q = query(collection(db, 'table_orders'), where('tableId', '==', cleanId));
+      const snap = await getDocs(q);
+      const updates = [];
+      snap.forEach(d => {
+        if (d.data().status !== 'closed') {
+          updates.push(updateDoc(doc(db, 'table_orders', d.id), { 
+            status: 'closed', 
+            serverUpdatedAt: serverTimestamp() 
+          }));
+        }
+      });
+      await Promise.all(updates);
+    } catch (err) {
+      console.warn('LUCENTE Firestore closeTable notice:', err.message);
+    }
+  }
 }
 
 // =========================================================================
@@ -222,11 +244,8 @@ export function subscribeToTableOrders(tableId, onUpdate) {
         snapshot.forEach(docSnap => {
           firestoreOrders.push(docSnap.data());
         });
-        if (firestoreOrders.length > 0) {
-          // Merge with local state
-          const activeOnly = firestoreOrders.filter(o => o.status !== 'closed');
-          onUpdate(activeOnly);
-        }
+        const activeOnly = firestoreOrders.filter(o => o.status !== 'closed');
+        onUpdate(activeOnly);
       }, (err) => {
         console.warn('Firestore subscription fallback:', err.message);
       });
@@ -273,12 +292,10 @@ export function subscribeToAllActiveOrders(onUpdate) {
         snapshot.forEach(docSnap => {
           firestoreOrders.push(docSnap.data());
         });
-        if (firestoreOrders.length > 0) {
-          const activeOnly = firestoreOrders
-            .filter(o => o.status !== 'closed')
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-          onUpdate(activeOnly);
-        }
+        const activeOnly = firestoreOrders
+          .filter(o => o.status !== 'closed')
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        onUpdate(activeOnly);
       }, (err) => {
         console.warn('Firestore KDS subscription fallback:', err.message);
       });
@@ -359,10 +376,8 @@ export function subscribeToServiceCalls(onUpdate) {
       unsubscribeFirestore = onSnapshot(q, (snapshot) => {
         const calls = [];
         snapshot.forEach(docSnap => calls.push(docSnap.data()));
-        if (calls.length > 0) {
-          const activeOnly = calls.filter(c => c.status === 'pending');
-          onUpdate(activeOnly);
-        }
+        const activeOnly = calls.filter(c => c.status === 'pending');
+        onUpdate(activeOnly);
       }, () => {});
     } catch {}
   }
@@ -385,4 +400,165 @@ export async function dismissServiceCall(callId) {
       });
     } catch {}
   }
+}
+
+// =========================================================================
+// TABLE RESERVATIONS (PERSISTENCE & REALTIME)
+// =========================================================================
+
+function getLocalReservations() {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_RESERVATIONS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveLocalReservations(resList) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(LOCAL_STORAGE_RESERVATIONS_KEY, JSON.stringify(resList));
+    if (channel) channel.postMessage({ type: 'RESERVATIONS_UPDATED', reservations: resList });
+    window.dispatchEvent(new CustomEvent('lucente:reservations-changed', { detail: { reservations: resList } }));
+  } catch {}
+}
+
+export async function submitReservation(data) {
+  const reference = data.reference || `LUC-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+  const now = new Date().toISOString();
+
+  const reservation = {
+    id: reference,
+    reference,
+    createdAt: now,
+    status: 'confirmed', // 'confirmed' | 'arrived' | 'cancelled'
+    date: data.date,
+    time: data.time,
+    guests: data.guests || 2,
+    seating: data.seating || 'La Sala Chiaroscuro',
+    firstName: data.firstName || '',
+    lastName: data.lastName || '',
+    email: data.email || '',
+    phone: data.phone || '',
+    specialOccasion: data.specialOccasion || 'Aucune',
+    dietary: data.dietary || [],
+    dietaryNotes: data.dietaryNotes || '',
+    accessibility: data.accessibility || 'Aucun',
+    accessibilityNotes: data.accessibilityNotes || ''
+  };
+
+  // Local save
+  const local = getLocalReservations();
+  saveLocalReservations([reservation, ...local.filter(r => r.id !== reference)]);
+
+  // Firestore save
+  if (db) {
+    try {
+      await setDoc(doc(db, 'reservations', reference), {
+        ...reservation,
+        serverCreatedAt: serverTimestamp()
+      });
+    } catch (err) {
+      console.warn('Firestore reservation save warning:', err.message);
+    }
+  }
+
+  return reservation;
+}
+
+export function subscribeToReservations(onUpdate) {
+  onUpdate(getLocalReservations());
+
+  const handleLocalChange = () => {
+    onUpdate(getLocalReservations());
+  };
+
+  window.addEventListener('lucente:reservations-changed', handleLocalChange);
+  if (channel) {
+    channel.addEventListener('message', (e) => {
+      if (e.data?.type === 'RESERVATIONS_UPDATED') handleLocalChange();
+    });
+  }
+
+  let unsubscribeFirestore = null;
+  if (db) {
+    try {
+      const q = query(collection(db, 'reservations'));
+      unsubscribeFirestore = onSnapshot(q, (snapshot) => {
+        const reservations = [];
+        snapshot.forEach(docSnap => reservations.push(docSnap.data()));
+        reservations.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        onUpdate(reservations);
+        saveLocalReservations(reservations);
+      }, () => {});
+    } catch {}
+  }
+
+  return () => {
+    window.removeEventListener('lucente:reservations-changed', handleLocalChange);
+    if (unsubscribeFirestore) unsubscribeFirestore();
+  };
+}
+
+export async function updateReservationStatus(reservationId, status) {
+  const local = getLocalReservations();
+  const updated = local.map(r => r.id === reservationId ? { ...r, status } : r);
+  saveLocalReservations(updated);
+
+  if (db) {
+    try {
+      await updateDoc(doc(db, 'reservations', reservationId), {
+        status,
+        updatedAt: new Date().toISOString()
+      });
+    } catch {}
+  }
+}
+
+// =========================================================================
+// CONTACT & CAREERS SUBMISSIONS
+// =========================================================================
+
+export async function submitContactMessage(data) {
+  const id = `MSG-${Date.now()}`;
+  const messageData = {
+    id,
+    ...data,
+    createdAt: new Date().toISOString()
+  };
+
+  if (db) {
+    try {
+      await setDoc(doc(db, 'contact_messages', id), {
+        ...messageData,
+        serverCreatedAt: serverTimestamp()
+      });
+    } catch (err) {
+      console.warn('Firestore contact message warning:', err.message);
+    }
+  }
+  return messageData;
+}
+
+export async function submitJobApplication(data) {
+  const id = `JOB-${Date.now()}`;
+  const appData = {
+    id,
+    ...data,
+    createdAt: new Date().toISOString()
+  };
+
+  if (db) {
+    try {
+      await setDoc(doc(db, 'job_applications', id), {
+        ...appData,
+        serverCreatedAt: serverTimestamp()
+      });
+    } catch (err) {
+      console.warn('Firestore job application warning:', err.message);
+    }
+  }
+  return appData;
 }

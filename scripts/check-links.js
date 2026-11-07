@@ -46,3 +46,4 @@ if (deadLinks.length === 0) {
 } else {
   console.log('WARNING: Liens sans route correspondante :', deadLinks);
 }
+
