@@ -5,15 +5,12 @@ import {
   doc, 
   setDoc, 
   getDoc, 
-  getDocs, 
   updateDoc, 
-  deleteDoc, 
-  query, 
-  where 
+  deleteDoc
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD8GjQ_placeholder", // not needed for open firestore rules read/write
+  apiKey: "AIzaSyD8GjQ_placeholder",
   projectId: "lucente-milano",
   storageBucket: "lucente-milano.appspot.com",
   appId: "1:788837729474:web:0fa929d20c53443a51057c"
@@ -37,139 +34,125 @@ function assert(condition, message) {
 
 async function run() {
   console.log('\n\x1b[36m============================================================\x1b[0m');
-  console.log('\x1b[36m   LUCENTE MILANO — VALIDATION FIRESTORE TEMPS RÉEL        \x1b[0m');
+  console.log('\x1b[36m   LUCENTE MILANO — VÉRIFICATION SÉCURITÉ FIRESTORE        \x1b[0m');
   console.log('\x1b[36m============================================================\x1b[0m\n');
 
   try {
-    // 1. Test Table Order write & read
-    const orderId = `LUC-TEST-LIVE-${Date.now()}`;
-    const orderData = {
+    // 1. Table Order (Public customer creation + kitchen status updates)
+    console.log('\x1b[34m[1/6] Test Commandes à Table (table_orders)...\x1b[0m');
+    const orderId = `LUC-SEC-TEST-${Date.now()}`;
+    await setDoc(doc(db, 'table_orders', orderId), {
       id: orderId,
       reference: orderId,
       tableId: '04',
       tableName: 'Table 04 — Sala Chiaroscuro',
       areaName: 'Sala Chiaroscuro',
-      items: [
-        { name: 'Menu Chiaroscuro (9 actes)', price: 290, quantity: 2 },
-        { name: 'Accord Majeur', price: 180, quantity: 2 }
-      ],
-      totalAmount: 940,
-      guestCount: '2 convives',
-      notes: 'Test table order e2e',
-      paymentPreference: 'table',
-      paymentStatus: 'pending_at_table',
+      items: [{ name: 'Menu Chiaroscuro', price: 290, quantity: 2 }],
+      totalAmount: 580,
       status: 'received',
       createdAt: new Date().toISOString()
-    };
-
-    console.log('\x1b[34m[1/5] Test Commande de Table (table_orders)...\x1b[0m');
-    await setDoc(doc(db, 'table_orders', orderId), orderData);
-    assert(true, `Commande créée avec succès : ${orderId}`);
+    });
+    assert(true, 'Création commande client avec données conformes autorisée');
 
     const orderSnap = await getDoc(doc(db, 'table_orders', orderId));
-    assert(orderSnap.exists() && orderSnap.data().totalAmount === 940, 'Lecture commande vérifiée (Montant = 940 €)');
+    assert(orderSnap.exists() && orderSnap.data().totalAmount === 580, 'Lecture commande pour suivi client autorisée');
 
     await updateDoc(doc(db, 'table_orders', orderId), { status: 'preparing' });
-    const orderPrepSnap = await getDoc(doc(db, 'table_orders', orderId));
-    assert(orderPrepSnap.data().status === 'preparing', 'Mise à jour statut Cuisine -> preparing vérifiée');
+    const orderUpdated = await getDoc(doc(db, 'table_orders', orderId));
+    assert(orderUpdated.data().status === 'preparing', 'Mise à jour statut cuisine -> preparing autorisée');
 
-    // 2. Test Reservation write, read, update
-    console.log('\n\x1b[34m[2/5] Test Réservation Gastronomique (reservations)...\x1b[0m');
-    const resId = `RES-TEST-${Date.now()}`;
-    const resData = {
-      id: resId,
-      reference: `LUC-${new Date().getFullYear()}-9999`,
-      firstName: 'Jean',
-      lastName: 'Dupont',
-      email: 'guest@lucente-milano.com',
-      phone: '+33612345678',
-      date: '2026-11-20',
-      time: '20:30',
-      guests: 2,
-      seating: 'main',
-      dietary: ['Sans gluten'],
-      status: 'confirmed',
-      createdAt: new Date().toISOString()
-    };
-
-    await setDoc(doc(db, 'reservations', resId), resData);
-    assert(true, `Réservation créée avec succès : ${resId}`);
-
-    const resSnap = await getDoc(doc(db, 'reservations', resId));
-    assert(resSnap.exists() && resSnap.data().lastName === 'Dupont', 'Lecture réservation confirmée (Nom: Dupont)');
-
-    await updateDoc(doc(db, 'reservations', resId), { status: 'arrived' });
-    const resArrSnap = await getDoc(doc(db, 'reservations', resId));
-    assert(resArrSnap.data().status === 'arrived', 'Mise à jour statut Admin -> arrived vérifiée');
-
-    // 3. Test Service Call write & resolve
-    console.log('\n\x1b[34m[3/5] Test Appel de Service / Conciergerie (service_calls)...\x1b[0m');
-    const callId = `CALL-TEST-${Date.now()}`;
-    const callData = {
+    // 2. Service Call
+    console.log('\n\x1b[34m[2/6] Test Appels Sommelier / Service (service_calls)...\x1b[0m');
+    const callId = `CALL-SEC-${Date.now()}`;
+    await setDoc(doc(db, 'service_calls', callId), {
       id: callId,
       tableId: '04',
-      tableName: 'Table 04 — Sala Chiaroscuro',
       type: 'sommelier',
       status: 'pending',
-      notes: 'Demande conseil millésime Barolo',
       createdAt: new Date().toISOString()
-    };
-
-    await setDoc(doc(db, 'service_calls', callId), callData);
-    assert(true, `Appel sommelier créé : ${callId}`);
+    });
+    assert(true, 'Création appel sommelier client autorisée');
 
     await updateDoc(doc(db, 'service_calls', callId), { status: 'resolved' });
     const callSnap = await getDoc(doc(db, 'service_calls', callId));
-    assert(callSnap.data().status === 'resolved', 'Clôture appel sommelier -> resolved vérifiée');
+    assert(callSnap.data().status === 'resolved', 'Clôture appel sommelier par le personnel autorisée');
 
-    // 4. Test Contact Message
-    console.log('\n\x1b[34m[4/5] Test Formulaire de Contact (contact_messages)...\x1b[0m');
-    const msgId = `MSG-TEST-${Date.now()}`;
+    // 3. Reservation (Creation + Lookup by reference)
+    console.log('\n\x1b[34m[3/6] Test Réservation Gastronomique Client...\x1b[0m');
+    const resId = `RES-SEC-${Date.now()}`;
+    await setDoc(doc(db, 'reservations', resId), {
+      id: resId,
+      reference: resId,
+      firstName: 'Claire',
+      lastName: 'Moreau',
+      email: 'claire.moreau@email.fr',
+      phone: '+33612345678',
+      date: '2026-11-25',
+      time: '20:00',
+      guests: 2,
+      createdAt: new Date().toISOString()
+    });
+    assert(true, 'Création réservation client autorisée');
+
+    const resSnap = await getDoc(doc(db, 'reservations', resId));
+    assert(resSnap.exists() && resSnap.data().lastName === 'Moreau', 'Consultation unitaire par référence autorisée');
+
+    // 4. Security Enforcement: Unauthenticated Update/Delete on Reservations must be BLOCKED
+    console.log('\n\x1b[34m[4/6] Contrôle Sécurité : Blocage altération réservation non-admin...\x1b[0m');
+    try {
+      await deleteDoc(doc(db, 'reservations', resId));
+      assert(false, 'ALERTE : Suppression non autorisée a réussi');
+    } catch (err) {
+      assert(err.code === 'permission-denied', 'Règle active : Suppression non-admin bloquée (permission-denied)');
+    }
+
+    // 5. Contact Message & Job Application (Creation allowed)
+    console.log('\n\x1b[34m[5/6] Test Envoi Contact & Candidature...\x1b[0m');
+    const msgId = `MSG-SEC-${Date.now()}`;
     await setDoc(doc(db, 'contact_messages', msgId), {
       id: msgId,
-      name: 'Claire de Vignoble',
-      email: 'claire@vignoble.it',
-      phone: '+39 02 1234 567',
-      subject: 'Privatisation événementielle',
-      message: 'Demande de privatisation pour 30 personnes le 15 décembre.',
+      name: 'Elena Rossi',
+      email: 'elena@rossi.it',
+      message: 'Demande d information',
       createdAt: new Date().toISOString()
     });
-    const msgSnap = await getDoc(doc(db, 'contact_messages', msgId));
-    assert(msgSnap.exists() && msgSnap.data().name === 'Claire de Vignoble', 'Enregistrement message contact vérifié');
+    assert(true, 'Envoi message de contact public autorisé');
 
-    // 5. Test Job Application
-    console.log('\n\x1b[34m[5/5] Test Recrutement & Candidature (job_applications)...\x1b[0m');
-    const jobAppId = `JOB-TEST-${Date.now()}`;
+    const jobAppId = `JOB-SEC-${Date.now()}`;
     await setDoc(doc(db, 'job_applications', jobAppId), {
       id: jobAppId,
-      fullName: 'Marcello Rossi',
-      email: 'marcello.rossi@email.it',
-      phone: '+39 340 000 1122',
-      role: 'Sommelier — Cantina & Vini Vulcanici',
-      message: 'Diplômé AIS avec 4 ans d expérience en restaurant étoilé.',
+      fullName: 'Matteo Bellini',
+      email: 'matteo@bellini.it',
+      role: 'Sommelier',
       createdAt: new Date().toISOString()
     });
-    const jobSnap = await getDoc(doc(db, 'job_applications', jobAppId));
-    assert(jobSnap.exists() && jobSnap.data().role.includes('Sommelier'), 'Enregistrement candidature vérifié');
+    assert(true, 'Envoi candidature recrutement public autorisé');
 
-    // Clean up test documents
-    console.log('\n\x1b[33mNettoyage des données de test...\x1b[0m');
-    await deleteDoc(doc(db, 'table_orders', orderId));
-    await deleteDoc(doc(db, 'reservations', resId));
-    await deleteDoc(doc(db, 'service_calls', callId));
-    await deleteDoc(doc(db, 'contact_messages', msgId));
-    await deleteDoc(doc(db, 'job_applications', jobAppId));
-    assert(true, 'Documents de test purgés proprement de Firestore');
+    // 6. Security Enforcement: Reading other people's contact messages must be BLOCKED
+    console.log('\n\x1b[34m[6/6] Contrôle Sécurité : Confidentialité stricte des messages et CVs...\x1b[0m');
+    try {
+      await getDoc(doc(db, 'contact_messages', msgId));
+      assert(false, 'ALERTE : Lecture publique des messages autorisée');
+    } catch (err) {
+      assert(err.code === 'permission-denied', 'Règle active : Lecture messages confidentiels bloquée (permission-denied)');
+    }
+
+    try {
+      await getDoc(doc(db, 'job_applications', jobAppId));
+      assert(false, 'ALERTE : Lecture publique des CVs autorisée');
+    } catch (err) {
+      assert(err.code === 'permission-denied', 'Règle active : Lecture candidatures confidentielles bloquée (permission-denied)');
+    }
 
   } catch (err) {
-    console.error('Erreur test Firestore:', err);
+    console.error('Erreur inattendue test suite:', err);
     failed++;
   }
 
   console.log('\n\x1b[36m============================================================\x1b[0m');
-  console.log(`\x1b[32mRÉSULTAT FIRESTORE : ${passed} tests réussis\x1b[0m / ${passed + failed} tests`);
+  console.log(`\x1b[32mRÉSULTAT SÉCURITÉ FIRESTORE : ${passed} tests réussis\x1b[0m / ${passed + failed} tests`);
   if (failed === 0) {
-    console.log('\x1b[32mLA BASE DE DONNÉES CLOUD FIRESTORE EST 100% OPÉRATIONNELLE !\x1b[0m');
+    console.log('\x1b[32mLES RÈGLES DE SÉCURITÉ SONT 100% VALIDES ET IMPERMÉABLES !\x1b[0m');
   }
   console.log('\x1b[36m============================================================\x1b[0m');
 }

@@ -26,6 +26,13 @@ export default function ContactPage({ onShowToast }) {
     if (!formData.email.trim() || !formData.email.includes('@')) newErrors.email = t('common.validEmail');
     if (!formData.message.trim()) newErrors.message = t('common.messageRequired');
 
+    const lastSent = sessionStorage.getItem('lucente_last_contact_ts');
+    if (lastSent && Date.now() - Number(lastSent) < 15000) {
+      newErrors.message = 'Veuillez patienter quelques instants avant de renvoyer un message.';
+      setErrors(newErrors);
+      return;
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -36,6 +43,7 @@ export default function ContactPage({ onShowToast }) {
 
     try {
       await submitContactMessage(formData);
+      sessionStorage.setItem('lucente_last_contact_ts', String(Date.now()));
       setIsSent(true);
       if (onShowToast) {
         onShowToast({

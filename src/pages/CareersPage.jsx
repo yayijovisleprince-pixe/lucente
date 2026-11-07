@@ -16,15 +16,27 @@ export default function CareersPage() {
     message: ''
   });
   const [isSent, setIsSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [rateLimitMsg, setRateLimitMsg] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const lastSent = sessionStorage.getItem('lucente_last_job_ts');
+    if (lastSent && Date.now() - Number(lastSent) < 15000) {
+      setRateLimitMsg('Veuillez patienter quelques instants avant de soumettre une nouvelle candidature.');
+      return;
+    }
+    setRateLimitMsg('');
+    setIsSubmitting(true);
     try {
       await submitJobApplication(formData);
+      sessionStorage.setItem('lucente_last_job_ts', String(Date.now()));
+      setIsSent(true);
     } catch (err) {
       console.error('Job application error:', err);
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSent(true);
   };
 
   const openPositions = [
@@ -218,11 +230,18 @@ export default function CareersPage() {
                 />
               </div>
 
+              {rateLimitMsg && (
+                <div className="p-3 bg-terracotta/20 border border-terracotta/40 text-terracotta text-xs rounded-sm">
+                  {rateLimitMsg}
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="w-full py-3.5 sm:py-4 px-4 btn-luxury-primary flex items-center justify-center gap-2 shadow-xl text-xs sm:text-sm uppercase tracking-wider"
+                disabled={isSubmitting}
+                className="w-full py-3.5 sm:py-4 px-4 btn-luxury-primary disabled:opacity-60 flex items-center justify-center gap-2 shadow-xl text-xs sm:text-sm uppercase tracking-wider"
               >
-                <span>{lang === 'it' ? 'INVIA LA MIA CANDIDATURA' : lang === 'en' ? 'SUBMIT MY APPLICATION' : 'TRANSMETTRE MA CANDIDATURE'}</span>
+                <span>{isSubmitting ? (lang === 'it' ? 'INVIO IN CORSO...' : lang === 'en' ? 'TRANSMITTING...' : 'TRANSMISSION EN COURS...') : (lang === 'it' ? 'INVIA LA MIA CANDIDATURA' : lang === 'en' ? 'SUBMIT MY APPLICATION' : 'TRANSMETTRE MA CANDIDATURE')}</span>
                 <Send size={14} />
               </button>
             </form>

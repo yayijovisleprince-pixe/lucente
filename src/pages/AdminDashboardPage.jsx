@@ -130,20 +130,16 @@ export default function AdminDashboardPage() {
 
   // ── Auth Listener ──────────────────────────────────────────────────────────
   useEffect(() => {
-    const savedLocal = sessionStorage.getItem('lucente_admin_user');
-    if (savedLocal) {
-      try {
-        const parsed = JSON.parse(savedLocal);
-        if (parsed.email && parsed.email.toLowerCase() === AUTHORIZED_ADMIN_EMAIL) {
-          setCurrentUser(parsed);
-          setAuthLoading(false);
-          return;
-        }
-      } catch {}
+    if (!auth) { 
+      setAuthLoading(false); 
+      return; 
     }
-    if (!auth) { setAuthLoading(false); return; }
     const unsub = onAuthStateChanged(auth, (user) => {
-      if (user) setCurrentUser(user);
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
       setAuthLoading(false);
     });
     return () => unsub();
@@ -164,15 +160,8 @@ export default function AdminDashboardPage() {
     } finally { setIsSigningIn(false); }
   };
 
-  const handleDirectAdminAccess = () => {
-    const adminObj = { email: AUTHORIZED_ADMIN_EMAIL, displayName: 'Direction LUCENTE' };
-    sessionStorage.setItem('lucente_admin_user', JSON.stringify(adminObj));
-    setCurrentUser(adminObj);
-  };
-
   const handleSignOut = async () => {
     try {
-      sessionStorage.removeItem('lucente_admin_user');
       if (auth) await signOut(auth);
       setCurrentUser(null);
     } catch {}
@@ -327,12 +316,6 @@ export default function AdminDashboardPage() {
                   <ExternalLink size={12} />
                 </a>
               </div>
-              <button
-                type="button" onClick={handleDirectAdminAccess}
-                className="w-full py-3 px-4 bg-surface hover:bg-surface-elevated text-or border border-or/60 hover:border-or text-xs font-mono uppercase tracking-wider transition-all rounded font-semibold text-center"
-              >
-                Accéder Directement en Mode Direction
-              </button>
             </div>
           )}
 

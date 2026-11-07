@@ -112,7 +112,7 @@ export async function submitTableOrder({
     serviceRound,
     notes,
     paymentPreference,
-    paymentStatus: paymentPreference === 'hybrid_online' ? 'paid' : 'pending_at_table',
+    paymentStatus: 'pending_at_table',
     status: 'received', // 'received' | 'preparing' | 'plating' | 'served' | 'closed'
     createdAt: now,
     updatedAt: now

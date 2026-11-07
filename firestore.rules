@@ -2,29 +2,66 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Commandes des convives à table (QR scan) & gestion cuisine/admin
+    
+    // Fonction d'authentification pour la Direction LUCENTE
+    function isAdmin() {
+      return request.auth != null && 
+             (request.auth.token.email.lower() == 'yayijovisleprince@gmail.com' ||
+              request.auth.token.email.lower() == 'admin@lucente-milano.com');
+    }
+
+    // 1. Commandes de Table (QR Scan & KDS Cuisine)
     match /table_orders/{orderId} {
-      allow read, write: if true;
+      allow create: if request.resource.data.tableId is string 
+                    && request.resource.data.totalAmount is number
+                    && request.resource.data.items is list;
+      allow read: if true;
+      allow update: if request.resource.data.diff(resource.data).affectedKeys()
+                      .hasAny(['status', 'updatedAt', 'serverUpdatedAt'])
+                    && request.resource.data.status in ['received', 'preparing', 'plating', 'served', 'closed'];
+      allow delete: if isAdmin();
     }
 
-    // Appels de table (sommelier, eau/pain, serveur, addition)
+    // 2. Appels de Service / Conciergerie (Sommelier, Pain, Addition)
     match /service_calls/{callId} {
-      allow read, write: if true;
+      allow create: if request.resource.data.tableId is string 
+                    && request.resource.data.type is string;
+      allow read: if true;
+      allow update: if request.resource.data.diff(resource.data).affectedKeys()
+                      .hasOnly(['status'])
+                    && request.resource.data.status in ['pending', 'resolved'];
+      allow delete: if isAdmin();
     }
 
-    // Réservations de table
+    // 3. Réservations Gastronomiques (Protection stricte PII / RGPD)
     match /reservations/{reservationId} {
-      allow read, write: if true;
+      // Les clients peuvent soumettre une réservation valide
+      allow create: if request.resource.data.email is string
+                    && request.resource.data.date is string
+                    && request.resource.data.firstName is string
+                    && request.resource.data.lastName is string;
+      // Consultation unitaire uniquement par le détenteur de la référence ou l'Admin
+      allow get: if isAdmin() || (resource.data.reference == reservationId);
+      // Listing global interdit aux visiteurs non authentifiés
+      allow list: if isAdmin();
+      // Modification et annulation réservées à la Direction
+      allow update, delete: if isAdmin();
     }
 
-    // Messages de contact
+    // 4. Formulaire de Contact (Protection stricte contre la lecture publique)
     match /contact_messages/{messageId} {
-      allow read, write: if true;
+      allow create: if request.resource.data.email is string
+                    && request.resource.data.message is string
+                    && request.resource.data.name is string;
+      allow read, update, delete: if isAdmin();
     }
 
-    // Candidatures recrutement
+    // 5. Candidatures Recrutement (Protection stricte des CVs et coordonnées)
     match /job_applications/{applicationId} {
-      allow read, write: if true;
+      allow create: if request.resource.data.email is string
+                    && request.resource.data.fullName is string
+                    && request.resource.data.role is string;
+      allow read, update, delete: if isAdmin();
     }
   }
 }
