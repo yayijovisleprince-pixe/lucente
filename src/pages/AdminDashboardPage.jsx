@@ -22,6 +22,7 @@ import {
 } from '../utils/tableOrderManager';
 import { auth, googleProvider } from '../firebase/config';
 import { signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import { useAdminSession } from '../hooks/useAdminSession';
 import SEOHead from '../components/SEOHead';
 
 const AUTHORIZED_ADMIN_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || 'yayijovisleprince@gmail.com').toLowerCase();
@@ -160,12 +161,33 @@ export default function AdminDashboardPage() {
     } finally { setIsSigningIn(false); }
   };
 
-  const handleSignOut = async () => {
+  const [sessionExpiredNotice, setSessionExpiredNotice] = useState(null);
+
+  const handleSignOut = async (reason = null) => {
     try {
       if (auth) await signOut(auth);
       setCurrentUser(null);
+      if (reason === 'inactivity') {
+        setSessionExpiredNotice("Votre session de direction a expiré automatiquement après 15 minutes d'inactivité pour préserver la sécurité de la console.");
+      } else if (reason === 'max_lifetime') {
+        setSessionExpiredNotice("Votre session de service a atteint la durée maximale autorisée (8 heures). Veuillez vous réauthentifier.");
+      }
     } catch {}
   };
+
+  const isAuthorized = useMemo(() => {
+    return !!(currentUser && currentUser.email && currentUser.email.toLowerCase() === AUTHORIZED_ADMIN_EMAIL);
+  }, [currentUser]);
+
+  const {
+    secondsRemaining,
+    timeRemainingFormatted,
+    isWarningOpen,
+    extendSession
+  } = useAdminSession({
+    isActive: isAuthorized,
+    onExpire: (reason) => handleSignOut(reason)
+  });
 
   // ── Base URL ───────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -296,6 +318,15 @@ export default function AdminDashboardPage() {
             </p>
           </div>
 
+          {sessionExpiredNotice && (
+            <div className="p-3.5 bg-or/15 border border-or/60 text-ivoire text-xs rounded-sm flex items-start gap-2.5 text-left shadow-lg">
+              <span className="text-or text-sm font-serif">✦</span>
+              <p className="leading-relaxed font-serif text-or-light">
+                {sessionExpiredNotice}
+              </p>
+            </div>
+          )}
+
           {authError && (
             <div className="space-y-3 text-left">
               <div className="p-3 bg-terracotta/20 border border-terracotta/40 text-terracotta text-xs rounded-sm flex items-start gap-2">
@@ -339,7 +370,6 @@ export default function AdminDashboardPage() {
   }
 
   // 3. Unauthorized account
-  const isAuthorized = currentUser.email && currentUser.email.toLowerCase() === AUTHORIZED_ADMIN_EMAIL;
   if (!isAuthorized) {
     return (
       <div className="min-h-screen bg-nero text-ivoire flex items-center justify-center p-4">
@@ -407,11 +437,30 @@ export default function AdminDashboardPage() {
                   <div className="font-mono text-xs text-or font-semibold">Direction Autorisée</div>
                 </div>
                 <button
-                  type="button" onClick={handleSignOut}
+                  type="button" onClick={() => handleSignOut()}
                   title="Se déconnecter"
                   className="ml-2 p-1.5 text-muted hover:text-terracotta transition-colors"
                 >
                   <LogOut size={14} />
+                </button>
+              </div>
+
+              {/* Session Timer & Security Badge */}
+              <div className="flex items-center gap-2 p-2 px-3 bg-surface border border-or/30 rounded-sm">
+                <Clock size={13} className="text-or shrink-0" />
+                <div className="text-left font-mono text-xs">
+                  <span className="text-muted text-[9px] block uppercase leading-none">Session</span>
+                  <span className={`font-semibold tracking-wider ${secondsRemaining <= 120 ? 'text-terracotta animate-pulse' : 'text-or'}`}>
+                    {timeRemainingFormatted}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={extendSession}
+                  title="Prolonger la session (réinitialise le délai à 15 minutes)"
+                  className="ml-1 p-1 text-muted hover:text-or transition-colors"
+                >
+                  <RefreshCw size={12} />
                 </button>
               </div>
 
@@ -1177,6 +1226,50 @@ export default function AdminDashboardPage() {
                   <><Copy size={13} /><span>Copier le Lien Direct</span></>
                 )}
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* ── Admin Session Expiry Warning Modal ────────────────────────────── */}
+        {isWarningOpen && (
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="w-full max-w-md bg-surface border-2 border-or/80 p-6 sm:p-8 rounded-sm shadow-2xl space-y-6 text-center">
+              <div className="w-14 h-14 rounded-full bg-or/15 border border-or flex items-center justify-center mx-auto text-or shadow-lg shadow-or/20">
+                <Clock size={28} className="animate-spin" />
+              </div>
+
+              <div className="space-y-2">
+                <span className="font-serif-luxury tracking-[0.25em] text-or text-xs uppercase block font-semibold">
+                  Sécurité de Direction
+                </span>
+                <h2 className="font-serif-luxury text-2xl text-ivoire font-light">
+                  Expiration Imminente de la Session
+                </h2>
+                <p className="text-xs text-muted leading-relaxed font-serif italic">
+                  « Aucune interaction détectée depuis 13 minutes. Pour préserver la sécurité de la console, votre session sera verrouillée dans : »
+                </p>
+              </div>
+
+              <div className="py-3 px-6 bg-nero border border-or/40 rounded font-mono text-3xl font-bold text-or tracking-widest inline-block shadow-inner">
+                {timeRemainingFormatted}
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={extendSession}
+                  className="w-full py-3.5 px-5 bg-or hover:bg-or-light text-nero font-semibold text-xs font-mono uppercase tracking-wider transition-all shadow-lg shadow-or/20"
+                >
+                  Prolonger ma Session (15 min)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSignOut('inactivity')}
+                  className="w-full py-3.5 px-5 bg-surface hover:bg-surface-elevated text-muted hover:text-ivoire border border-white/10 text-xs font-mono uppercase tracking-wider transition-all"
+                >
+                  Verrouiller Maintenant
+                </button>
+              </div>
             </div>
           </div>
         )}

@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, setPersistence, browserSessionPersistence } from 'firebase/auth';
 
 const env = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env : (typeof process !== 'undefined' && process.env ? process.env : {});
 
@@ -22,6 +22,9 @@ try {
   app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
   db = getFirestore(app);
   auth = getAuth(app);
+  if (typeof window !== 'undefined') {
+    setPersistence(auth, browserSessionPersistence).catch(() => {});
+  }
   googleProvider = new GoogleAuthProvider();
 } catch (error) {
   console.warn('LUCENTE: Firebase initialization notice:', error.message);
